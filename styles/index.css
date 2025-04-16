@@ -1,0 +1,29 @@
+@import "reset.css";
+
+:root {
+  --color-neutral: #fdfdfd;
+}
+
+body {
+  background-color: var(--color-neutral);
+}
+
+.input {
+  all: unset;
+  width: 100%;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease;
+
+  /* Optional: smooth placeholder */
+  ::placeholder {
+    color: #999;
+    opacity: 1;
+  }
+}
+
+.input:focus {
+  border-bottom: 1px solid #333;
+}
