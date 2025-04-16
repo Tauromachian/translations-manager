@@ -7,9 +7,9 @@ export default defineConfig({
     outDir: "../dist", // Output to project root/dist/
     emptyOutDir: true, // Clear dist/ before building
     rollupOptions: {
-      input: join(Deno.cwd(), "resources", "app.js"), // JS entry point
+      input: join(Deno.cwd(), "resources", "main.js"), // JS entry point
       output: {
-        entryFileNames: "app.js", // Output JS path
+        entryFileNames: "main.js", // Output JS path
         assetFileNames: "[name].[ext]", // Output CSS path
       },
     },
