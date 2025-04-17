@@ -14,7 +14,15 @@
 
       ws.onmessage = (event) => {
         if (event.data === "reload") {
-          window.location.reload();
+          fetch(window.location.href)
+            .then((response) => response.text())
+            .then((html) => {
+              // Replace the entire document
+              document.open();
+              document.write(html);
+              document.close();
+            })
+            .catch((err) => console.error("Reload error:", err));
         }
       };
     </script>
