@@ -35,7 +35,7 @@ export class TextField extends HTMLElement {
                   font-size: 1em;
                   color: #333;
                   background: #fff;
-                  border: 1px solid var(--black);
+                  border: 1px solid var(--gray);
                   border-radius: 4px;
                   transition: border-color 0.2s ease, box-shadow 0.2s ease;
                   width: 100%;
