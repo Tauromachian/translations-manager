@@ -1,4 +1,6 @@
 export class AppButton extends HTMLElement {
+  button = null;
+
   constructor() {
     super();
     this.root = this.attachShadow({ mode: "open" });
@@ -46,5 +48,10 @@ export class AppButton extends HTMLElement {
         `;
 
     this.root.appendChild(template.content.cloneNode(true));
+    this.button = this.root.querySelector("button");
+
+    this.button.addEventListener("click", () => {
+      this.dispatchEvent(new CustomEvent("click"));
+    });
   }
 }
