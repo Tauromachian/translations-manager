@@ -40,7 +40,7 @@ export class AppButton extends HTMLElement {
                 }
             </style>
 
-            <button>
+            <button type="button">
                 <slot></slot>
             </button>
         `;
