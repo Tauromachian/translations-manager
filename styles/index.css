@@ -75,6 +75,10 @@ th {
   color: #555;
 }
 
+tr:last-child td {
+  border-bottom: none;
+}
+
 tr:hover {
   background-color: #f9f9f9;
 }
