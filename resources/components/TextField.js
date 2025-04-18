@@ -23,13 +23,40 @@ export class TextField extends HTMLElement {
     const template = document.createElement("template");
 
     template.innerHTML = `
+          <style>
+              :host {
+                  display: block;
+                  width: 100%;
+              }
+
+              input {
+                  padding: 10px 12px;
+                  font-family: Arial, sans-serif;
+                  font-size: 1em;
+                  color: #333;
+                  background: #fff;
+                  border: 1px solid var(--black);
+                  border-radius: 4px;
+                  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+                  width: 100%;
+              }
+
+              input:focus {
+                  outline: none;
+                  border-color: var(--primary-10);
+                  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+              }
+          </style>
+
           <div>
               <label></label>
               <input class="input" type="text">
           </div>
       `;
 
-    this.appendChild(template.content.cloneNode(true));
+    this.root = this.attachShadow({ mode: "open" });
+    this.root.appendChild(template.content.cloneNode(true));
+
     this.handleLabel();
   }
 }
