@@ -6,6 +6,7 @@ export default defineConfig({
   build: {
     outDir: "../dist", // Output to project root/dist/
     emptyOutDir: true, // Clear dist/ before building
+    minify: Deno.env.get("APP_ENV") === "production",
     rollupOptions: {
       input: join(Deno.cwd(), "resources", "main.js"), // JS entry point
       output: {
