@@ -23,26 +23,16 @@ export class Collection extends HTMLElement {
                     margin: 1rem;
                 }
 
-                .table-toolbar {
-                    display: flex;
-                    justify-content: space-between;
+                .p-1 {
                     padding: 1rem;
-                    align-items: center;
-                }
-
-                text-field {
-                    max-width: 300px;
                 }
             </style>
             <div class="container mt-5">
                 <h1>Collections</h1>
 
                 <div class="card">
-                    <div class="table-toolbar">
+                    <table-toolbar class="p-1"></table-toolbar>
 
-                        <text-field></text-field>
-                        <button >Create</button>
-                    </div>
                     <table>
                         <thead>
                             <tr>
