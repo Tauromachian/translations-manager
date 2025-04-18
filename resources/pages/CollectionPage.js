@@ -35,7 +35,7 @@ export class Collection extends HTMLElement {
                 }
             </style>
             <div class="container mt-5">
-                <h1>Collection</h1>
+                <h1>Collections</h1>
 
                 <div class="card">
                     <div class="table-toolbar">
