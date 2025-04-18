@@ -15,20 +15,24 @@ export class Collection extends HTMLElement {
 
     template.innerHTML = `
             <style>
-            .mt-5 {
-                margin-top: 5rem;
-            }
+                .mt-5 {
+                    margin-top: 5rem;
+                }
 
-            .m-1 {
-                margin: 1rem;
-            }
+                .m-1 {
+                    margin: 1rem;
+                }
 
-            .table-toolbar {
-                display: flex;
-                justify-content: space-between;
-                padding: 1rem;
-                align-items: center;
-            }
+                .table-toolbar {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 1rem;
+                    align-items: center;
+                }
+
+                text-field {
+                    max-width: 300px;
+                }
             </style>
             <div class="container mt-5">
                 <h1>Collection</h1>
