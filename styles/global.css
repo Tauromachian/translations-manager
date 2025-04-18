@@ -1,6 +1,8 @@
 :root {
   --color-neutral: #fdfdfd;
   --black: #191919;
+  --primary: #a2d2ff;
+  --primary-10: #66b5ff;
 }
 
 @font-face {
