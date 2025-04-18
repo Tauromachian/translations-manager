@@ -10,7 +10,7 @@ export class TextField extends HTMLElement {
   handleLabel() {
     const label = this.getAttribute("label");
 
-    const labelEl = this.querySelector("label");
+    const labelEl = this.root.querySelector("label");
 
     if (label) {
       labelEl.textContent = label;
