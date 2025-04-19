@@ -15,7 +15,7 @@ export class AppButton extends HTMLElement {
                     display: block;
                 }
 
-                button {
+                .button {
                     padding: 10px 20px;
                     font-weight: 500;
                     background-color: var(--primary);
@@ -26,22 +26,22 @@ export class AppButton extends HTMLElement {
                     transition: background-color 0.2s ease;
                 }
 
-                button:hover {
+                .button:hover {
                     background-color: var(--primary-10);
                 }
 
-                button:focus {
+                .button:focus {
                     outline: none;
                     box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
                 }
 
-                button:disabled {
+                .button:disabled {
                     background-color: #cccccc;
                     cursor: not-allowed;
                 }
             </style>
 
-            <button type="button">
+            <button type="button" class="button">
                 <slot></slot>
             </button>
         `;
