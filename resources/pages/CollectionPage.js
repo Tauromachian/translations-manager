@@ -26,6 +26,16 @@ export class Collection extends HTMLElement {
                 .p-1 {
                     padding: 1rem;
                 }
+                
+                .actions-column {
+                    display: flex;
+                    gap: .5rem;
+                    justify-content: left;
+                }
+                
+                .actions-column app-button {
+                    width: fit-content;
+                }
             </style>
             <div class="container mt-5">
                 <h1>Collections</h1>
