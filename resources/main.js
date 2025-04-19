@@ -4,6 +4,8 @@ import { routes } from "./services/routes.js";
 import { Collection } from "./pages/CollectionPage.js";
 import { TextField } from "./components/TextField.js";
 import { AppModal } from "./components/AppModal.js";
+import { TableToolbar } from "./components/TableToolbar.js";
+import { AppButton } from "./components/AppButton.js";
 
 import "../styles/index.css";
 
@@ -11,6 +13,8 @@ function defineCustomElements() {
   customElements.define("collection-page", Collection);
   customElements.define("text-field", TextField);
   customElements.define("app-modal", AppModal);
+  customElements.define("table-toolbar", TableToolbar);
+  customElements.define("app-button", AppButton);
 }
 
 globalThis.addEventListener("DOMContentLoaded", () => {
