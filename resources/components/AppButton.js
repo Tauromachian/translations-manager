@@ -6,8 +6,23 @@ export class AppButton extends HTMLElement {
     this.root = this.attachShadow({ mode: "open" });
   }
 
+  static get observerdAttributes() {
+    return ["to"];
+  }
+
   connectedCallback() {
     const template = document.createElement("template");
+
+    const to = this.getAttribute("to");
+    let buttonDefinition = "";
+
+    if (to) {
+      buttonDefinition = `<a href="/app/${
+        to === "/" ? "" : to
+      }" class="button"><slot></slot></a>`;
+    } else {
+      buttonDefinition = `<button class="button"><slot></slot></button>`;
+    }
 
     template.innerHTML = `
             <style>
@@ -41,9 +56,7 @@ export class AppButton extends HTMLElement {
                 }
             </style>
 
-            <button type="button" class="button">
-                <slot></slot>
-            </button>
+            ${buttonDefinition}
         `;
 
     this.root.appendChild(template.content.cloneNode(true));
