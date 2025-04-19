@@ -61,6 +61,13 @@ export class Collection extends HTMLElement {
                     </table>
                 </div>
             </div>
+
+            <app-modal title="Create Collection">
+                <form>
+                    <text-field label="Name"></text-field>
+                    <app-button>Create</app-button>
+                </form>
+            </app-modal>
         `;
 
     this.appendChild(template.content.cloneNode(true));
