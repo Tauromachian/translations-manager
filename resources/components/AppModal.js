@@ -8,7 +8,7 @@ export class AppModal extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["open", "title"];
+    return ["open", "title", "width"];
   }
 
   attributeChangedCallback(name, _, newValue) {
@@ -41,7 +41,7 @@ export class AppModal extends HTMLElement {
               background: #fff;
               box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
               max-width: 500px;
-              width: 500px;
+              width: ${this.getAttribute("width") || "500px"};
               font-family: Arial, sans-serif;
               outline: none;
             }
