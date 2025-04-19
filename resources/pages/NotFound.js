@@ -26,7 +26,7 @@ export class NotFound extends HTMLElement {
             <div>
                 <h1>404</h1>
                 <p>Page not found</p>
-                <app-button>
+                <app-button to="/">
                     Go Home
                 </app-button>
             </div>
