@@ -13,7 +13,6 @@ export class AppButton extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    width: 100%;
                 }
 
                 button {
