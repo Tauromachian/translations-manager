@@ -30,5 +30,9 @@ export class TableToolbar extends HTMLElement {
       `;
 
     this.root.appendChild(template.content.cloneNode(true));
+
+    this.root.querySelector("app-button").addEventListener("click", () => {
+      this.dispatchEvent(new CustomEvent("click-create"));
+    });
   }
 }
