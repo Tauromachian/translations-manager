@@ -36,6 +36,13 @@ export class Collection extends HTMLElement {
                 .actions-column app-button {
                     width: fit-content;
                 }
+
+                .modal-actions {
+                    display: flex;
+                    justify-content: flex-end;
+                    width: 100%;
+                    margin-top: 0.5rem;
+                }
             </style>
             <div class="container mt-5">
                 <h1>Collections</h1>
@@ -75,7 +82,10 @@ export class Collection extends HTMLElement {
             <app-modal title="Create Collection">
                 <form>
                     <text-field label="Name"></text-field>
-                    <app-button>Create</app-button>
+
+                    <div class="modal-actions">
+                        <app-button>Create</app-button>
+                    </div>
                 </form>
             </app-modal>
         `;
