@@ -81,5 +81,12 @@ export class Collection extends HTMLElement {
         `;
 
     this.appendChild(template.content.cloneNode(true));
+
+    const tableToolbar = this.querySelector("table-toolbar");
+
+    tableToolbar.addEventListener("click-create", () => {
+      const modal = this.querySelector("app-modal");
+      modal.setAttribute("open", true);
+    });
   }
 }
