@@ -25,7 +25,9 @@ export class TextField extends HTMLElement {
     template.innerHTML = `
           <style>
               :host {
-                  display: block;
+                  display: flex;
+                  flex-direction: column;
+                  gap: 4px;
                   width: 100%;
               }
 
@@ -38,7 +40,6 @@ export class TextField extends HTMLElement {
                   border: 1px solid var(--gray);
                   border-radius: 4px;
                   transition: border-color 0.2s ease, box-shadow 0.2s ease;
-                  width: 100%;
               }
 
               input:focus {
@@ -48,10 +49,8 @@ export class TextField extends HTMLElement {
               }
           </style>
 
-          <div>
-              <label></label>
-              <input class="input" type="text">
-          </div>
+          <label></label>
+          <input class="input" type="text">
       `;
 
     this.root = this.attachShadow({ mode: "open" });
