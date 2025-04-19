@@ -20,6 +20,8 @@ export const router = {
 
     if (this.routes[route]) {
       pageElement = document.createElement(this.routes[route]);
+    } else {
+      pageElement = document.createElement(this.routes["*"]);
     }
 
     this.mainEl.innerHTML = "";
