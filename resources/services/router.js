@@ -18,6 +18,10 @@ export const router = {
 
     let pageElement = null;
 
+    if (route.endsWith("/")) {
+      route = route.slice(0, -1);
+    }
+
     if (this.routes[route]) {
       pageElement = document.createElement(this.routes[route]);
     } else {
