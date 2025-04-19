@@ -79,7 +79,7 @@ export class Collection extends HTMLElement {
                 </div>
             </div>
 
-            <app-modal title="Create Collection">
+            <app-modal title="Create Collection" width="400px">
                 <form>
                     <text-field label="Name"></text-field>
 
