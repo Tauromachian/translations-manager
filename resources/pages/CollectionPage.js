@@ -47,9 +47,9 @@ export class Collection extends HTMLElement {
           (collection) => `
                             <tr>
                                 <td>${collection}</td>
-                                <td>
-                                    <button>Edit</button>
-                                    <button>Delete</button>
+                                <td class="actions-column">
+                                    <app-button>Edit</app-button>
+                                    <app-button>Delete</app-button>
                                 </td>
                             </tr>
                             `,
