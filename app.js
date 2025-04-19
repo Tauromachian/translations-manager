@@ -8,10 +8,9 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
-console.log(join(Deno.cwd(), "dist"));
 app.use(express.static(join(Deno.cwd(), "dist")));
 
-app.get("/", (_, res) => {
+app.get(/^\/app(.*)/, (_, res) => {
   res.sendFile(join(Deno.cwd(), "views", "index.html"));
 });
 

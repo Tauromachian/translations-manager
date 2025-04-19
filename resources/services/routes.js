@@ -1,3 +1,5 @@
 export const routes = {
-  "/": "collection-page",
+  "/app": "collection-page",
+  "/app/collection/:id": "translations-page",
+  "*": "not-found",
 };
