@@ -61,13 +61,9 @@ export class TranslationsPage extends HTMLElement {
                     <table>
                         <thead>
                             <tr>
-                                
                                 ${
-      headers.map((header) => `
-                                        <th>${header}</th>
-                                    `)
+      headers.map((header) => `<th>${header}</th>`).join("")
     }
-
                             </tr>
                         </thead>
                         <tbody>
