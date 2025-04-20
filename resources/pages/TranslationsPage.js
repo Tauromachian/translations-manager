@@ -3,19 +3,60 @@ export class TranslationsPage extends HTMLElement {
     super();
   }
 
+  getTableBody(languages, headers) {
+    const tBody = document.createElement("tbody");
+
+    let allKeys = new Set();
+
+    for (const key in languages) {
+      const langKeys = Object.keys(languages[key]);
+      allKeys = allKeys.union(new Set(langKeys));
+    }
+
+    for (const key of allKeys) {
+      const row = document.createElement("tr");
+
+      for (const header of headers) {
+        const cell = document.createElement("td");
+
+        if (!languages[header.value]) {
+          continue;
+        }
+
+        cell.innerHTML = languages[header.value][key];
+        row.appendChild(cell);
+      }
+
+      tBody.appendChild(row);
+    }
+
+    return tBody;
+  }
+
   connectedCallback() {
     const template = document.createElement("template");
 
     const headers = [
-      "Es",
-      "En",
-      "Actions",
+      {
+        title: "Es",
+        value: "es",
+      },
+      {
+        title: "En",
+        value: "en",
+      },
+      {
+        title: "Actions",
+        value: "actions",
+      },
     ];
 
-    const languages = [
-      { en: "Food", es: "Comida" },
-      { en: "This", es: "Comida" },
-    ];
+    const languages = {
+      en: { food: "Food", this: "This" },
+      es: { food: "Comida", this: "Esto" },
+    };
+
+    const tBody = this.getTableBody(languages, headers);
 
     template.innerHTML = `
             <style>
@@ -62,28 +103,10 @@ export class TranslationsPage extends HTMLElement {
                         <thead>
                             <tr>
                                 ${
-      headers.map((header) => `<th>${header}</th>`).join("")
+      headers.map((header) => `<th>${header.title}</th>`).join("")
     }
                             </tr>
                         </thead>
-                        <tbody>
-                            ${
-      languages
-        .map(
-          (lang) => `
-                            <tr>
-                                <td>${lang.en}</td>
-                                <td>${lang.es}</td>
-                                <td class="actions-column">
-                                    <app-button>Edit</app-button>
-                                    <app-button>Delete</app-button>
-                                </td>
-                            </tr>
-                           `,
-        )
-        .join("")
-    }
-                        </tbody>
 
                     </table>
                 </div>
@@ -103,6 +126,9 @@ export class TranslationsPage extends HTMLElement {
     this.appendChild(template.content.cloneNode(true));
 
     const tableToolbar = this.querySelector("table-toolbar");
+    const table = this.querySelector("table");
+
+    table.appendChild(tBody);
 
     tableToolbar.addEventListener("click-create", () => {
       const modal = this.querySelector("app-modal");
