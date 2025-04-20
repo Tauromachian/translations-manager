@@ -123,14 +123,8 @@ export class TranslationsPage extends HTMLElement {
                 </div>
             </div>
 
-            <app-modal title="Create Collection" width="400px">
-                <form>
-                    <text-field label="Name"></text-field>
-
-                    <div class="modal-actions">
-                        <app-button>Create</app-button>
-                    </div>
-                </form>
+            <app-modal title="Add Language" width="400px">
+                <language-form></language-form>
             </app-modal>
         `;
 
