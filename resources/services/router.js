@@ -17,8 +17,6 @@ export const router = {
       }
     }
 
-    console.log(this.regexRoutes);
-
     globalThis.addEventListener("popstate", () => {
       this.go(event.state.route, false);
     });
@@ -36,8 +34,6 @@ export const router = {
         }
       }
     }
-
-    console.log(matchingRoutes);
 
     return matchingRoutes;
   },
