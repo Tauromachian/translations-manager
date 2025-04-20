@@ -4,20 +4,28 @@ export class TableToolbar extends HTMLElement {
     this.root = this.attachShadow({ mode: "open" });
   }
 
+  static get observedAttributes() {
+    return ["action-button-text"];
+  }
+
   connectedCallback() {
     const template = document.createElement("template");
+
+    const actionButtonText = this.getAttribute("action-button-text") ||
+      "Create";
 
     template.innerHTML = `
           <style>
               :host {
                   width: 100%;
                   display: flex;
-                  justify-content: space-between;
                   align-items: center;
+                  gap: .5rem;
               }
 
               :host text-field {
                   max-width: 300px; 
+                  margin-right: auto;
               }
 
               :host app-button {
@@ -26,7 +34,8 @@ export class TableToolbar extends HTMLElement {
           </style>
 
           <text-field></text-field>
-          <app-button>Create</app-button>
+          <app-button>${actionButtonText}</app-button>
+          <slot name="append"></slot>
       `;
 
     this.root.appendChild(template.content.cloneNode(true));
