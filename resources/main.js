@@ -9,6 +9,7 @@ import { AppModal } from "./components/AppModal.js";
 import { TableToolbar } from "./components/TableToolbar.js";
 import { AppButton } from "./components/AppButton.js";
 import { NotFound } from "./pages/NotFound.js";
+import { TranslationsPage } from "./pages/TranslationsPage.js";
 
 function defineCustomElements() {
   customElements.define("collection-page", Collection);
@@ -17,6 +18,7 @@ function defineCustomElements() {
   customElements.define("table-toolbar", TableToolbar);
   customElements.define("app-button", AppButton);
   customElements.define("not-found", NotFound);
+  customElements.define("translations-page", TranslationsPage);
 }
 
 globalThis.addEventListener("DOMContentLoaded", () => {
