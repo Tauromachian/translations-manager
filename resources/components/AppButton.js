@@ -62,6 +62,8 @@ export class AppButton extends HTMLElement {
     this.root.appendChild(template.content.cloneNode(true));
     this.button = this.root.querySelector("button");
 
+    if (!this.button) return;
+
     this.button.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click"));
     });
