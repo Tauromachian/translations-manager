@@ -62,6 +62,13 @@ export class TranslationsPage extends HTMLElement {
       },
     ];
 
+    const headersWithoutActions = headers.toSpliced(
+      headers.length - 1,
+      headers.length - 1,
+    );
+
+    console.log(JSON.stringify(headersWithoutActions));
+
     const languages = {
       en: { food: "Food", this: "This" },
       es: { food: "Comida", this: "Esto" },
@@ -106,7 +113,7 @@ export class TranslationsPage extends HTMLElement {
                 <div class="card">
                     <table-toolbar class="p-1" action-button-text="Add Language">
                         <div slot="append">
-                            <app-button>Add Translation</app-button>
+                            <app-button id="translations-create-button">Add Translation</app-button>
                         </div>
                     </table-toolbar>
 
@@ -126,17 +133,32 @@ export class TranslationsPage extends HTMLElement {
             <app-modal title="Add Language" width="400px">
                 <language-form></language-form>
             </app-modal>
+
+            <app-modal title="Add Translations" width="400px">
+                <translations-form 
+                    languages='${JSON.stringify(headersWithoutActions)}'
+                ></translations-form>
+            </app-modal>
+
         `;
 
     this.appendChild(template.content.cloneNode(true));
 
     const tableToolbar = this.querySelector("table-toolbar");
     const table = this.querySelector("table");
+    const translationsCreateButton = this.querySelector(
+      "#translations-create-button",
+    );
 
     table.appendChild(tBody);
 
     tableToolbar.addEventListener("click-create", () => {
       const modal = this.querySelector("app-modal");
+      modal.setAttribute("open", true);
+    });
+
+    translationsCreateButton.addEventListener("click", () => {
+      const modal = this.querySelectorAll("app-modal")[1];
       modal.setAttribute("open", true);
     });
   }

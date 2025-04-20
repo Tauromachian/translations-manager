@@ -11,6 +11,7 @@ import { AppButton } from "./components/AppButton.js";
 import { NotFound } from "./pages/NotFound.js";
 import { TranslationsPage } from "./pages/TranslationsPage.js";
 import { LanguageForm } from "./components/LanguageForm.js";
+import { TranslationsForm } from "./components/TranslationsForm.js";
 
 function defineCustomElements() {
   customElements.define("collection-page", Collection);
@@ -21,6 +22,7 @@ function defineCustomElements() {
   customElements.define("not-found", NotFound);
   customElements.define("translations-page", TranslationsPage);
   customElements.define("language-form", LanguageForm);
+  customElements.define("translations-form", TranslationsForm);
 }
 
 globalThis.addEventListener("DOMContentLoaded", () => {
