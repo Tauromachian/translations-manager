@@ -19,6 +19,17 @@ export class TranslationsPage extends HTMLElement {
       for (const header of headers) {
         const cell = document.createElement("td");
 
+        if (header.value === "actions") {
+          cell.innerHTML = `
+                    <app-button>Edit</app-button>
+                    <app-button>Delete</app-button>
+            `;
+
+          cell.classList.add("actions-column");
+          row.appendChild(cell);
+          continue;
+        }
+
         if (!languages[header.value]) {
           continue;
         }
