@@ -1,11 +1,18 @@
 import { drizzle } from "npm:drizzle-orm/node-postgres";
 
-import Pool from "npm:pg-pool";
+import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 
-const postgresUrl = `postgresql://
-    ${Deno.env.get("DATABASE_USER")}:${Deno.env.get("DATABASE_PASSWORD")}@${
-  Deno.env.get("DATABASE_HOST")
-}:${Deno.env.get("DATABASE_PORT")}/${Deno.env.get("DATABASE_NAME")}`;
+import pg from "pg";
+
+const { Pool } = pg;
+
+await load({ export: true });
+
+const postgresUrl = `postgresql://${Deno.env.get("DB_USER")}:${
+  Deno.env.get("DB_PASSWORD")
+}@${Deno.env.get("DB_HOST")}:${Deno.env.get("DB_PORT")}/${
+  Deno.env.get("DB_NAME")
+}`;
 
 const pool = new Pool({
   connectionString: postgresUrl,
