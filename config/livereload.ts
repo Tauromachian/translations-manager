@@ -2,7 +2,7 @@ import { join } from "https://deno.land/std/path/mod.ts";
 
 const sockets = new Set<WebSocket>();
 
-export function init() {
+export function start() {
   Deno.serve({
     port: 35989,
     handler: (req) => {
