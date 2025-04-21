@@ -1,8 +1,8 @@
-import { integer, pgTable, text } from "drizzle-orm/pg-core";
+import { pgTable, serial, text } from "drizzle-orm/pg-core";
 
 // Define the "collections" table (equivalent to your Collection entity)
 export const collections = pgTable("collections", {
-  id: integer("id").primaryKey({ autoIncrement: true }),
+  id: serial().primaryKey().notNull(),
   name: text("name").notNull(),
   description: text("description"),
 });

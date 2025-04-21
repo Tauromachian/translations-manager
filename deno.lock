@@ -3,7 +3,9 @@
   "specifiers": {
     "npm:@types/pg@^8.11.13": "8.11.13",
     "npm:dotenv@^16.5.0": "16.5.0",
+    "npm:drizzle-kit@*": "0.31.0_esbuild@0.25.2",
     "npm:drizzle-kit@0.31": "0.31.0_esbuild@0.25.2",
+    "npm:drizzle-orm@*": "0.42.0_@types+pg@8.11.13_pg@8.14.1",
     "npm:drizzle-orm@0.42": "0.42.0_@types+pg@8.11.13_pg@8.14.1",
     "npm:express@5": "5.1.0",
     "npm:morgan@*": "1.10.0",
