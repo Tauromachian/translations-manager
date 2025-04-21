@@ -3,7 +3,7 @@ import morgan from "npm:morgan";
 
 import { join } from "https://deno.land/std/path/mod.ts";
 
-import { router } from "./routes/web.js";
+import { router as webRouter } from "./routes/web.js";
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use(express.json());
 
 app.use(express.static(join(Deno.cwd(), "dist")));
 
-app.use("/app", router);
+app.use("/app", webRouter);
 
 app.listen(3000, () => console.log("Server on http://localhost:3000"));
 
