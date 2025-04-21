@@ -5,6 +5,8 @@ import { join } from "https://deno.land/std/path/mod.ts";
 
 import { router as webRouter } from "./routes/web.js";
 
+import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
+
 const app = express();
 
 app.use(morgan("dev"));
@@ -14,7 +16,13 @@ app.use(express.static(join(Deno.cwd(), "dist")));
 
 app.use("/app", webRouter);
 
-app.listen(3000, () => console.log("Server on http://localhost:3000"));
+(
+  async function init() {
+    await load({ export: true });
+
+    app.listen(3000, () => console.log("Server on http://localhost:3000"));
+  }
+)();
 
 // Livereload implementation
 const sockets = new Set();
