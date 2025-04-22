@@ -5,8 +5,10 @@ import { join } from "https://deno.land/std/path/mod.ts";
 
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 
-import { router as webRouter } from "./routes/web.js";
 import { start as livereloadStart } from "./config/livereload.ts";
+
+import { router as webRouter } from "./routes/web.js";
+import { router as apiRouter } from "./routes/api.js";
 
 const app = express();
 
@@ -16,6 +18,7 @@ app.use(express.json());
 app.use(express.static(join(Deno.cwd(), "dist")));
 
 app.use("/app", webRouter);
+app.use("/api", apiRouter);
 
 (
   async function init() {
