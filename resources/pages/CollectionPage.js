@@ -1,17 +1,47 @@
 export class Collection extends HTMLElement {
   constructor() {
     super();
+
+    this.collections = [];
+    this.collections = new Proxy({ value: this.collections }, {
+      set: (target, property, value) => {
+        target[property] = value;
+        this.builTBody(value);
+        return true;
+      },
+    });
+  }
+
+  async loadData() {
+    const response = await fetch("/api/collections");
+    const data = await response.json();
+
+    this.collections.value = data;
+  }
+
+  builTBody(collections) {
+    if (!collections.length) return;
+
+    const tBody = document.querySelector("tbody");
+    tBody.innerHTML = "";
+
+    for (const collection of collections) {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+                <td>${collection.name}</td>
+                <td>${collection.description}</td>
+                <td class="actions-column">
+                    <app-button>Edit</app-button>
+                    <app-button>Delete</app-button>
+                </td>
+            `;
+
+      tBody.appendChild(row);
+    }
   }
 
   connectedCallback() {
     const template = document.createElement("template");
-
-    const collections = [
-      "Collection 1",
-      "Collection 2",
-      "Collection 3",
-      "Collection 4",
-    ];
 
     template.innerHTML = `
             <style>
@@ -54,27 +84,12 @@ export class Collection extends HTMLElement {
                         <thead>
                             <tr>
                                 <th>Name</th>
+                                <th>Description</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${
-      collections
-        .map(
-          (collection) => `
-                            <tr>
-                                <td>${collection}</td>
-                                <td class="actions-column">
-                                    <app-button>Edit</app-button>
-                                    <app-button>Delete</app-button>
-                                </td>
-                            </tr>
-                            `,
-        )
-        .join("")
-    }
                         </tbody>
-
                     </table>
                 </div>
             </div>
@@ -98,5 +113,7 @@ export class Collection extends HTMLElement {
       const modal = this.querySelector("app-modal");
       modal.setAttribute("open", true);
     });
+
+    this.loadData();
   }
 }
