@@ -7,21 +7,28 @@ export class AppButton extends HTMLElement {
   }
 
   static get observerdAttributes() {
-    return ["to"];
+    return ["to", "type"];
   }
 
   connectedCallback() {
     const template = document.createElement("template");
 
     const to = this.getAttribute("to");
+    const type = this.getAttribute("type");
+
     let buttonDefinition = "";
+
+    buttonDefinition = `<button class="button"><slot></slot></button>`;
+
+    if (type) {
+      buttonDefinition =
+        `<button type="${type}" class="button"><slot></slot></button>`;
+    }
 
     if (to) {
       buttonDefinition = `<a href="/app/${
         to === "/" ? "" : to
       }" class="button"><slot></slot></a>`;
-    } else {
-      buttonDefinition = `<button class="button"><slot></slot></button>`;
     }
 
     template.innerHTML = `
@@ -64,8 +71,18 @@ export class AppButton extends HTMLElement {
 
     if (!this.button) return;
 
+    const form = this.closest("form");
+
     this.button.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click"));
+
+      if (form && type === "submit") {
+        const submitEvent = new Event("submit", {
+          cancelable: true,
+          bubbles: true,
+        });
+        form.dispatchEvent(submitEvent);
+      }
     });
   }
 }
