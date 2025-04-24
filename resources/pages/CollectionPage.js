@@ -157,6 +157,8 @@ export class Collection extends HTMLElement {
                     </div>
                 </form>
             </app-modal>
+
+            <modal-confirm-delete></modal-confirm-delete>
         `;
 
     this.appendChild(template.content.cloneNode(true));
@@ -185,13 +187,22 @@ export class Collection extends HTMLElement {
       this.loadData();
     });
 
+    const modalConfirmDelete = this.querySelector("modal-confirm-delete");
+
+    modalConfirmDelete.addEventListener("click-delete", () => {
+      this.deleteCollection(this.selectedId);
+      modalConfirmDelete.setAttribute("open", false);
+      this.loadData();
+    });
+
     this.querySelector("#collections-table").addEventListener(
       "click",
       (event) => {
         const collectionId = event.target.dataset.value;
 
         if (event.target.closest(".delete")) {
-          this.deleteCollection(collectionId);
+          modalConfirmDelete.setAttribute("open", true);
+          this.selectedId = collectionId;
 
           this.loadData();
         }
