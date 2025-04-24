@@ -10,7 +10,7 @@ router.route("/collections")
   .get(async (_, res) => {
     const collections = await db.select().from(collectionsSchema);
 
-    res.json(collections);
+    res.status(201).json(collections);
   }).post(async (req, res) => {
     const { name, description } = req.body;
 
