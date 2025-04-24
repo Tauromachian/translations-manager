@@ -19,6 +19,20 @@ export class Collection extends HTMLElement {
     this.collections.value = data;
   }
 
+  async postData(data) {
+    const response = await fetch("/api/collections", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    const result = await response.json();
+
+    console.log(result);
+  }
+
   builTBody(collections) {
     if (!collections.length) return;
 
@@ -73,6 +87,12 @@ export class Collection extends HTMLElement {
                     width: 100%;
                     margin-top: 0.5rem;
                 }
+
+                form {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 1rem;
+                }
             </style>
             <div class="container mt-5">
                 <h1>Collections</h1>
@@ -96,10 +116,11 @@ export class Collection extends HTMLElement {
 
             <app-modal title="Create Collection" width="400px">
                 <form>
-                    <text-field label="Name"></text-field>
+                    <text-field label="Name" name="name"></text-field>
+                    <text-area label="Description" name="description"></text-area>
 
                     <div class="modal-actions">
-                        <app-button>Create</app-button>
+                        <app-button type="submit">Create</app-button>
                     </div>
                 </form>
             </app-modal>
@@ -115,5 +136,16 @@ export class Collection extends HTMLElement {
     });
 
     this.loadData();
+
+    const form = this.querySelector("app-modal form");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const data = new FormData(e.target);
+
+      this.postData(Object.fromEntries(data));
+
+      this.loadData();
+    });
   }
 }
