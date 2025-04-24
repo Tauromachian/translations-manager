@@ -180,11 +180,12 @@ export class Collection extends HTMLElement {
       e.preventDefault();
 
       const data = new FormData(e.target);
+      const jsonData = Object.fromEntries(data);
 
       if (this.isFormInserting) {
-        this.postData(Object.fromEntries(data));
+        this.postData(jsonData);
       } else {
-        this.putData(Object.fromEntries(data));
+        this.putData(jsonData);
       }
 
       this.querySelector("app-modal").setAttribute("open", false);
