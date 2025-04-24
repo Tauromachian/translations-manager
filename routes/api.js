@@ -53,11 +53,11 @@ router.route("/collections/:id")
 
     const collection = await db.insert(collectionsSchema).values({
       ...req.body,
-      id: Number(id),
+      id,
     })
       .onConflictDoUpdate({
         target: collectionsSchema.id,
-        set: { ...req.body, id: Number(id) },
+        set: { ...req.body, id },
       });
 
     res.status(201).json(collection);
