@@ -1,3 +1,10 @@
+import {
+  deleteCollection,
+  getCollections,
+  postCollection,
+  putCollection,
+} from "../services/collections-req.js";
+
 export class Collection extends HTMLElement {
   isFormInserting = false;
   selectedId = null;
@@ -17,36 +24,21 @@ export class Collection extends HTMLElement {
   }
 
   async loadData() {
-    const response = await fetch("/api/collections");
-    const data = await response.json();
+    const data = await getCollections();
 
     this.collections.value = data;
   }
 
   async postData(data) {
-    await fetch("/api/collections", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    await postCollection(data);
   }
 
   async putData(data) {
-    await fetch(`/api/collections/${this.selectedId}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    await putCollection(this.selectedId, data);
   }
 
   async deleteCollection(id) {
-    await fetch(`/api/collections/${id}`, {
-      method: "DELETE",
-    });
+    await deleteCollection(id);
 
     this.loadData();
   }
