@@ -41,5 +41,5 @@
 body {
   background-color: var(--color-neutral);
   color: var(--black);
-  font-family: "Nunito Sans Variable", sans-serif;
+  font-family: var(--font-sans);
 }
