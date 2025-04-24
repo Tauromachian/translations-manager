@@ -78,8 +78,15 @@ export class Collection extends HTMLElement {
                 <td>${collection.name}</td>
                 <td>${collection.description}</td>
                 <td class="actions-column">
-                    <app-button class="edit" data-value="${collection.id}">Edit</app-button>
-                    <app-button class="delete" data-value="${collection.id}">Delete</app-button>
+                    <app-button class="edit" data-value="${collection.id}">
+                        Edit
+                    </app-button>
+                    <app-button class="delete" data-value="${collection.id}">
+                        Delete
+                    </app-button>
+                    <app-button class="translate" to="collection/${collection.id}" data-value="${collection.id}">
+                        Manage Translations
+                    </app-button>
                 </td>
             `;
 
