@@ -5,6 +5,8 @@
   --primary-10: #66b5ff;
   --gray: #4a5565;
   --danger: #f56565;
+
+  --font-sans: "Nunito Sans Variable", sans-serif;
 }
 
 @font-face {
