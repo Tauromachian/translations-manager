@@ -43,4 +43,22 @@ router.route("/collections/:id")
     await db.delete(collectionsSchema).where(eq(collectionsSchema.id, id));
 
     res.status(204).send();
+  }).put(async (req, res) => {
+    const { name } = req.body;
+    const { id } = req.params;
+
+    if (!name) {
+      return res.status(400).json({ error: "Name is required" });
+    }
+
+    const collection = await db.insert(collectionsSchema).values({
+      ...req.body,
+      id: Number(id),
+    })
+      .onConflictDoUpdate({
+        target: collectionsSchema.id,
+        set: { ...req.body, id: Number(id) },
+      });
+
+    res.status(201).json(collection);
   });

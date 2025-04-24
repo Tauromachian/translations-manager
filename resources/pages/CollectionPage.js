@@ -1,4 +1,7 @@
 export class Collection extends HTMLElement {
+  isFormInserting = false;
+  selectedId = null;
+
   constructor() {
     super();
 
@@ -30,12 +33,43 @@ export class Collection extends HTMLElement {
     });
   }
 
+  async putData(data) {
+    await fetch(`/api/collections/${this.selectedId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+  }
+
   async deleteCollection(id) {
     await fetch(`/api/collections/${id}`, {
       method: "DELETE",
     });
 
     this.loadData();
+  }
+
+  openModal(isInserting, id) {
+    const modal = this.querySelector("app-modal");
+    modal.setAttribute("open", true);
+    this.isFormInserting = isInserting;
+    this.selectedId = id;
+
+    if (isInserting) return;
+
+    if (!id) return;
+
+    const collection = this.collections.value.find((c) => c.id == id);
+
+    if (collection) {
+      const textField = modal.querySelector("text-field[name='name']");
+      textField.value = collection.name;
+
+      modal.querySelector("text-area[name='description']").value =
+        collection.description;
+    }
   }
 
   builTBody(collections) {
@@ -136,8 +170,7 @@ export class Collection extends HTMLElement {
     const tableToolbar = this.querySelector("table-toolbar");
 
     tableToolbar.addEventListener("click-create", () => {
-      const modal = this.querySelector("app-modal");
-      modal.setAttribute("open", true);
+      this.openModal(true);
     });
 
     this.loadData();
@@ -148,8 +181,13 @@ export class Collection extends HTMLElement {
 
       const data = new FormData(e.target);
 
-      this.postData(Object.fromEntries(data));
+      if (this.isFormInserting) {
+        this.postData(Object.fromEntries(data));
+      } else {
+        this.putData(Object.fromEntries(data));
+      }
 
+      this.querySelector("app-modal").setAttribute("open", false);
       this.loadData();
     });
 
@@ -163,8 +201,7 @@ export class Collection extends HTMLElement {
         }
 
         if (event.target.closest(".edit")) {
-          const modal = this.querySelector("app-modal");
-          modal.setAttribute("open", true);
+          this.openModal(false, collectionId);
         }
       },
     );
