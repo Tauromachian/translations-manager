@@ -14,8 +14,6 @@ router.route("/collections")
   }).post(async (req, res) => {
     const { name, description } = req.body;
 
-    console.log(req);
-
     const collection = await db
       .insert(collectionsSchema)
       .values({ name, description })
