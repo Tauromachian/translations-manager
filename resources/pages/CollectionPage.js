@@ -8,6 +8,7 @@ import {
 export class Collection extends HTMLElement {
   isFormInserting = false;
   selectedId = null;
+  form = null;
 
   constructor() {
     super();
@@ -39,8 +40,6 @@ export class Collection extends HTMLElement {
 
   async deleteCollection(id) {
     await deleteCollection(id);
-
-    this.loadData();
   }
 
   openModal(isInserting, id) {
@@ -49,7 +48,10 @@ export class Collection extends HTMLElement {
     this.isFormInserting = isInserting;
     this.selectedId = id;
 
-    if (isInserting) return;
+    if (isInserting) {
+      this.form.reset();
+      return;
+    }
 
     if (!id) return;
 
@@ -158,6 +160,7 @@ export class Collection extends HTMLElement {
         `;
 
     this.appendChild(template.content.cloneNode(true));
+    this.loadData();
 
     const tableToolbar = this.querySelector("table-toolbar");
 
@@ -165,10 +168,8 @@ export class Collection extends HTMLElement {
       this.openModal(true);
     });
 
-    this.loadData();
-
-    const form = this.querySelector("app-modal form");
-    form.addEventListener("submit", (e) => {
+    this.form = this.querySelector("app-modal form");
+    this.form.addEventListener("submit", (e) => {
       e.preventDefault();
 
       const data = new FormData(e.target);
@@ -191,6 +192,8 @@ export class Collection extends HTMLElement {
 
         if (event.target.closest(".delete")) {
           this.deleteCollection(collectionId);
+
+          this.loadData();
         }
 
         if (event.target.closest(".edit")) {
