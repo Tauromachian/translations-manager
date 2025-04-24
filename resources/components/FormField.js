@@ -55,6 +55,12 @@ export class FormField extends HTMLElement {
     });
   }
 
+  formAssociatedCallback(form) {
+    form.addEventListener("reset", () => {
+      this.value = "";
+    });
+  }
+
   getWrappedField() {
     throw new Error("This method needs to be implemented");
   }
