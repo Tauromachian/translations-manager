@@ -183,7 +183,9 @@ export class Collection extends HTMLElement {
         this.putData(jsonData);
       }
 
-      this.querySelector("app-modal").setAttribute("open", false);
+      const appModal = this.querySelector("app-modal");
+      appModal.setAttribute("open", false);
+
       this.loadData();
     });
 
