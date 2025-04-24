@@ -4,6 +4,8 @@ export const router = express.Router();
 
 import { db } from "../config/db.ts";
 
+import { eq } from "drizzle-orm";
+
 import { collections as collectionsSchema } from "../database/schema/collections.ts";
 
 router.route("/collections")
@@ -24,4 +26,21 @@ router.route("/collections")
       .returning();
 
     res.json(collection);
+  });
+
+router.route("/collections/:id")
+  .all((req, res, next) => {
+    const { id } = req.params;
+
+    if (!id || Number.isNaN(Number(id))) {
+      return res.status(400).json({ error: "ID should be a number" });
+    }
+
+    next();
+  }).delete(async (req, res) => {
+    const { id } = req.params;
+
+    await db.delete(collectionsSchema).where(eq(collectionsSchema.id, id));
+
+    res.status(204).send();
   });

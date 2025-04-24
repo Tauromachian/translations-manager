@@ -7,6 +7,7 @@ export class Collection extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
         this.builTBody(value);
+
         return true;
       },
     });
@@ -20,17 +21,21 @@ export class Collection extends HTMLElement {
   }
 
   async postData(data) {
-    const response = await fetch("/api/collections", {
+    await fetch("/api/collections", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
     });
+  }
 
-    const result = await response.json();
+  async deleteCollection(id) {
+    await fetch(`/api/collections/${id}`, {
+      method: "DELETE",
+    });
 
-    console.log(result);
+    this.loadData();
   }
 
   builTBody(collections) {
@@ -45,8 +50,8 @@ export class Collection extends HTMLElement {
                 <td>${collection.name}</td>
                 <td>${collection.description}</td>
                 <td class="actions-column">
-                    <app-button>Edit</app-button>
-                    <app-button>Delete</app-button>
+                    <app-button class="edit" data-value="${collection.id}">Edit</app-button>
+                    <app-button class="delete" data-value="${collection.id}">Delete</app-button>
                 </td>
             `;
 
@@ -100,7 +105,7 @@ export class Collection extends HTMLElement {
                 <div class="card">
                     <table-toolbar class="p-1"></table-toolbar>
 
-                    <table>
+                    <table id="collections-table">
                         <thead>
                             <tr>
                                 <th>Name</th>
@@ -147,5 +152,21 @@ export class Collection extends HTMLElement {
 
       this.loadData();
     });
+
+    this.querySelector("#collections-table").addEventListener(
+      "click",
+      (event) => {
+        const collectionId = event.target.dataset.value;
+
+        if (event.target.closest(".delete")) {
+          this.deleteCollection(collectionId);
+        }
+
+        if (event.target.closest(".edit")) {
+          const modal = this.querySelector("app-modal");
+          modal.setAttribute("open", true);
+        }
+      },
+    );
   }
 }
