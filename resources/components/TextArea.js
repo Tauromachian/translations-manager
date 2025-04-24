@@ -6,8 +6,6 @@ export class TextArea extends FormField {
   }
 
   getWrappedField() {
-    const input = document.createElement("textarea");
-
-    return input;
+    return document.createElement("textarea");
   }
 }
