@@ -7,7 +7,7 @@ export class AppButton extends HTMLElement {
   }
 
   static get observerdAttributes() {
-    return ["to", "type"];
+    return ["to", "type", "color"];
   }
 
   connectedCallback() {
@@ -15,6 +15,7 @@ export class AppButton extends HTMLElement {
 
     const to = this.getAttribute("to");
     const type = this.getAttribute("type");
+    const color = this.getAttribute("color");
 
     let buttonDefinition = "";
 
@@ -61,6 +62,10 @@ export class AppButton extends HTMLElement {
                     background-color: #cccccc;
                     cursor: not-allowed;
                 }
+
+                .button--danger {
+                    background-color: var(--danger);
+                }
             </style>
 
             ${buttonDefinition}
@@ -84,5 +89,9 @@ export class AppButton extends HTMLElement {
         form.dispatchEvent(submitEvent);
       }
     });
+
+    if (color === "danger") {
+      this.button.classList.add("button--danger");
+    }
   }
 }
