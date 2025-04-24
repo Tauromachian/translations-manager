@@ -21,7 +21,7 @@ export class ModalConfirmDelete extends HTMLElement {
 
     template.innerHTML = `
         <style>
-            div {
+            .actions {
                 display: flex;
                 justify-content: flex-end;
                 gap: .5rem;
@@ -30,7 +30,7 @@ export class ModalConfirmDelete extends HTMLElement {
         <app-modal title="Delete Entity">
             <p>Are you sure you want to delete this resource?</p>
 
-            <div>
+            <div class="actions">
                 <app-button class="cancel">Cancel</app-button>
                 <app-button class="delete" color="danger">Delete</app-button>
             </div>
@@ -41,12 +41,15 @@ export class ModalConfirmDelete extends HTMLElement {
 
     this.appModal = this.root.querySelector("app-modal");
 
-    this.addEventListener("click", (e) => {
-      if (e.target.classList.contains("cancel")) {
-        this.appModal.setAttribute("open", false);
-      } else {
-        this.dispatchEvent(new CustomEvent("click-delete"));
-      }
+    const cancelButton = this.appModal.querySelector(".cancel");
+    const deleteButton = this.appModal.querySelector(".delete");
+
+    cancelButton.addEventListener("click", () => {
+      this.appModal.setAttribute("open", false);
+    });
+
+    deleteButton.addEventListener("click", () => {
+      this.dispatchEvent(new CustomEvent("click-delete"));
     });
   }
 }
