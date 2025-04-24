@@ -1,10 +1,14 @@
 export class TextArea extends HTMLElement {
+  static formAssociated = true;
+
   constructor() {
     super();
+
+    this._internals = this.attachInternals();
   }
 
   static get observedAttributes() {
-    return ["label"];
+    return ["label", "name"];
   }
 
   handleLabel() {
@@ -21,6 +25,8 @@ export class TextArea extends HTMLElement {
 
   connectedCallback() {
     const template = document.createElement("template");
+
+    const name = this.getAttribute("name");
 
     template.innerHTML = `
           <style>
@@ -50,11 +56,15 @@ export class TextArea extends HTMLElement {
           </style>
 
           <label></label>
-          <textarea class="textarea" type="text"></textarea>
+          <textarea class="textarea" name="${name}"></textarea>
       `;
 
     this.root = this.attachShadow({ mode: "open" });
     this.root.appendChild(template.content.cloneNode(true));
+
+    this.root.querySelector("textarea").addEventListener("input", () => {
+      this._internals.setFormValue(this.root.querySelector("textarea").value);
+    });
 
     this.handleLabel();
   }

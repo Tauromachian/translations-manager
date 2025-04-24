@@ -1,10 +1,14 @@
 export class TextField extends HTMLElement {
+  static formAssociated = true;
+
   constructor() {
     super();
+
+    this._internals = this.attachInternals();
   }
 
   static get observedAttributes() {
-    return ["label"];
+    return ["label", "name"];
   }
 
   handleLabel() {
@@ -21,6 +25,8 @@ export class TextField extends HTMLElement {
 
   connectedCallback() {
     const template = document.createElement("template");
+
+    const name = this.getAttribute("name");
 
     template.innerHTML = `
           <style>
@@ -50,11 +56,15 @@ export class TextField extends HTMLElement {
           </style>
 
           <label></label>
-          <input class="input" type="text">
+          <input class="input" type="text" name="${name}">
       `;
 
     this.root = this.attachShadow({ mode: "open" });
     this.root.appendChild(template.content.cloneNode(true));
+
+    this.root.querySelector("input").addEventListener("input", () => {
+      this._internals.setFormValue(this.root.querySelector("input").value);
+    });
 
     this.handleLabel();
   }
