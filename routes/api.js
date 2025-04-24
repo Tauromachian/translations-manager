@@ -14,6 +14,10 @@ router.route("/collections")
   }).post(async (req, res) => {
     const { name, description } = req.body;
 
+    if (!name) {
+      return res.status(400).json({ error: "Name is required" });
+    }
+
     const collection = await db
       .insert(collectionsSchema)
       .values({ name, description })
