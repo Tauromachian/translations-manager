@@ -39,7 +39,7 @@ export class AppButton extends HTMLElement {
                 }
 
                 .button {
-                    padding: 10px 20px;
+                    padding: 0.5em 20px;
                     font-weight: 500;
                     background-color: var(--primary);
                     color: var(--black);
@@ -47,6 +47,11 @@ export class AppButton extends HTMLElement {
                     border-radius: 4px;
                     cursor: pointer;
                     transition: background-color 0.2s ease;
+                    text-decoration: none;
+                    font-size: 0.9rem;
+                    display: block;
+                    font-weight: 500 !important;
+                    font-family: var(--font-sans);
                 }
 
                 .button:hover {
