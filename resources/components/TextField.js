@@ -1,14 +1,26 @@
 export class TextField extends HTMLElement {
-  static formAssociated = true;
-
   constructor() {
     super();
 
     this._internals = this.attachInternals();
+    this._input = null;
+  }
+
+  static get formAssociated() {
+    return true;
   }
 
   static get observedAttributes() {
     return ["label", "name"];
+  }
+
+  get value() {
+    return this._input.value;
+  }
+
+  set value(value) {
+    this._input.value = value;
+    this._internals.setFormValue(value);
   }
 
   handleLabel() {
@@ -62,7 +74,8 @@ export class TextField extends HTMLElement {
     this.root = this.attachShadow({ mode: "open" });
     this.root.appendChild(template.content.cloneNode(true));
 
-    this.root.querySelector("input").addEventListener("input", () => {
+    this._input = this.root.querySelector("input");
+    this._input.addEventListener("input", () => {
       this._internals.setFormValue(this.root.querySelector("input").value);
     });
 

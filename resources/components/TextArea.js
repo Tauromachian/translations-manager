@@ -1,14 +1,26 @@
 export class TextArea extends HTMLElement {
-  static formAssociated = true;
-
   constructor() {
     super();
 
     this._internals = this.attachInternals();
+    this._textarea = null;
+  }
+
+  static get formAssociated() {
+    return true;
   }
 
   static get observedAttributes() {
     return ["label", "name"];
+  }
+
+  get value() {
+    return this._textarea.value;
+  }
+
+  set value(value) {
+    this._textarea.value = value;
+    this._internals.setFormValue(value);
   }
 
   handleLabel() {
@@ -62,7 +74,8 @@ export class TextArea extends HTMLElement {
     this.root = this.attachShadow({ mode: "open" });
     this.root.appendChild(template.content.cloneNode(true));
 
-    this.root.querySelector("textarea").addEventListener("input", () => {
+    this._textarea = this.root.querySelector("textarea");
+    this._textarea.addEventListener("input", () => {
       this._internals.setFormValue(this.root.querySelector("textarea").value);
     });
 
