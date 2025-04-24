@@ -97,7 +97,7 @@ export class AppModal extends HTMLElement {
         event.clientY <= rect.bottom;
 
       if (!clickedInDialog) {
-        this.dialog.close(); // this will close the dialog if clicked outside
+        this.dialog.close();
       }
     });
 
