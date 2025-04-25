@@ -169,7 +169,7 @@ export class Collection extends HTMLElement {
             <modal-confirm-delete></modal-confirm-delete>
         `;
 
-    this.appendChild(template.content.cloneNode(true));
+    this.appendChild(template.content);
     this.loadData();
 
     const tableToolbar = this.querySelector("table-toolbar");

@@ -142,7 +142,7 @@ export class TranslationsPage extends HTMLElement {
 
         `;
 
-    this.appendChild(template.content.cloneNode(true));
+    this.appendChild(template.content);
 
     const tableToolbar = this.querySelector("table-toolbar");
     const table = this.querySelector("table");
