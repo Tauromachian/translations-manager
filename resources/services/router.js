@@ -8,12 +8,10 @@ export const router = {
     this.mainEl = el;
 
     for (const key in routes) {
-      if (Object.hasOwnProperty.call(routes, key)) {
-        if (key.includes(":")) {
-          const routeShards = key.split(":");
-          routeShards[1] = "(.*)";
-          this.regexRoutes[routeShards.join("")] = routes[key];
-        }
+      if (key.includes(":")) {
+        const routeShards = key.split(":");
+        routeShards[1] = "(.*)";
+        this.regexRoutes[routeShards.join("")] = routes[key];
       }
     }
 
@@ -28,10 +26,8 @@ export const router = {
     const matchingRoutes = [];
 
     for (const key in this.regexRoutes) {
-      if (Object.hasOwnProperty.call(this.regexRoutes, key)) {
-        if (new RegExp(key).test(route)) {
-          matchingRoutes.push(this.regexRoutes[key]);
-        }
+      if (new RegExp(key).test(route)) {
+        matchingRoutes.push(this.regexRoutes[key]);
       }
     }
 
