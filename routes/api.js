@@ -4,15 +4,35 @@ export const router = express.Router();
 
 import { db } from "../config/db.ts";
 
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import { collections as collectionsSchema } from "../database/schema/collections.ts";
 
-router.route("/collections")
-  .get(async (_, res) => {
-    const collections = await db.select().from(collectionsSchema);
+async function doFullTextSearch(query) {
+  const result = await db.execute(sql`
+        SELECT * 
+          FROM collections 
+          WHERE (setweight(to_tsvector(name), 'A') || setweight(to_tsvector(description), 'B') 
+            @@ to_tsquery(${query}))
+    `);
 
-    res.status(201).json(collections);
+  return result;
+}
+
+router.route("/collections")
+  .get(async (req, res) => {
+    const { search } = req.query;
+
+    let collections;
+
+    if (!search) {
+      collections = await db.select().from(collectionsSchema);
+    } else {
+      const result = await doFullTextSearch(search);
+      collections = result.rows;
+    }
+
+    res.status(200).json(collections);
   }).post(async (req, res) => {
     const { name, description } = req.body;
 
