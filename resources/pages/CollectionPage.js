@@ -44,8 +44,6 @@ export class Collection extends HTMLElement {
   }
 
   openModal(isInserting, id) {
-    if (!id) return;
-
     const modal = this.querySelector("app-modal");
     modal.setAttribute("open", true);
     this.isFormInserting = isInserting;
@@ -55,6 +53,8 @@ export class Collection extends HTMLElement {
       this.form.reset();
       return;
     }
+
+    if (!id) return;
 
     const collection = this.collections.value.find((c) => c.id == id);
 
