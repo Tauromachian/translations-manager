@@ -12,8 +12,9 @@ async function doFullTextSearch(query) {
   const result = await db.execute(sql`
         SELECT * 
           FROM collections 
-          WHERE (setweight(to_tsvector(name), 'A') || setweight(to_tsvector(description), 'B') 
-            @@ to_tsquery(${query}))
+          WHERE (setweight(to_tsvector(name), 'A') ||
+                 setweight(coalesce(to_tsvector(description), ''), 'B') 
+                 @@ to_tsquery(${query}))
     `);
 
   return result;
