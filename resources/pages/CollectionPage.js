@@ -18,7 +18,7 @@ export class Collection extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
 
-        this.buildTBody(value);
+        this.buildTableBody(value);
 
         return true;
       },
@@ -67,7 +67,7 @@ export class Collection extends HTMLElement {
     }
   }
 
-  buildTBody(collections) {
+  buildTableBody(collections) {
     if (!collections) return;
 
     const tBody = document.querySelector("tbody");
