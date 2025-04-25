@@ -1,5 +1,5 @@
 export class AppButton extends HTMLElement {
-  button = null;
+  #button = null;
 
   constructor() {
     super();
@@ -77,13 +77,13 @@ export class AppButton extends HTMLElement {
         `;
 
     this.root.appendChild(template.content.cloneNode(true));
-    this.button = this.root.querySelector("button");
+    this.#button = this.root.querySelector("button");
 
-    if (!this.button) return;
+    if (!this.#button) return;
 
     const form = this.closest("form");
 
-    this.button.addEventListener("click", () => {
+    this.#button.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click"));
 
       if (form && type === "submit") {
@@ -96,7 +96,7 @@ export class AppButton extends HTMLElement {
     });
 
     if (color === "danger") {
-      this.button.classList.add("button--danger");
+      this.#button.classList.add("button--danger");
     }
   }
 }

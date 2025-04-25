@@ -1,13 +1,13 @@
 export class FormField extends HTMLElement {
-  _internals = null;
-  _wrappedField = null;
+  #internals = null;
+  #wrappedField = null;
 
   constructor() {
     super();
     this.root = this.attachShadow({ mode: "open" });
 
-    this._internals = this.attachInternals();
-    this._wrappedField = null;
+    this.#internals = this.attachInternals();
+    this.#wrappedField = null;
   }
 
   static get formAssociated() {
@@ -19,12 +19,12 @@ export class FormField extends HTMLElement {
   }
 
   get value() {
-    return this._wrappedField.value;
+    return this.#wrappedField.value;
   }
 
   set value(value) {
-    this._wrappedField.value = value;
-    this._internals.setFormValue(value);
+    this.#wrappedField.value = value;
+    this.#internals.setFormValue(value);
   }
 
   handleLabel() {
@@ -40,18 +40,18 @@ export class FormField extends HTMLElement {
   }
 
   handleWrappedField() {
-    this._wrappedField = this.getWrappedField();
+    this.#wrappedField = this.getWrappedField();
 
-    if (!this._wrappedField) return;
+    if (!this.#wrappedField) return;
 
-    this._wrappedField.classList.add("wrapped-field");
-    this.root.appendChild(this._wrappedField);
+    this.#wrappedField.classList.add("wrapped-field");
+    this.root.appendChild(this.#wrappedField);
 
     const name = this.getAttribute("name");
-    this._wrappedField.setAttribute("name", name);
+    this.#wrappedField.setAttribute("name", name);
 
-    this._wrappedField.addEventListener("input", () => {
-      this._internals.setFormValue(this._wrappedField.value);
+    this.#wrappedField.addEventListener("input", () => {
+      this.#internals.setFormValue(this.#wrappedField.value);
     });
   }
 

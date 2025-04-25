@@ -1,5 +1,5 @@
 export class ModalConfirmDelete extends HTMLElement {
-  appModal = null;
+  #appModal = null;
 
   constructor() {
     super();
@@ -12,7 +12,7 @@ export class ModalConfirmDelete extends HTMLElement {
 
   attributeChangedCallback(name, _, newValue) {
     if (name === "open") {
-      this.appModal.setAttribute("open", newValue === "true");
+      this.#appModal.setAttribute("open", newValue === "true");
     }
   }
 
@@ -39,13 +39,13 @@ export class ModalConfirmDelete extends HTMLElement {
 
     this.root.appendChild(template.content.cloneNode(true));
 
-    this.appModal = this.root.querySelector("app-modal");
+    this.#appModal = this.root.querySelector("app-modal");
 
-    const cancelButton = this.appModal.querySelector(".cancel");
-    const deleteButton = this.appModal.querySelector(".delete");
+    const cancelButton = this.#appModal.querySelector(".cancel");
+    const deleteButton = this.#appModal.querySelector(".delete");
 
     cancelButton.addEventListener("click", () => {
-      this.appModal.setAttribute("open", false);
+      this.#appModal.setAttribute("open", false);
     });
 
     deleteButton.addEventListener("click", () => {

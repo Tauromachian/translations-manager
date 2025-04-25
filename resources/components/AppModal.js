@@ -1,5 +1,5 @@
 export class AppModal extends HTMLElement {
-  dialog = null;
+  #dialog = null;
 
   constructor() {
     super();
@@ -18,12 +18,12 @@ export class AppModal extends HTMLElement {
   }
 
   setDialogState(value) {
-    if (!this.dialog) return;
+    if (!this.#dialog) return;
 
     if (value) {
-      this.dialog.showModal();
+      this.#dialog.showModal();
     } else {
-      this.dialog.close();
+      this.#dialog.close();
     }
   }
 
@@ -86,10 +86,10 @@ export class AppModal extends HTMLElement {
 
     this.root.appendChild(template.content.cloneNode(true));
 
-    this.dialog = this.root.querySelector("dialog");
+    this.#dialog = this.root.querySelector("dialog");
 
-    this.dialog.addEventListener("click", (event) => {
-      const rect = this.dialog.getBoundingClientRect();
+    this.#dialog.addEventListener("click", (event) => {
+      const rect = this.#dialog.getBoundingClientRect();
 
       const clickedInDialog = event.clientX >= rect.left &&
         event.clientX <= rect.right &&
@@ -97,7 +97,7 @@ export class AppModal extends HTMLElement {
         event.clientY <= rect.bottom;
 
       if (!clickedInDialog) {
-        this.dialog.close();
+        this.#dialog.close();
       }
     });
 
