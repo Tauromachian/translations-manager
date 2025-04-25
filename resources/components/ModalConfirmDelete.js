@@ -1,5 +1,5 @@
 export class ModalConfirmDelete extends HTMLElement {
-  #appModal = null;
+  #appModal;
 
   constructor() {
     super();

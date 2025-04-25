@@ -1,5 +1,5 @@
 export class AppButton extends HTMLElement {
-  #button = null;
+  #button;
 
   constructor() {
     super();

@@ -1,5 +1,5 @@
 export class AppModal extends HTMLElement {
-  #dialog = null;
+  #dialog;
 
   constructor() {
     super();

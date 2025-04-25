@@ -1,6 +1,6 @@
 export class FormField extends HTMLElement {
-  #internals = null;
-  #wrappedField = null;
+  #internals;
+  #wrappedField;
 
   constructor() {
     super();
