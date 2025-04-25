@@ -1,7 +1,13 @@
 const baseUrl = "/api/collections";
 
-export async function getCollections() {
-  const response = await fetch(baseUrl);
+export async function getCollections(searchText) {
+  let url = baseUrl;
+
+  if (searchText) {
+    url += `?search=${searchText}`;
+  }
+
+  const response = await fetch(url);
   const data = await response.json();
 
   return data;
