@@ -6,7 +6,7 @@ export class AppButton extends HTMLElement {
     this.root = this.attachShadow({ mode: "open" });
   }
 
-  static get observerdAttributes() {
+  static get observedAttributes() {
     return ["to", "type", "color"];
   }
 
