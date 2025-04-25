@@ -43,5 +43,13 @@ export class TableToolbar extends HTMLElement {
     this.root.querySelector("app-button").addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click-create"));
     });
+
+    this.root
+      .querySelector("text-field")
+      .addEventListener("input", (e) => {
+        this.dispatchEvent(
+          new CustomEvent("search", { detail: e.target.value }),
+        );
+      });
   }
 }
