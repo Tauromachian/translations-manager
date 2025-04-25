@@ -17,7 +17,7 @@ export const router = {
       }
     }
 
-    globalThis.addEventListener("popstate", () => {
+    globalThis.addEventListener("popstate", (event) => {
       this.go(event.state.route, false);
     });
 
