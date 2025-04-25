@@ -17,15 +17,16 @@ export class Collection extends HTMLElement {
     this.collections = new Proxy({ value: this.collections }, {
       set: (target, property, value) => {
         target[property] = value;
-        this.builTBody(value);
+
+        this.buildTBody(value);
 
         return true;
       },
     });
   }
 
-  async loadData() {
-    const data = await getCollections();
+  async loadData(searchText) {
+    const data = await getCollections(searchText);
 
     this.collections.value = data;
   }
@@ -66,8 +67,8 @@ export class Collection extends HTMLElement {
     }
   }
 
-  builTBody(collections) {
-    if (!collections.length) return;
+  buildTBody(collections) {
+    if (!collections) return;
 
     const tBody = document.querySelector("tbody");
     tBody.innerHTML = "";
@@ -175,6 +176,10 @@ export class Collection extends HTMLElement {
 
     tableToolbar.addEventListener("click-create", () => {
       this.openModal(true);
+    });
+
+    tableToolbar.addEventListener("search", (e) => {
+      this.loadData(e.detail);
     });
 
     this.form = this.querySelector("app-modal form");
