@@ -5,7 +5,7 @@ import {
   putCollection,
 } from "../services/collections-req.js";
 
-export class Collection extends HTMLElement {
+export class CollectionsPage extends HTMLElement {
   isFormInserting = false;
   selectedId = null;
   form = null;
