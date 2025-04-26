@@ -7,8 +7,8 @@ import {
 
 export class CollectionsPage extends HTMLElement {
   isFormInserting = false;
-  selectedId = null;
-  form = null;
+  selectedId;
+  form;
 
   constructor() {
     super();
