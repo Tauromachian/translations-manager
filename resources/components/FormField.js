@@ -53,6 +53,10 @@ export class FormField extends HTMLElement {
     this.#wrappedField.addEventListener("input", () => {
       this.#internals.setFormValue(this.#wrappedField.value);
     });
+
+    this.#wrappedField.addEventListener("keydown", (event) => {
+      this.getKeydownEvent(event, this.#internals, this.#wrappedField);
+    });
   }
 
   formAssociatedCallback(form) {
@@ -62,6 +66,10 @@ export class FormField extends HTMLElement {
   }
 
   getWrappedField() {
+    throw new Error("This method needs to be implemented");
+  }
+
+  getKeydownEvent() {
     throw new Error("This method needs to be implemented");
   }
 

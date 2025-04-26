@@ -8,4 +8,6 @@ export class TextArea extends FormField {
   getWrappedField() {
     return document.createElement("textarea");
   }
+
+  getEnterEvent() {}
 }

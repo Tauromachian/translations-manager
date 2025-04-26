@@ -10,20 +10,21 @@ export class TextField extends FormField {
 
     input.setAttribute("type", "text");
 
-    input.addEventListener("keydown", (event) => {
-      if (event.key === "Enter") {
-        this._internals.setFormValue(this._wrappedField.value);
-
-        const form = this._internals.form;
-
-        const submitEvent = new Event("submit", {
-          bubbles: true,
-          cancelable: true,
-        });
-        form.dispatchEvent(submitEvent);
-      }
-    });
-
     return input;
+  }
+
+  getKeydownEvent(event, internals, input) {
+    if (event.key === "Enter") {
+      internals.setFormValue(input.value);
+
+      const form = internals.form;
+
+      const submitEvent = new Event("submit", {
+        bubbles: true,
+        cancelable: true,
+      });
+
+      form.dispatchEvent(submitEvent);
+    }
   }
 }
