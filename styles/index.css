@@ -1,5 +1,8 @@
 @import "reset.css";
 
+@import "@jogarcia/mgrid/dist/margin.css";
+@import "@jogarcia/mgrid/dist/padding.css";
+
 @import "global.css";
 
 @import "grid.css";

@@ -4,6 +4,7 @@
     "watch": "deno run --allow-read --allow-sys --allow-ffi --allow-run --allow-write --allow-env npm:vite build --watch"
   },
   "imports": {
+    "@jogarcia/mgrid": "npm:@jogarcia/mgrid@^1.1.0",
     "@std/assert": "jsr:@std/assert@1",
     "@types/pg": "npm:@types/pg@^8.11.13",
     "dotenv": "npm:dotenv@^16.5.0",
