@@ -9,6 +9,10 @@ export class CollectionsPage extends HTMLElement {
   isFormInserting = false;
   selectedId;
   form;
+  breadcrumbs = [
+    { name: "Collections", url: "/collections" },
+    { name: "Translations", url: "/translations" },
+  ];
 
   constructor() {
     super();
@@ -95,8 +99,20 @@ export class CollectionsPage extends HTMLElement {
     }
   }
 
+  buildBreadcrumbs() {
+    const breadcrumbs = document.createElement("app-breadcrumbs");
+    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.breadcrumbs));
+
+    return breadcrumbs;
+  }
+
   connectedCallback() {
     const template = document.createElement("template");
+
+    const stringifiedBreadcrumbs = JSON.stringify(this.breadcrumbs);
+    console.log(
+      stringifiedBreadcrumbs,
+    );
 
     template.innerHTML = `
             <style>
@@ -124,6 +140,8 @@ export class CollectionsPage extends HTMLElement {
                 }
             </style>
             <div class="container mt-5">
+                <div class="breadcrumbs-wrapper"></div>
+
                 <h1>Collections</h1>
 
                 <div class="card">
@@ -165,6 +183,9 @@ export class CollectionsPage extends HTMLElement {
     tableToolbar.addEventListener("click-create", () => {
       this.openModal(true);
     });
+
+    const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
+    breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
 
     tableToolbar.addEventListener("search", (e) => {
       this.loadData(e.detail);
