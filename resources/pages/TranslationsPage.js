@@ -1,4 +1,9 @@
 export class TranslationsPage extends HTMLElement {
+  breadcrumbs = [
+    { name: "Collections", url: "/app" },
+    { name: "Languages", url: "" },
+  ];
+
   constructor() {
     super();
   }
@@ -44,6 +49,13 @@ export class TranslationsPage extends HTMLElement {
     return tBody;
   }
 
+  buildBreadcrumbs() {
+    const breadcrumbs = document.createElement("app-breadcrumbs");
+    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.breadcrumbs));
+
+    return breadcrumbs;
+  }
+
   connectedCallback() {
     const template = document.createElement("template");
 
@@ -66,8 +78,6 @@ export class TranslationsPage extends HTMLElement {
       headers.length - 1,
       headers.length - 1,
     );
-
-    console.log(JSON.stringify(headersWithoutActions));
 
     const languages = {
       en: { food: "Food", this: "This" },
@@ -96,6 +106,8 @@ export class TranslationsPage extends HTMLElement {
                 }
             </style>
             <div class="container mt-5">
+                <div class="breadcrumbs-wrapper my-2"></div>
+
                 <h1>Languages</h1>
 
                 <div class="card">
@@ -137,6 +149,9 @@ export class TranslationsPage extends HTMLElement {
     const translationsCreateButton = this.querySelector(
       "#translations-create-button",
     );
+
+    const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
+    breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
 
     table.appendChild(tBody);
 
