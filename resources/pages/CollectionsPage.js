@@ -108,11 +108,6 @@ export class CollectionsPage extends HTMLElement {
   connectedCallback() {
     const template = document.createElement("template");
 
-    const stringifiedBreadcrumbs = JSON.stringify(this.breadcrumbs);
-    console.log(
-      stringifiedBreadcrumbs,
-    );
-
     template.innerHTML = `
             <style>
                 .actions-column {
