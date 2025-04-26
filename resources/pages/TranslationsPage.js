@@ -61,6 +61,10 @@ export class TranslationsPage extends HTMLElement {
 
     const headers = [
       {
+        title: "Key",
+        value: "key",
+      },
+      {
         title: "Es",
         value: "es",
       },
@@ -80,6 +84,7 @@ export class TranslationsPage extends HTMLElement {
     );
 
     const languages = {
+      key: { food: "food", this: "this" },
       en: { food: "Food", this: "This" },
       es: { food: "Comida", this: "Esto" },
     };
