@@ -100,18 +100,6 @@ export class Collection extends HTMLElement {
 
     template.innerHTML = `
             <style>
-                .mt-5 {
-                    margin-top: 5rem;
-                }
-
-                .m-1 {
-                    margin: 1rem;
-                }
-
-                .p-1 {
-                    padding: 1rem;
-                }
-                
                 .actions-column {
                     display: flex;
                     gap: .5rem;
