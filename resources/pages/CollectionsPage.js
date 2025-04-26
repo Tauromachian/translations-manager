@@ -140,7 +140,7 @@ export class CollectionsPage extends HTMLElement {
                 }
             </style>
             <div class="container mt-5">
-                <div class="breadcrumbs-wrapper"></div>
+                <div class="breadcrumbs-wrapper my-2"></div>
 
                 <h1>Collections</h1>
 
