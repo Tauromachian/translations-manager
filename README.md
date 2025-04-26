@@ -17,8 +17,6 @@ Everything else is pure javascript.
 This is not for small projects.
 If you have 2 languages that you know, there is no reason to use this.
 As your app and the translations gets bigger, you may bring in someone that can translate but can't code.
-Are you going to give this person access to your i18n files? I think not.
-This is the problem this projects aims to solve.
 
 Also, you don't want to be running your pipelines for every change to the translations.
 That stuff costs money
