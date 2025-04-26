@@ -15,8 +15,15 @@ export class AppBreadcrumbs extends HTMLElement {
     let breadcrumbs = this.getAttribute("breadcrumbs");
     breadcrumbs = JSON.parse(breadcrumbs);
 
-    return breadcrumbs.map((breadcrumb) => {
-      return `<li><a href="${breadcrumb.url}">${breadcrumb.name}</a></li>`;
+    return breadcrumbs.map((breadcrumb, index) => {
+      let breadcrumbItem =
+        `<li><a href="${breadcrumb.url}">${breadcrumb.name}</a></li>`;
+
+      if (index !== breadcrumbs.length - 1) {
+        breadcrumbItem += "<li>/</li>";
+      }
+
+      return breadcrumbItem;
     }).join("");
   }
 
@@ -28,7 +35,7 @@ export class AppBreadcrumbs extends HTMLElement {
                           padding: 0;
                           margin: 0;
                           display: flex;
-                          gap: 0.3rem;
+                          gap: 0.7rem;
                        }
 
                        .breadcrumbs li {
