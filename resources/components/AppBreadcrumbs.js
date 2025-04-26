@@ -34,6 +34,16 @@ export class AppBreadcrumbs extends HTMLElement {
                        .breadcrumbs li {
                           display: inline-block;
                        }
+
+                       .breadcrumbs li a {
+                           text-decoration: none;
+                       }
+
+                       .breadcrumbs li:last-child a {
+                           color: var(--disabled);
+                           pointer-events: none;
+
+                       }
                     </style>
     
     
