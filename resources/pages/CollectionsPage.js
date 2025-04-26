@@ -11,7 +11,6 @@ export class CollectionsPage extends HTMLElement {
   form;
   breadcrumbs = [
     { name: "Collections", url: "/collections" },
-    { name: "Translations", url: "/translations" },
   ];
 
   constructor() {
