@@ -5,10 +5,13 @@ import {
   putCollection,
 } from "../services/collections-req.js";
 
+import debounce from "../../utilities/debouncer.js";
+
 export class CollectionsPage extends HTMLElement {
   isFormInserting = false;
   selectedId;
   form;
+  modalConfirmDelete;
   breadcrumbs = [
     { name: "Collections", url: "" },
   ];
@@ -26,6 +29,51 @@ export class CollectionsPage extends HTMLElement {
         return true;
       },
     });
+  }
+
+  onSearch(event) {
+    debounce(() => {
+      this.loadData(event.detail);
+    });
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+    const data = new FormData(event.target);
+    const jsonData = Object.fromEntries(data);
+
+    if (this.isFormInserting) {
+      this.postData(jsonData);
+    } else {
+      this.putData(jsonData);
+    }
+
+    const appModal = this.querySelector("app-modal");
+    appModal.setAttribute("open", false);
+
+    this.loadData();
+  }
+
+  onTableAction(event) {
+    const collectionId = event.target.dataset.value;
+
+    if (event.target.closest(".delete")) {
+      this.modalConfirmDelete.setAttribute("open", true);
+      this.selectedId = collectionId;
+
+      this.loadData();
+    }
+
+    if (event.target.closest(".edit")) {
+      this.openModal.call(this, false, collectionId);
+    }
+  }
+
+  onModalDeleteConfirmation() {
+    this.deleteCollection(this.selectedId);
+    this.modalConfirmDelete.setAttribute("open", false);
+    this.loadData();
   }
 
   async loadData(searchText) {
@@ -181,53 +229,21 @@ export class CollectionsPage extends HTMLElement {
     const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
     breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
 
-    tableToolbar.addEventListener("search", (e) => {
-      this.loadData(e.detail);
-    });
+    tableToolbar.addEventListener("search", this.onSearch.bind(this));
 
     this.form = this.querySelector("app-modal form");
-    this.form.addEventListener("submit", (e) => {
-      e.preventDefault();
+    this.form.addEventListener("submit", this.onSubmit.bind(this));
 
-      const data = new FormData(e.target);
-      const jsonData = Object.fromEntries(data);
+    this.modalConfirmDelete = this.querySelector("modal-confirm-delete");
 
-      if (this.isFormInserting) {
-        this.postData(jsonData);
-      } else {
-        this.putData(jsonData);
-      }
-
-      const appModal = this.querySelector("app-modal");
-      appModal.setAttribute("open", false);
-
-      this.loadData();
-    });
-
-    const modalConfirmDelete = this.querySelector("modal-confirm-delete");
-
-    modalConfirmDelete.addEventListener("click-delete", () => {
-      this.deleteCollection(this.selectedId);
-      modalConfirmDelete.setAttribute("open", false);
-      this.loadData();
-    });
+    this.modalConfirmDelete.addEventListener(
+      "click-delete",
+      this.onModalDeleteConfirmation.bind(this),
+    );
 
     this.querySelector("#collections-table").addEventListener(
       "click",
-      (event) => {
-        const collectionId = event.target.dataset.value;
-
-        if (event.target.closest(".delete")) {
-          modalConfirmDelete.setAttribute("open", true);
-          this.selectedId = collectionId;
-
-          this.loadData();
-        }
-
-        if (event.target.closest(".edit")) {
-          this.openModal(false, collectionId);
-        }
-      },
+      this.onTableAction.bind(this),
     );
   }
 }
