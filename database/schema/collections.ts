@@ -2,6 +2,7 @@ import { pgTable, serial, text } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 import { translations } from "./translations.ts";
+import { languages } from "./languages.ts";
 
 export const collections = pgTable("collections", {
   id: serial().primaryKey().notNull(),
@@ -11,4 +12,5 @@ export const collections = pgTable("collections", {
 
 export const collectionsRelations = relations(collections, ({ many }) => ({
   translations: many(translations),
+  languages: many(languages),
 }));
