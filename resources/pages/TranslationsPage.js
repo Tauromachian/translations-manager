@@ -1,5 +1,5 @@
 export class TranslationsPage extends HTMLElement {
-  breadcrumbs = [
+  #breadcrumbs = [
     { name: "Collections", url: "/app" },
     { name: "Languages", url: "" },
   ];
@@ -51,7 +51,7 @@ export class TranslationsPage extends HTMLElement {
 
   buildBreadcrumbs() {
     const breadcrumbs = document.createElement("app-breadcrumbs");
-    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.breadcrumbs));
+    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
     return breadcrumbs;
   }

@@ -12,7 +12,7 @@ export class CollectionsPage extends HTMLElement {
   selectedId;
   form;
   modalConfirmDelete;
-  breadcrumbs = [
+  #breadcrumbs = [
     { name: "Collections", url: "" },
   ];
 
@@ -148,7 +148,7 @@ export class CollectionsPage extends HTMLElement {
 
   buildBreadcrumbs() {
     const breadcrumbs = document.createElement("app-breadcrumbs");
-    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.breadcrumbs));
+    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
     return breadcrumbs;
   }
