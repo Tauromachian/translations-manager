@@ -1,18 +1,18 @@
-import { integer, jsonb, pgTable, serial, text } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
-import { collections } from "./collections.ts";
+import { languages } from "./languages.ts";
 
 export const translations = pgTable("translations", {
   id: serial().primaryKey().notNull(),
-  collectionId: integer("collection_id").notNull(),
+  languageId: integer("language_id").notNull(),
   key: text("key").notNull(),
-  translations: jsonb().notNull(),
+  translation: text(),
 });
 
 export const translationsRelations = relations(translations, ({ one }) => ({
-  collections: one(collections, {
-    fields: [translations.collectionId],
-    references: [collections.id],
+  languages: one(languages, {
+    fields: [translations.languageId],
+    references: [languages.id],
   }),
 }));

@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1745279714061,
-      "tag": "0000_solid_wiccan",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1745709274302,
-      "tag": "0001_public_scorpion",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1745714764190,
-      "tag": "0002_mysterious_lorna_dane",
+      "when": 1745874096126,
+      "tag": "0000_yellow_maelstrom",
       "breakpoints": true
     }
   ]
