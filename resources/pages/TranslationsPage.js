@@ -1,3 +1,5 @@
+import { getLanguages } from "../services/languages-req.js";
+
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
     { name: "Collections", url: "/app" },
@@ -6,48 +8,89 @@ export class TranslationsPage extends HTMLElement {
 
   constructor() {
     super();
+
+    this.languages = new Proxy({ value: [] }, {
+      set: (target, property, value) => {
+        target[property] = value;
+
+        this.buildTableHeader(value);
+
+        return true;
+      },
+    });
   }
 
-  getTableBody(languages, headers) {
-    const tBody = document.createElement("tbody");
+  async loadData(searchText) {
+    const data = await getLanguages(searchText);
 
-    let allKeys = new Set();
-
-    for (const key in languages) {
-      const langKeys = Object.keys(languages[key]);
-      allKeys = allKeys.union(new Set(langKeys));
-    }
-
-    for (const key of allKeys) {
-      const row = document.createElement("tr");
-
-      for (const header of headers) {
-        const cell = document.createElement("td");
-
-        if (header.value === "actions") {
-          cell.innerHTML = `
-                    <app-button>Edit</app-button>
-                    <app-button>Delete</app-button>
-            `;
-
-          cell.classList.add("actions-column");
-          row.appendChild(cell);
-          continue;
-        }
-
-        if (!languages[header.value]) {
-          continue;
-        }
-
-        cell.innerHTML = languages[header.value][key];
-        row.appendChild(cell);
-      }
-
-      tBody.appendChild(row);
-    }
-
-    return tBody;
+    this.languages.value = data;
   }
+
+  buildTableHeader(languages) {
+    const table = this.querySelector("table");
+
+    const tHead = document.createElement("thead");
+    const row = document.createElement("tr");
+
+    const keyTh = document.createElement("th");
+    keyTh.innerHTML = "Key";
+    row.appendChild(keyTh);
+
+    for (const language of languages) {
+      const th = document.createElement("th");
+      th.innerHTML = language.name;
+      row.appendChild(th);
+    }
+
+    const actionsTh = document.createElement("th");
+    actionsTh.innerHTML = "Actions";
+    row.appendChild(actionsTh);
+
+    tHead.appendChild(row);
+
+    table.appendChild(tHead);
+  }
+
+  // getTableBody(languages, headers) {
+  //   const tBody = document.createElement("tbody");
+  //
+  //   let allKeys = new Set();
+  //
+  //   for (const key in languages) {
+  //     const langKeys = Object.keys(languages[key]);
+  //     allKeys = allKeys.union(new Set(langKeys));
+  //   }
+  //
+  //   for (const key of allKeys) {
+  //     const row = document.createElement("tr");
+  //
+  //     for (const header of headers) {
+  //       const cell = document.createElement("td");
+  //
+  //       if (header.value === "actions") {
+  //         cell.innerHTML = `
+  //                   <app-button>Edit</app-button>
+  //                   <app-button>Delete</app-button>
+  //           `;
+  //
+  //         cell.classList.add("actions-column");
+  //         row.appendChild(cell);
+  //         continue;
+  //       }
+  //
+  //       if (!languages[header.value]) {
+  //         continue;
+  //       }
+  //
+  //       cell.innerHTML = languages[header.value][key];
+  //       row.appendChild(cell);
+  //     }
+  //
+  //     tBody.appendChild(row);
+  //   }
+  //
+  //   return tBody;
+  // }
 
   buildBreadcrumbs() {
     const breadcrumbs = document.createElement("app-breadcrumbs");
@@ -59,37 +102,13 @@ export class TranslationsPage extends HTMLElement {
   connectedCallback() {
     const template = document.createElement("template");
 
-    const headers = [
-      {
-        title: "Key",
-        value: "key",
-      },
-      {
-        title: "Es",
-        value: "es",
-      },
-      {
-        title: "En",
-        value: "en",
-      },
-      {
-        title: "Actions",
-        value: "actions",
-      },
-    ];
+    // const languages = {
+    //   key: { food: "food", this: "this" },
+    //   en: { food: "Food", this: "This" },
+    //   es: { food: "Comida", this: "Esto" },
+    // };
 
-    const headersWithoutActions = headers.toSpliced(
-      headers.length - 1,
-      headers.length - 1,
-    );
-
-    const languages = {
-      key: { food: "food", this: "this" },
-      en: { food: "Food", this: "This" },
-      es: { food: "Comida", this: "Esto" },
-    };
-
-    const tBody = this.getTableBody(languages, headers);
+    // const tBody = this.getTableBody(languages);
 
     template.innerHTML = `
             <style>
@@ -122,16 +141,7 @@ export class TranslationsPage extends HTMLElement {
                         </div>
                     </table-toolbar>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                ${
-      headers.map((header) => `<th>${header.title}</th>`).join("")
-    }
-                            </tr>
-                        </thead>
-
-                    </table>
+                    <table></table>
                 </div>
             </div>
 
@@ -140,17 +150,15 @@ export class TranslationsPage extends HTMLElement {
             </app-modal>
 
             <app-modal title="Add Translations" width="400px">
-                <translations-form 
-                    languages='${JSON.stringify(headersWithoutActions)}'
-                ></translations-form>
             </app-modal>
 
         `;
 
     this.appendChild(template.content);
+    this.loadData();
 
     const tableToolbar = this.querySelector("table-toolbar");
-    const table = this.querySelector("table");
+    // const table = this.querySelector("table");
     const translationsCreateButton = this.querySelector(
       "#translations-create-button",
     );
@@ -158,7 +166,7 @@ export class TranslationsPage extends HTMLElement {
     const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
     breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
 
-    table.appendChild(tBody);
+    // table.appendChild(tBody);
 
     tableToolbar.addEventListener("click-create", () => {
       const modal = this.querySelector("app-modal");
