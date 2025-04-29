@@ -9,7 +9,7 @@ async function doFullTextSearch(query) {
         SELECT * 
           FROM languages 
           WHERE (setweight(to_tsvector(name), 'A') ||
-                 setweight(coalesce(to_tsvector(description), ''), 'B') 
+                 setweight(coalesce(to_tsvector(code), ''), 'B') 
                  @@ to_tsquery(${query}))
     `);
 
@@ -32,7 +32,7 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const { name, description } = req.body;
+  const { name, code } = req.body;
 
   if (!name) {
     return res.status(400).json({ error: "Name is required" });
@@ -40,7 +40,7 @@ export async function store(req, res) {
 
   const language = await db
     .insert(languagesSchema)
-    .values({ name, description })
+    .values({ name, code })
     .returning();
 
   res.json(language);
