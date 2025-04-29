@@ -22,7 +22,7 @@ export async function postCollection(data) {
     body: JSON.stringify(data),
   });
 
-  return response.json();
+  return await response.json();
 }
 
 export async function putCollection(id, data) {
