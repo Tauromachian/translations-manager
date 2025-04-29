@@ -1,7 +1,6 @@
 export class LanguageForm extends HTMLElement {
   constructor() {
     super();
-    this.root = this.attachShadow({ mode: "open" });
   }
 
   connectedCallback() {
@@ -9,19 +8,6 @@ export class LanguageForm extends HTMLElement {
 
     template.innerHTML = `
             <style>
-                :host {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 4px;
-                    width: 100%;
-                }
-
-                form {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 12px;
-                }
-
                 .modal-actions {
                     display: flex;
                     justify-content: flex-end;
@@ -31,15 +17,31 @@ export class LanguageForm extends HTMLElement {
             </style>
 
             <form>
-                <text-field label="Name"></text-field>
-                <text-field label="Code"></text-field>
+                <text-field label="Name" name="name"></text-field>
+                <text-field label="Code" name="code"></text-field>
 
                 <div class="modal-actions">
-                    <app-button>Add Language</app-button>
+                    <app-button type="submit">Add Language</app-button>
                 </div>
             </form>
         `;
 
-    this.root.appendChild(template.content.cloneNode(true));
+    this.appendChild(template.content.cloneNode(true));
+
+    const form = this.querySelector("form");
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(event.target);
+      const jsonData = Object.fromEntries(formData);
+
+      const submitEvent = new CustomEvent("form-submit", {
+        bubbles: true,
+        cancelable: true,
+        detail: jsonData,
+      });
+
+      this.dispatchEvent(submitEvent);
+    });
   }
 }

@@ -48,3 +48,9 @@ body {
 body * {
   font-family: var(--font-sans);
 }
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}

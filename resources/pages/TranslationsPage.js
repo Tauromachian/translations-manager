@@ -1,4 +1,4 @@
-import { getLanguages } from "../services/languages-req.js";
+import { getLanguages, postLanguage } from "../services/languages-req.js";
 
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
@@ -24,6 +24,10 @@ export class TranslationsPage extends HTMLElement {
     const data = await getLanguages(searchText);
 
     this.languages.value = data;
+  }
+
+  async postLanguageData(data) {
+    await postLanguage(data);
   }
 
   buildTableHeader(languages) {
@@ -157,6 +161,9 @@ export class TranslationsPage extends HTMLElement {
     this.appendChild(template.content);
     this.loadData();
 
+    const languagesModal = this.querySelector("app-modal");
+    const collectionsModal = this.querySelectorAll("app-modal")[1];
+
     const tableToolbar = this.querySelector("table-toolbar");
     // const table = this.querySelector("table");
     const translationsCreateButton = this.querySelector(
@@ -169,13 +176,22 @@ export class TranslationsPage extends HTMLElement {
     // table.appendChild(tBody);
 
     tableToolbar.addEventListener("click-create", () => {
-      const modal = this.querySelector("app-modal");
-      modal.setAttribute("open", true);
+      languagesModal.setAttribute("open", true);
     });
 
     translationsCreateButton.addEventListener("click", () => {
-      const modal = this.querySelectorAll("app-modal")[1];
-      modal.setAttribute("open", true);
+      collectionsModal.setAttribute("open", true);
+    });
+
+    const languageForm = this.querySelector("language-form");
+
+    languageForm.addEventListener("form-submit", (event) => {
+      this.postLanguageData(event.detail);
+
+      const languagesModal = this.querySelector("app-modal");
+      languagesModal.setAttribute("open", false);
+
+      this.loadData();
     });
   }
 }
