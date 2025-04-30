@@ -27,9 +27,9 @@ export class AppButton extends HTMLElement {
     }
 
     if (to) {
-      buttonDefinition = `<a href="/app/${
+      buttonDefinition = `<router-link to="/app/${
         to === "/" ? "" : to
-      }" class="button"><slot></slot></a>`;
+      }" class="button"><slot></slot></router-link>`;
     }
 
     template.innerHTML = `
@@ -47,7 +47,6 @@ export class AppButton extends HTMLElement {
                     border-radius: 4px;
                     cursor: pointer;
                     transition: background-color 0.2s ease;
-                    text-decoration: none;
                     font-size: 0.9rem;
                     display: block;
                     font-weight: 500 !important;
@@ -70,6 +69,11 @@ export class AppButton extends HTMLElement {
 
                 .button--danger {
                     background-color: var(--danger);
+                }
+
+                .button a {
+                    text-decoration: none;
+                    color: var(--black);
                 }
             </style>
 
