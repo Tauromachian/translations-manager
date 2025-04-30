@@ -1,5 +1,5 @@
 {
-  "id": "3a215748-3cfb-42ef-800c-c909728468cd",
+  "id": "c04e7f4f-8697-4da7-8069-2df9bd29cf92",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -45,6 +45,12 @@
           "primaryKey": true,
           "notNull": true
         },
+        "collection_id": {
+          "name": "collection_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "name": {
           "name": "name",
           "type": "text",
@@ -59,7 +65,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "languages_collection_id_collections_id_fk": {
+          "name": "languages_collection_id_collections_id_fk",
+          "tableFrom": "languages",
+          "tableTo": "collections",
+          "columnsFrom": [
+            "collection_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -96,7 +116,21 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {},
+      "foreignKeys": {
+        "translations_language_id_languages_id_fk": {
+          "name": "translations_language_id_languages_id_fk",
+          "tableFrom": "translations",
+          "tableTo": "languages",
+          "columnsFrom": [
+            "language_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},

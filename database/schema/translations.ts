@@ -5,7 +5,9 @@ import { languages } from "./languages.ts";
 
 export const translations = pgTable("translations", {
   id: serial().primaryKey().notNull(),
-  languageId: integer("language_id").notNull(),
+  languageId: integer("language_id").references(() => languages.id, {
+    onDelete: "cascade",
+  }).notNull(),
   key: text("key").notNull(),
   translation: text(),
 });
