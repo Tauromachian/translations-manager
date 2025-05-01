@@ -1,20 +1,37 @@
 export class TranslationsForm extends HTMLElement {
   constructor() {
     super();
-    this.root = this.attachShadow({ mode: "open" });
   }
 
   static get observedAttributes() {
     return ["languages"];
   }
 
+  attributeChangedCallback(name, _, newValue) {
+    if (name === "languages") {
+      const formWrapper = this.querySelector("div");
+      const form = document.createElement("form");
+      formWrapper.appendChild(form);
+
+      const fields = JSON.parse(newValue)
+        .map(
+          (lang) => `
+                            <text-field label="${lang.name}"></text-field>
+                        `,
+        )
+        .join("");
+
+      form.innerHTML = `
+            ${fields}
+            <div class="modal-actions">
+                <app-button>Add Translations</app-button>
+            </div>
+        `;
+    }
+  }
+
   connectedCallback() {
-    const template = document.createElement("template");
-
-    let languages = this.getAttribute("languages");
-    languages = JSON.parse(languages);
-
-    template.innerHTML = `
+    this.innerHTML = `
             <style>
                 :host {
                     display: flex;
@@ -37,23 +54,7 @@ export class TranslationsForm extends HTMLElement {
                 }
             </style>
 
-            <form>
-                ${
-      languages
-        .map(
-          (lang) => `
-                        <text-field label="${lang.title}"></text-field>
-                    `,
-        )
-        .join("")
-    }
-
-                <div class="modal-actions">
-                    <app-button>Add Translations</app-button>
-                </div>
-            </form>
+            <div></div>
         `;
-
-    this.root.appendChild(template.content.cloneNode(true));
   }
 }
