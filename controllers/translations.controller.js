@@ -1,32 +1,20 @@
 import { db } from "../config/db.ts";
 
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 
 import { translations as translationsSchema } from "../database/schema/translations.ts";
 
-async function doFullTextSearch(query) {
-  const result = await db.execute(sql`
-        SELECT * 
-          FROM translations 
-          WHERE (setweight(to_tsvector(name), 'A') ||
-                 setweight(coalesce(to_tsvector(description), ''), 'B') 
-                 @@ to_tsquery(${query}))
-    `);
-
-  return result;
-}
-
 export async function index(req, res) {
-  const { search } = req.query;
+  const { search, filter } = req.query;
 
-  let translations;
-
-  if (!search) {
-    translations = await db.select().from(translationsSchema);
-  } else {
-    const result = await doFullTextSearch(search);
-    translations = result.rows;
-  }
+  const translations = await db.select().from(translationsSchema).where(
+    and(
+      sql`language_id IN ${filter.languagesIds}`,
+      search && sql`setweight(to_tsvector(name), 'A') ||
+                     setweight(coalesce(to_tsvector(description), ''), 'B') 
+                     @@ to_tsquery(${search})`,
+    ),
+  );
 
   res.status(200).json(translations);
 }
