@@ -14,8 +14,6 @@ export class TranslationsForm extends HTMLElement {
     let languages = this.getAttribute("languages");
     languages = JSON.parse(languages);
 
-    console.log(languages);
-
     template.innerHTML = `
             <style>
                 :host {
