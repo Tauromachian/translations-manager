@@ -1,4 +1,5 @@
 import { getLanguages, postLanguage } from "../services/languages-req.js";
+import { getTranslations } from "../services/translations-req.js";
 
 import { router } from "../services/router.js";
 
@@ -22,15 +23,36 @@ export class TranslationsPage extends HTMLElement {
       },
     });
 
+    this.translations = new Proxy({ value: [] }, {
+      set: (target, property, value) => {
+        target[property] = value;
+
+        return true;
+      },
+    });
+
     this.#collectionId = router.route.params.id;
   }
 
-  async loadData() {
+  async loadData(searchText) {
     const languagesData = await getLanguages({
       "filter[collectionId]": this.#collectionId,
     });
 
+    const filterFields = {
+      "filter[languagesIds]": languagesData.map((language) => language.id),
+    };
+
+    if (searchText) {
+      filterFields.search = searchText;
+    }
+
+    const translations = await getTranslations(
+      filterFields,
+    );
+
     this.languages.value = languagesData;
+    this.translations.value = translations;
   }
 
   async postLanguageData(data) {
