@@ -1,17 +1,17 @@
 export const router = {
-  routes: {},
-  regexRoutes: {},
-  mainEl: null,
+  _routes: {},
+  _regexRoutes: {},
+  _mainEl: null,
 
   init(routes, el) {
-    this.routes = routes;
-    this.mainEl = el;
+    this._routes = routes;
+    this._mainEl = el;
 
     for (const key in routes) {
       if (key.includes(":")) {
-        const routeShards = key.split(":");
-        routeShards[1] = "(.*)";
-        this.regexRoutes[routeShards.join("")] = routes[key];
+        const formattedRoute = key.replace(/:(.*)$/, "(.*)");
+
+        this._regexRoutes[formattedRoute] = routes[key];
       }
     }
 
@@ -22,16 +22,29 @@ export const router = {
     this.go(location.pathname);
   },
 
-  getMatchingRegexRoutes(route) {
-    const matchingRoutes = [];
+  renderPage(pageElement) {
+    this._mainEl.innerHTML = "";
+    this._mainEl.appendChild(pageElement);
+  },
 
-    for (const key in this.regexRoutes) {
+  getMatchingPage(route) {
+    if (this._routes[route]) {
+      return document.createElement(this._routes[route]);
+    }
+
+    let matchingRegex;
+
+    for (const key in this._regexRoutes) {
       if (new RegExp(key).test(route)) {
-        matchingRoutes.push(this.regexRoutes[key]);
+        matchingRegex = this._regexRoutes[key];
       }
     }
 
-    return matchingRoutes;
+    if (!matchingRegex) return;
+
+    const pageElement = document.createElement(matchingRegex);
+
+    return pageElement;
   },
 
   go(route, addToHistory = true) {
@@ -39,23 +52,18 @@ export const router = {
       history.pushState({ route }, "", route);
     }
 
-    let pageElement = null;
-
     if (route.endsWith("/")) {
       route = route.slice(0, -1);
     }
 
-    if (this.routes[route]) {
-      pageElement = document.createElement(this.routes[route]);
-    } else if (this.getMatchingRegexRoutes.call(this, route).length) {
-      const matchingRegex = this.getMatchingRegexRoutes.call(this, route);
-      pageElement = document.createElement(matchingRegex[0]);
-      console.log(pageElement);
-    } else {
-      pageElement = document.createElement(this.routes["*"]);
+    let pageElement = this.getMatchingPage.call(this, route);
+
+    if (pageElement) {
+      this.renderPage(pageElement);
+      return;
     }
 
-    this.mainEl.innerHTML = "";
-    this.mainEl.appendChild(pageElement);
+    pageElement = document.createElement(this._routes["*"]);
+    this.renderPage(Promise.all(value));
   },
 };
