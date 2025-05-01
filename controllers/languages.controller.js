@@ -4,8 +4,12 @@ import { eq } from "drizzle-orm";
 
 import { languages as languagesSchema } from "../database/schema/languages.ts";
 
-export async function index(_, res) {
-  const languages = await db.select().from(languagesSchema);
+export async function index(req, res) {
+  const { filter } = req.query;
+
+  const languages = await db.select().from(languagesSchema).where(
+    eq(languagesSchema.collectionId, filter.collectionId),
+  );
 
   res.status(200).json(languages);
 }
