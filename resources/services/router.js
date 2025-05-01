@@ -69,7 +69,7 @@ export const router = {
       route = route.slice(0, -1);
     }
 
-    let pageElement = this.getMatchingPage.call(this, route);
+    let pageElement = this.getMatchingPage(route);
 
     if (pageElement) {
       this.renderPage(pageElement);
