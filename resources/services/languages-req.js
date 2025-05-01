@@ -1,13 +1,7 @@
 const baseUrl = "/api/languages";
 
-export async function getLanguages(searchText) {
-  let url = baseUrl;
-
-  if (searchText) {
-    url += `?search=${searchText}`;
-  }
-
-  const response = await fetch(url);
+export async function getLanguages() {
+  const response = await fetch(baseUrl);
   const data = await response.json();
 
   return data;
