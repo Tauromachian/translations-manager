@@ -1,4 +1,6 @@
 export const router = {
+  route: {},
+
   _routes: {},
   _regexRoutes: {},
   _mainEl: null,
@@ -11,7 +13,11 @@ export const router = {
       if (key.includes(":")) {
         const formattedRoute = key.replace(/:(.*)$/, "(.*)");
 
-        this._regexRoutes[formattedRoute] = routes[key];
+        this._regexRoutes[formattedRoute] = {
+          page: routes[key],
+          indexOfParam: key.indexOf(":"),
+          params: [key.match(/:(.*)$/)[1]],
+        };
       }
     }
 
@@ -29,20 +35,27 @@ export const router = {
 
   getMatchingPage(route) {
     if (this._routes[route]) {
+      delete route.params;
       return document.createElement(this._routes[route]);
     }
 
-    let matchingRegex;
+    let matchedRoute;
 
     for (const key in this._regexRoutes) {
       if (new RegExp(key).test(route)) {
-        matchingRegex = this._regexRoutes[key];
+        matchedRoute = this._regexRoutes[key];
       }
     }
 
-    if (!matchingRegex) return;
+    if (!matchedRoute) return;
 
-    const pageElement = document.createElement(matchingRegex);
+    const page = matchedRoute.page;
+
+    this.route.params = {
+      [matchedRoute.params[0]]: route.slice(matchedRoute.indexOfParam),
+    };
+
+    const pageElement = document.createElement(page);
 
     return pageElement;
   },
