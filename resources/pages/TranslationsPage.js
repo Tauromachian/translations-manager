@@ -27,7 +27,7 @@ export class TranslationsPage extends HTMLElement {
 
   async loadData() {
     const data = await getLanguages({
-      "filter[collection_id]": this.#collectionId,
+      "filter[collectionId]": this.#collectionId,
     });
 
     this.languages.value = data;
