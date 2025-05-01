@@ -27,6 +27,8 @@ export class TranslationsPage extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
 
+        this.buildTableBody(value, this.languages.value);
+
         return true;
       },
     });
@@ -84,46 +86,62 @@ export class TranslationsPage extends HTMLElement {
     table.appendChild(tHead);
   }
 
-  // getTableBody(languages, headers) {
-  //   const tBody = document.createElement("tbody");
-  //
-  //   let allKeys = new Set();
-  //
-  //   for (const key in languages) {
-  //     const langKeys = Object.keys(languages[key]);
-  //     allKeys = allKeys.union(new Set(langKeys));
-  //   }
-  //
-  //   for (const key of allKeys) {
-  //     const row = document.createElement("tr");
-  //
-  //     for (const header of headers) {
-  //       const cell = document.createElement("td");
-  //
-  //       if (header.value === "actions") {
-  //         cell.innerHTML = `
-  //                   <app-button>Edit</app-button>
-  //                   <app-button>Delete</app-button>
-  //           `;
-  //
-  //         cell.classList.add("actions-column");
-  //         row.appendChild(cell);
-  //         continue;
-  //       }
-  //
-  //       if (!languages[header.value]) {
-  //         continue;
-  //       }
-  //
-  //       cell.innerHTML = languages[header.value][key];
-  //       row.appendChild(cell);
-  //     }
-  //
-  //     tBody.appendChild(row);
-  //   }
-  //
-  //   return tBody;
-  // }
+  buildTableBody(translations, languages) {
+    const rowsByKeys = {};
+    const languagesCodesByIds = {};
+
+    for (const translation of translations) {
+      let code = languagesCodesByIds[translation.languageId];
+
+      if (!code) {
+        languagesCodesByIds[translation.languageId] = languages.find(
+          (language) => language.id === translation.languageId,
+        ).code;
+
+        code = languagesCodesByIds[translation.languageId];
+      }
+
+      const key = translation.key;
+      if (!rowsByKeys[key]) {
+        rowsByKeys[key] = {
+          key,
+          [code]: translation.translation,
+        };
+      } else {
+        rowsByKeys[key][code] = translation.translation;
+      }
+    }
+
+    const tableEl = this.querySelector("table");
+    const tableBodyEl = document.createElement("tbody");
+
+    for (const rowKey in rowsByKeys) {
+      const row = document.createElement("tr");
+
+      for (const cell in rowsByKeys[rowKey]) {
+        const cellEl = document.createElement("td");
+        cellEl.textContent = rowsByKeys[rowKey][cell];
+
+        row.appendChild(cellEl);
+      }
+
+      const actionsCell = document.createElement("td");
+      actionsCell.innerHTML = `
+            <span class="actions-column">
+                <app-button class="edit" data-value="${rowKey}">
+                    Edit
+                </app-button>
+                <app-button class="delete" data-value="${rowKey}">
+                    Delete
+                </app-button>
+            </span>
+            `;
+
+      row.appendChild(actionsCell);
+      tableBodyEl.appendChild(row);
+    }
+    tableEl.appendChild(tableBodyEl);
+  }
 
   buildBreadcrumbs() {
     const breadcrumbs = document.createElement("app-breadcrumbs");
@@ -134,14 +152,6 @@ export class TranslationsPage extends HTMLElement {
 
   connectedCallback() {
     const template = document.createElement("template");
-
-    // const languages = {
-    //   key: { food: "food", this: "this" },
-    //   en: { food: "Food", this: "This" },
-    //   es: { food: "Comida", this: "Esto" },
-    // };
-
-    // const tBody = this.getTableBody(languages);
 
     template.innerHTML = `
             <style>
@@ -194,15 +204,12 @@ export class TranslationsPage extends HTMLElement {
     const collectionsModal = this.querySelectorAll("app-modal")[1];
 
     const tableToolbar = this.querySelector("table-toolbar");
-    // const table = this.querySelector("table");
     const translationsCreateButton = this.querySelector(
       "#translations-create-button",
     );
 
     const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
     breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
-
-    // table.appendChild(tBody);
 
     tableToolbar.addEventListener("click-create", () => {
       languagesModal.setAttribute("open", true);
