@@ -19,8 +19,7 @@ export class CollectionsPage extends HTMLElement {
   constructor() {
     super();
 
-    this.collections = [];
-    this.collections = new Proxy({ value: this.collections }, {
+    this.collections = new Proxy({ value: [] }, {
       set: (target, property, value) => {
         target[property] = value;
 
