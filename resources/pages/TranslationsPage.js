@@ -1,10 +1,13 @@
 import { getLanguages, postLanguage } from "../services/languages-req.js";
 
+import { router } from "../services/router.js";
+
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
     { name: "Collections", url: "/app" },
     { name: "Languages", url: "" },
   ];
+  #collectionId;
 
   constructor() {
     super();
@@ -18,10 +21,14 @@ export class TranslationsPage extends HTMLElement {
         return true;
       },
     });
+
+    this.#collectionId = router.route.params.id;
   }
 
-  async loadData(searchText) {
-    const data = await getLanguages(searchText);
+  async loadData() {
+    const data = await getLanguages({
+      "filter[collection_id]": this.#collectionId,
+    });
 
     this.languages.value = data;
   }
