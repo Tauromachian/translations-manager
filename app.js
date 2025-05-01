@@ -17,6 +17,8 @@ app.use(express.json());
 
 app.use(express.static(join(Deno.cwd(), "dist")));
 
+app.set("query parser", "extended");
+
 app.use("/app", webRouter);
 app.use("/api", apiRouter);
 
