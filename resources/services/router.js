@@ -77,6 +77,6 @@ export const router = {
     }
 
     pageElement = document.createElement(this._routes["*"]);
-    this.renderPage(Promise.all(value));
+    this.renderPage(pageElement);
   },
 };
