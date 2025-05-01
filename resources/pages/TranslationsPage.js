@@ -19,6 +19,12 @@ export class TranslationsPage extends HTMLElement {
 
         this.buildTableHeader(value);
 
+        const translationsForm = this.querySelector("translations-form");
+        translationsForm.setAttribute(
+          "languages",
+          JSON.stringify(value),
+        );
+
         return true;
       },
     });
@@ -193,6 +199,7 @@ export class TranslationsPage extends HTMLElement {
             </app-modal>
 
             <app-modal title="Add Translations" width="400px">
+                <translations-form></translations-form>
             </app-modal>
 
         `;
