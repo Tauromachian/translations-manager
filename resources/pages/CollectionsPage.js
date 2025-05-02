@@ -153,9 +153,7 @@ export class CollectionsPage extends HTMLElement {
   }
 
   connectedCallback() {
-    const template = document.createElement("template");
-
-    template.innerHTML = `
+    this.innerHTML = `
             <style>
                 .actions-column {
                     display: flex;
@@ -216,7 +214,6 @@ export class CollectionsPage extends HTMLElement {
             <modal-confirm-delete></modal-confirm-delete>
         `;
 
-    this.appendChild(template.content);
     this.loadData();
 
     const tableToolbar = this.querySelector("table-toolbar");

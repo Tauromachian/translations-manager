@@ -4,9 +4,7 @@ export class LanguageForm extends HTMLElement {
   }
 
   connectedCallback() {
-    const template = document.createElement("template");
-
-    template.innerHTML = `
+    this.innerHTML = `
             <style>
                 .modal-actions {
                     display: flex;
@@ -25,8 +23,6 @@ export class LanguageForm extends HTMLElement {
                 </div>
             </form>
         `;
-
-    this.appendChild(template.content.cloneNode(true));
 
     const form = this.querySelector("form");
     form.addEventListener("submit", (event) => {

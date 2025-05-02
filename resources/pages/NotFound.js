@@ -4,9 +4,7 @@ export class NotFound extends HTMLElement {
   }
 
   connectedCallback() {
-    const template = document.createElement("template");
-
-    template.innerHTML = `
+    this.innerHTML = `
             <style>
                 div {
                     display: flex;
@@ -31,7 +29,5 @@ export class NotFound extends HTMLElement {
                 </app-button>
             </div>
         `;
-
-    this.appendChild(template.content.cloneNode(true));
   }
 }

@@ -159,9 +159,7 @@ export class TranslationsPage extends HTMLElement {
   }
 
   connectedCallback() {
-    const template = document.createElement("template");
-
-    template.innerHTML = `
+    this.innerHTML = `
             <style>
                 .actions-column {
                     display: flex;
@@ -206,7 +204,6 @@ export class TranslationsPage extends HTMLElement {
 
         `;
 
-    this.appendChild(template.content);
     this.loadData();
 
     const languagesModal = this.querySelector("app-modal");
