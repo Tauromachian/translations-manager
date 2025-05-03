@@ -12,6 +12,7 @@ export class CollectionsPage extends HTMLElement {
   selectedId;
   form;
   modalConfirmDelete;
+  #isLoading;
   #breadcrumbs = [
     { name: "Collections", url: "" },
   ];
@@ -28,12 +29,28 @@ export class CollectionsPage extends HTMLElement {
         return true;
       },
     });
+
+    this.#isLoading = new Proxy({ value: false }, {
+      set: (target, property, value) => {
+        target[property] = value;
+
+        this.setLoaderState(value);
+
+        return true;
+      },
+    });
   }
 
   onSearch(event) {
     debounce(() => {
       this.loadData(event.detail);
     });
+  }
+
+  setLoaderState(state) {
+    const loader = this.querySelector("app-loader");
+
+    loader.style.display = state ? "block" : "none";
   }
 
   onSubmit(event) {
@@ -76,9 +93,12 @@ export class CollectionsPage extends HTMLElement {
   }
 
   async loadData(searchText) {
+    this.#isLoading.value = true;
+
     const data = await getCollections(searchText);
 
     this.collections.value = data;
+    this.#isLoading.value = false;
   }
 
   async postData(data) {
@@ -197,6 +217,8 @@ export class CollectionsPage extends HTMLElement {
                         <tbody>
                         </tbody>
                     </table>
+
+                    <app-loader class="py-5"></app-loader>
                 </div>
             </div>
 
