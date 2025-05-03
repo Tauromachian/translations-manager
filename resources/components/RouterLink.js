@@ -10,13 +10,17 @@ export class RouterLink extends HTMLElement {
   }
 
   connectedCallback() {
+    const template = document.createElement("template");
+
     const to = this.getAttribute("to");
 
-    this.innerHTML = `
+    this.template.innerHTML = `
         <a href="${to}">
             <slot></slot>
         </a>
     `;
+
+    this.appendChild(template.content.cloneNode(true));
 
     const aEl = this.querySelector("a");
 
