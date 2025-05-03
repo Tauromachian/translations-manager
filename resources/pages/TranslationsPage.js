@@ -66,7 +66,10 @@ export class TranslationsPage extends HTMLElement {
       "filter[collectionId]": this.#collectionId,
     });
 
-    if (!languagesData.length) return;
+    if (!languagesData.length) {
+      this.#isLoading.value = false;
+      return;
+    }
 
     const filterFields = {
       "filter[languagesIds]": languagesData.map((language) => language.id),
