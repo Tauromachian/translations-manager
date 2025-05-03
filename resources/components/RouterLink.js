@@ -14,19 +14,16 @@ export class RouterLink extends HTMLElement {
 
     const to = this.getAttribute("to");
 
-    this.template.innerHTML = `
+    template.innerHTML = `
         <a href="${to}">
             <slot></slot>
         </a>
     `;
 
     this.appendChild(template.content.cloneNode(true));
+    this.setAttribute("role", "link");
 
-    const aEl = this.querySelector("a");
-
-    aEl.addEventListener("click", (event) => {
-      event.preventDefault();
-
+    this.addEventListener("click", () => {
       router.go(to);
     });
   }
