@@ -16,6 +16,7 @@ import { TextArea } from "./components/TextArea.js";
 import { ModalConfirmDelete } from "./components/ModalConfirmDelete.js";
 import { AppBreadcrumbs } from "./components/AppBreadcrumbs.js";
 import { RouterLink } from "./components/RouterLink.js";
+import { AppLoader } from "./components/AppLoader.js";
 
 function defineCustomElements() {
   customElements.define("collection-page", CollectionsPage);
@@ -31,6 +32,7 @@ function defineCustomElements() {
   customElements.define("modal-confirm-delete", ModalConfirmDelete);
   customElements.define("app-breadcrumbs", AppBreadcrumbs);
   customElements.define("router-link", RouterLink);
+  customElements.define("app-loader", AppLoader);
 }
 
 globalThis.addEventListener("DOMContentLoaded", () => {
