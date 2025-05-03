@@ -8,7 +8,7 @@ export class AppLoader extends HTMLElement {
                     border-radius: 50%;
                     width: 40px;
                     height: 40px;
-                    animation: spin 1s linear infinite;
+                    animation: spin 0.5s linear infinite;
                     margin: 50px auto;
                 }
 
