@@ -9,6 +9,7 @@ export class TranslationsPage extends HTMLElement {
     { name: "Languages", url: "" },
   ];
   #collectionId;
+  #isLoading;
 
   constructor() {
     super();
@@ -39,10 +40,28 @@ export class TranslationsPage extends HTMLElement {
       },
     });
 
+    this.#isLoading = new Proxy({ value: false }, {
+      set: (target, property, value) => {
+        target[property] = value;
+
+        this.setLoaderState(value);
+
+        return true;
+      },
+    });
+
     this.#collectionId = router.route.params.id;
   }
 
+  setLoaderState(state) {
+    const loader = this.querySelector("app-loader");
+
+    loader.style.display = state ? "block" : "none";
+  }
+
   async loadData(searchText) {
+    this.#isLoading.value = true;
+
     const languagesData = await getLanguages({
       "filter[collectionId]": this.#collectionId,
     });
@@ -63,6 +82,8 @@ export class TranslationsPage extends HTMLElement {
 
     this.languages.value = languagesData;
     this.translations.value = translations;
+
+    this.#isLoading.value = false;
   }
 
   async postLanguageData(data) {
@@ -191,6 +212,8 @@ export class TranslationsPage extends HTMLElement {
                     </table-toolbar>
 
                     <table></table>
+
+                    <app-loader class="py-5"></app-loader>
                 </div>
             </div>
 
