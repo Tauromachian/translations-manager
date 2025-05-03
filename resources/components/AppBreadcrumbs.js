@@ -15,16 +15,14 @@ export class AppBreadcrumbs extends HTMLElement {
     let breadcrumbs = this.getAttribute("breadcrumbs");
     breadcrumbs = JSON.parse(breadcrumbs);
 
-    return breadcrumbs.map((breadcrumb, index) => {
-      let breadcrumbItem =
-        `<li><a href="${breadcrumb.url}">${breadcrumb.name}</a></li>`;
+    return breadcrumbs.map((breadcrumb) => {
+      const liEl = document.createElement("li");
 
-      if (index !== breadcrumbs.length - 1) {
-        breadcrumbItem += "<li>/</li>";
-      }
+      liEl.innerHTML =
+        `<router-link to="${breadcrumb.url}">${breadcrumb.name}</router-link>`;
 
-      return breadcrumbItem;
-    }).join("");
+      return liEl;
+    });
   }
 
   connectedCallback() {
@@ -42,21 +40,37 @@ export class AppBreadcrumbs extends HTMLElement {
                           display: inline-block;
                        }
 
-                       .breadcrumbs li a {
+                       .breadcrumbs li router-link {
                            text-decoration: none;
+                           color: var(--primary-20);
+                           cursor: pointer;
                        }
 
-                       .breadcrumbs li:last-child a {
+                       .breadcrumbs li:last-child router-link{
                            color: var(--disabled);
                            pointer-events: none;
-
+                           cursor: default;
                        }
                     </style>
     
     
                     <ul class="breadcrumbs">
-                        ${this.buildBreadcrumbs()}
                     </ul>
                 `;
+
+    const breadCrumbsItems = this.buildBreadcrumbs();
+
+    const ulEl = this.querySelector(".breadcrumbs");
+
+    breadCrumbsItems.forEach((listItem, index) => {
+      const separatorLi = document.createElement("li");
+      separatorLi.innerHTML = "/";
+
+      ulEl.appendChild(listItem);
+
+      if (index !== breadCrumbsItems.length - 1) {
+        ulEl.appendChild(separatorLi);
+      }
+    });
   }
 }
