@@ -9,12 +9,14 @@ export class TranslationsPage extends HTMLElement {
     { name: "Languages", url: "" },
   ];
   #collectionId;
+  #languages;
+  #translations;
   #isLoading;
 
   constructor() {
     super();
 
-    this.languages = new Proxy({ value: [] }, {
+    this.#languages = new Proxy({ value: [] }, {
       set: (target, property, value) => {
         target[property] = value;
 
@@ -30,11 +32,11 @@ export class TranslationsPage extends HTMLElement {
       },
     });
 
-    this.translations = new Proxy({ value: [] }, {
+    this.#translations = new Proxy({ value: [] }, {
       set: (target, property, value) => {
         target[property] = value;
 
-        this.buildTableBody(value, this.languages.value);
+        this.buildTableBody(value, this.#languages.value);
 
         return true;
       },
@@ -83,8 +85,8 @@ export class TranslationsPage extends HTMLElement {
       filterFields,
     );
 
-    this.languages.value = languagesData;
-    this.translations.value = translations;
+    this.#languages.value = languagesData;
+    this.#translations.value = translations;
 
     this.#isLoading.value = false;
   }

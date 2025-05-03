@@ -8,11 +8,12 @@ import {
 import debounce from "../../utilities/debouncer.js";
 
 export class CollectionsPage extends HTMLElement {
-  isFormInserting = false;
-  selectedId;
-  form;
-  modalConfirmDelete;
+  #isFormInserting = false;
+  #selectedId;
+  #form;
+  #modalConfirmDelete;
   #isLoading;
+  #collections;
   #breadcrumbs = [
     { name: "Collections", url: "" },
   ];
@@ -20,7 +21,7 @@ export class CollectionsPage extends HTMLElement {
   constructor() {
     super();
 
-    this.collections = new Proxy({ value: [] }, {
+    this.#collections = new Proxy({ value: [] }, {
       set: (target, property, value) => {
         target[property] = value;
 
@@ -59,7 +60,7 @@ export class CollectionsPage extends HTMLElement {
     const data = new FormData(event.target);
     const jsonData = Object.fromEntries(data);
 
-    if (this.isFormInserting) {
+    if (this.#isFormInserting) {
       this.postData(jsonData);
     } else {
       this.putData(jsonData);
@@ -75,8 +76,8 @@ export class CollectionsPage extends HTMLElement {
     const collectionId = event.target.dataset.value;
 
     if (event.target.closest(".delete")) {
-      this.modalConfirmDelete.setAttribute("open", true);
-      this.selectedId = collectionId;
+      this.#modalConfirmDelete.setAttribute("open", true);
+      this.#selectedId = collectionId;
 
       this.loadData();
     }
@@ -87,8 +88,8 @@ export class CollectionsPage extends HTMLElement {
   }
 
   onModalDeleteConfirmation() {
-    this.deleteCollection(this.selectedId);
-    this.modalConfirmDelete.setAttribute("open", false);
+    this.deleteCollection(this.#selectedId);
+    this.#modalConfirmDelete.setAttribute("open", false);
     this.loadData();
   }
 
@@ -97,7 +98,7 @@ export class CollectionsPage extends HTMLElement {
 
     const data = await getCollections(searchText);
 
-    this.collections.value = data;
+    this.#collections.value = data;
     this.#isLoading.value = false;
   }
 
@@ -106,7 +107,7 @@ export class CollectionsPage extends HTMLElement {
   }
 
   async putData(data) {
-    await putCollection(this.selectedId, data);
+    await putCollection(this.#selectedId, data);
   }
 
   async deleteCollection(id) {
@@ -116,17 +117,17 @@ export class CollectionsPage extends HTMLElement {
   openModal(isInserting, id) {
     const modal = this.querySelector("app-modal");
     modal.setAttribute("open", true);
-    this.isFormInserting = isInserting;
-    this.selectedId = id;
+    this.#isFormInserting = isInserting;
+    this.#selectedId = id;
 
     if (isInserting) {
-      this.form.reset();
+      this.#form.reset();
       return;
     }
 
     if (!id) return;
 
-    const collection = this.collections.value.find((c) => c.id == id);
+    const collection = this.#collections.value.find((c) => c.id == id);
 
     if (collection) {
       const textField = modal.querySelector("text-field[name='name']");
@@ -249,12 +250,12 @@ export class CollectionsPage extends HTMLElement {
 
     tableToolbar.addEventListener("search", this.onSearch.bind(this));
 
-    this.form = this.querySelector("app-modal form");
-    this.form.addEventListener("submit", this.onSubmit.bind(this));
+    this.#form = this.querySelector("app-modal form");
+    this.#form.addEventListener("submit", this.onSubmit.bind(this));
 
-    this.modalConfirmDelete = this.querySelector("modal-confirm-delete");
+    this.#modalConfirmDelete = this.querySelector("modal-confirm-delete");
 
-    this.modalConfirmDelete.addEventListener(
+    this.#modalConfirmDelete.addEventListener(
       "click-delete",
       this.onModalDeleteConfirmation.bind(this),
     );
