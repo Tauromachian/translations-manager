@@ -86,6 +86,7 @@ export class DataTable extends HTMLElement {
         row.appendChild(th);
       }
 
+      row.setAttribute("data-value", item.id);
       tBody.appendChild(row);
     }
 
@@ -129,11 +130,6 @@ export class DataTable extends HTMLElement {
             td {
               font-size: 0.95em;
             }
-
-                            ::slotted(span) {
-                  font-weight: bold;
-                }
-
         </style>
 
         <table>
