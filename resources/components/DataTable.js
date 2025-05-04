@@ -28,6 +28,9 @@ export class DataTable extends HTMLElement {
     const table = this.root.querySelector("table");
 
     for (const header of this.#headers) {
+      const isAlreadyAdded = this.#slotsByKeys[header.key];
+      if (isAlreadyAdded) continue;
+
       const slot = document.createElement("slot");
       slot.setAttribute("name", header.key);
       slot.style.display = "none";
