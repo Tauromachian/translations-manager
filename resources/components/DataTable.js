@@ -59,6 +59,11 @@ export class DataTable extends HTMLElement {
   }
 
   buildTableBody() {
+    if (!this.#headers) {
+      console.error("You need to define headers");
+      return;
+    }
+
     const table = this.root.querySelector("table");
     const tBody = document.createElement("tbody");
 
