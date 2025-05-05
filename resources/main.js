@@ -18,6 +18,7 @@ import { AppBreadcrumbs } from "./components/AppBreadcrumbs.js";
 import { RouterLink } from "./components/RouterLink.js";
 import { AppLoader } from "./components/AppLoader.js";
 import { DataTable } from "./components/DataTable.js";
+import { EmptyState } from "./components/EmptyState.js";
 
 function defineCustomElements() {
   customElements.define("collection-page", CollectionsPage);
@@ -35,6 +36,7 @@ function defineCustomElements() {
   customElements.define("router-link", RouterLink);
   customElements.define("app-loader", AppLoader);
   customElements.define("data-table", DataTable);
+  customElements.define("empty-state", EmptyState);
 }
 
 globalThis.addEventListener("DOMContentLoaded", () => {
