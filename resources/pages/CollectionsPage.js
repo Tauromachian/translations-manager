@@ -19,6 +19,7 @@ export class CollectionsPage extends HTMLElement {
   #breadcrumbs = [
     { name: "Collections", url: "" },
   ];
+  #isEmpty;
 
   constructor() {
     super();
@@ -26,6 +27,13 @@ export class CollectionsPage extends HTMLElement {
     this.#collections = new Proxy({ value: [] }, {
       set: (target, property, value) => {
         target[property] = value;
+
+        if (!value.length) {
+          this.#isEmpty.value = true;
+          return true;
+        } else {
+          this.#isEmpty.value = false;
+        }
 
         const dataTable = this.querySelector("data-table");
         dataTable.setAttribute("items", JSON.stringify(value));
@@ -39,6 +47,18 @@ export class CollectionsPage extends HTMLElement {
         target[property] = value;
 
         this.setLoaderState(value);
+
+        return true;
+      },
+    });
+
+    this.#isEmpty = new Proxy({ value: false }, {
+      set: (target, property, value) => {
+        target[property] = value;
+
+        const empty = this.querySelector("empty-state");
+
+        empty.style.display = value ? "block" : "none";
 
         return true;
       },
@@ -221,6 +241,8 @@ export class CollectionsPage extends HTMLElement {
                             </app-button>
                         </div>
                     </data-table>
+
+                    <empty-state></empty-state>
 
                     <app-loader class="py-5"></app-loader>
                 </div>
