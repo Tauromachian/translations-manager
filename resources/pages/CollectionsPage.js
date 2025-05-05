@@ -84,8 +84,6 @@ export class CollectionsPage extends HTMLElement {
     if (event.target.closest(".delete")) {
       this.#modalConfirmDelete.setAttribute("open", true);
       this.#selectedId = collectionId;
-
-      this.loadData();
     }
 
     if (event.target.closest(".edit")) {
