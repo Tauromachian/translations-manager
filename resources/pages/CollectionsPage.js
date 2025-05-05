@@ -7,6 +7,8 @@ import {
 
 import debounce from "../../utilities/debouncer.js";
 
+import { router } from "../services/router.js";
+
 export class CollectionsPage extends HTMLElement {
   #isFormInserting = false;
   #selectedId;
@@ -25,7 +27,8 @@ export class CollectionsPage extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
 
-        this.buildTableBody(value);
+        const dataTable = this.querySelector("data-table");
+        dataTable.setAttribute("items", JSON.stringify(value));
 
         return true;
       },
@@ -73,7 +76,10 @@ export class CollectionsPage extends HTMLElement {
   }
 
   onTableAction(event) {
-    const collectionId = event.target.dataset.value;
+    const button = event.target;
+    const closestTd = button.closest("tr");
+
+    const collectionId = closestTd.dataset.value;
 
     if (event.target.closest(".delete")) {
       this.#modalConfirmDelete.setAttribute("open", true);
@@ -84,6 +90,10 @@ export class CollectionsPage extends HTMLElement {
 
     if (event.target.closest(".edit")) {
       this.openModal.call(this, false, collectionId);
+    }
+
+    if (event.target.closest(".go-to-translation")) {
+      router.go(`/app/collection/${collectionId}`);
     }
   }
 
@@ -138,34 +148,6 @@ export class CollectionsPage extends HTMLElement {
     }
   }
 
-  buildTableBody(collections) {
-    if (!collections) return;
-
-    const tBody = document.querySelector("tbody");
-    tBody.innerHTML = "";
-
-    for (const collection of collections) {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-                <td>${collection.name}</td>
-                <td>${collection.description}</td>
-                <td class="actions-column">
-                    <app-button class="edit" data-value="${collection.id}">
-                        Edit
-                    </app-button>
-                    <app-button class="delete" data-value="${collection.id}">
-                        Delete
-                    </app-button>
-                    <app-button class="translate" to="collection/${collection.id}" data-value="${collection.id}">
-                        Manage Translations
-                    </app-button>
-                </td>
-            `;
-
-      tBody.appendChild(row);
-    }
-  }
-
   buildBreadcrumbs() {
     const breadcrumbs = document.createElement("app-breadcrumbs");
     breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
@@ -174,6 +156,21 @@ export class CollectionsPage extends HTMLElement {
   }
 
   connectedCallback() {
+    const headers = [
+      {
+        title: "Name",
+        key: "name",
+      },
+      {
+        title: "Description",
+        key: "description",
+      },
+      {
+        title: "Actions",
+        key: "actions",
+      },
+    ];
+
     this.innerHTML = `
             <style>
                 .actions-column {
@@ -198,6 +195,12 @@ export class CollectionsPage extends HTMLElement {
                     flex-direction: column;
                     gap: 1rem;
                 }
+
+                data-table::part(actions-column) {
+                    display: flex;
+                    gap: .5rem;
+                    justify-content: left;
+                }
             </style>
             <div class="container mt-5">
                 <div class="breadcrumbs-wrapper my-2"></div>
@@ -207,17 +210,19 @@ export class CollectionsPage extends HTMLElement {
                 <div class="card">
                     <table-toolbar class="p-1"></table-toolbar>
 
-                    <table id="collections-table">
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    <data-table>
+                        <div slot="actions" part="actions-column" class="actions-column">
+                            <app-button class="edit">
+                                Edit
+                            </app-button>
+                            <app-button class="delete">
+                                Delete
+                            </app-button>
+                            <app-button class="go-to-translation">
+                                Manage Translations
+                            </app-button>
+                        </div>
+                    </data-table>
 
                     <app-loader class="py-5"></app-loader>
                 </div>
@@ -260,7 +265,9 @@ export class CollectionsPage extends HTMLElement {
       this.onModalDeleteConfirmation.bind(this),
     );
 
-    this.querySelector("#collections-table").addEventListener(
+    const dataTable = this.querySelector("data-table");
+    dataTable.setAttribute("headers", JSON.stringify(headers));
+    dataTable.shadowRoot.querySelector("table").addEventListener(
       "click",
       this.onTableAction.bind(this),
     );
