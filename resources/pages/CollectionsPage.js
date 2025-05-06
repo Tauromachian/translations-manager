@@ -46,6 +46,10 @@ export class CollectionsPage extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
 
+        if (value) {
+          this.#isEmpty.value = false;
+        }
+
         this.setLoaderState(value);
 
         return true;
