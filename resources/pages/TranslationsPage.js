@@ -12,6 +12,7 @@ export class TranslationsPage extends HTMLElement {
   #languages;
   #translations;
   #isLoading;
+  #isEmpty;
 
   constructor() {
     super();
@@ -36,6 +37,16 @@ export class TranslationsPage extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
 
+        console.log(value);
+
+        if (!value.length) {
+          console.log("oooo");
+          this.#isEmpty.value = true;
+          return true;
+        } else {
+          this.#isEmpty.value = false;
+        }
+
         this.buildTableBody(value, this.#languages.value);
 
         return true;
@@ -46,7 +57,23 @@ export class TranslationsPage extends HTMLElement {
       set: (target, property, value) => {
         target[property] = value;
 
+        if (value) {
+          this.#isEmpty.value = false;
+        }
+
         this.setLoaderState(value);
+
+        return true;
+      },
+    });
+
+    this.#isEmpty = new Proxy({ value: false }, {
+      set: (target, property, value) => {
+        target[property] = value;
+
+        const empty = this.querySelector("empty-state");
+
+        empty.style.display = value ? "block" : "none";
 
         return true;
       },
@@ -70,6 +97,9 @@ export class TranslationsPage extends HTMLElement {
 
     if (!languagesData.length) {
       this.#isLoading.value = false;
+
+      this.#isEmpty.value = true;
+
       return;
     }
 
@@ -217,6 +247,8 @@ export class TranslationsPage extends HTMLElement {
                     </table-toolbar>
 
                     <table></table>
+
+                    <empty-state></empty-state>
 
                     <app-loader class="py-5"></app-loader>
                 </div>
