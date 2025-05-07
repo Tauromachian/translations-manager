@@ -8,64 +8,58 @@ import {
 import debounce from "../../utilities/debouncer.js";
 
 import { router } from "../services/router.js";
+import { ref, watch } from "../../utilities/reactivity.js";
 
 export class CollectionsPage extends HTMLElement {
   #isFormInserting = false;
   #selectedId;
   #form;
   #modalConfirmDelete;
-  #isLoading;
-  #collections;
+  #collections = ref([]);
   #breadcrumbs = [
     { name: "Collections", url: "" },
   ];
-  #isEmpty;
+  #isLoading = ref(false);
+  #isEmpty = ref(false);
 
   constructor() {
     super();
 
-    this.#collections = new Proxy({ value: [] }, {
-      set: (target, property, value) => {
-        target[property] = value;
-
-        if (!value.length) {
-          this.#isEmpty.value = true;
-          return true;
-        } else {
-          this.#isEmpty.value = false;
-        }
-
-        const dataTable = this.querySelector("data-table");
-        dataTable.setAttribute("items", JSON.stringify(value));
-
+    watch(this.#collections, (value) => {
+      if (!value.length) {
+        this.#isEmpty.value = true;
         return true;
-      },
+      } else {
+        this.#isEmpty.value = false;
+      }
+
+      const dataTable = this.querySelector("data-table");
+
+      if (!dataTable) return true;
+
+      dataTable.setAttribute("items", JSON.stringify(value));
+
+      return true;
     });
 
-    this.#isLoading = new Proxy({ value: false }, {
-      set: (target, property, value) => {
-        target[property] = value;
+    watch(this.#isLoading, (value) => {
+      if (value) {
+        this.#isEmpty.value = false;
+      }
 
-        if (value) {
-          this.#isEmpty.value = false;
-        }
+      this.setLoaderState(value);
 
-        this.setLoaderState(value);
-
-        return true;
-      },
+      return true;
     });
 
-    this.#isEmpty = new Proxy({ value: false }, {
-      set: (target, property, value) => {
-        target[property] = value;
+    watch(this.#isEmpty, (value) => {
+      const empty = this.querySelector("empty-state");
 
-        const empty = this.querySelector("empty-state");
+      if (!empty) return;
 
-        empty.style.display = value ? "block" : "none";
+      empty.style.display = value ? "block" : "none";
 
-        return true;
-      },
+      return true;
     });
   }
 
@@ -77,6 +71,8 @@ export class CollectionsPage extends HTMLElement {
 
   setLoaderState(state) {
     const loader = this.querySelector("app-loader");
+
+    if (!loader) return;
 
     loader.style.display = state ? "block" : "none";
   }
