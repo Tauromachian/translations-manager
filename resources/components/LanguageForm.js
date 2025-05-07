@@ -5,15 +5,6 @@ export class LanguageForm extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
-            <style>
-                .modal-actions {
-                    display: flex;
-                    justify-content: flex-end;
-                    width: 100%;
-                    margin-top: 0.5rem;
-                }
-            </style>
-
             <form>
                 <text-field label="Name" name="name"></text-field>
                 <text-field label="Code" name="code"></text-field>
