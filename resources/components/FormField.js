@@ -15,7 +15,7 @@ export class FormField extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["label", "name"];
+    return ["label", "name", "required"];
   }
 
   get value() {
@@ -25,6 +25,7 @@ export class FormField extends HTMLElement {
   set value(value) {
     this.#wrappedField.value = value;
     this.#internals.setFormValue(value);
+    this.updateValidity();
   }
 
   handleLabel() {
@@ -39,6 +40,14 @@ export class FormField extends HTMLElement {
     }
   }
 
+  updateValidity() {
+    this.#internals.setValidity(
+      this.#wrappedField.validity,
+      this.#wrappedField.validationMessage,
+      this.#wrappedField,
+    );
+  }
+
   handleWrappedField() {
     this.#wrappedField = this.getWrappedField();
 
@@ -46,6 +55,11 @@ export class FormField extends HTMLElement {
 
     this.#wrappedField.classList.add("wrapped-field");
     this.root.appendChild(this.#wrappedField);
+
+    const required = this.getAttribute("required");
+    if (typeof required === "string" || required) {
+      this.#wrappedField.setAttribute("required", true);
+    }
 
     const name = this.getAttribute("name");
     this.#wrappedField.setAttribute("name", name);
