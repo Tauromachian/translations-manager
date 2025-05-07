@@ -3,80 +3,60 @@ import { getTranslations } from "../services/translations-req.js";
 
 import { router } from "../services/router.js";
 
+import { ref, watch } from "../../utilities/reactivity.js";
+
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
     { name: "Collections", url: "/app" },
     { name: "Languages", url: "" },
   ];
   #collectionId;
-  #languages;
-  #translations;
-  #isLoading;
-  #isEmpty;
+  #languages = ref([]);
+  #translations = ref([]);
+  #isLoading = ref(false);
+  #isEmpty = ref(false);
 
   constructor() {
     super();
 
-    this.#languages = new Proxy({ value: [] }, {
-      set: (target, property, value) => {
-        target[property] = value;
+    watch(this.#languages, (value) => {
+      this.buildTableHeader(value);
 
-        this.buildTableHeader(value);
+      const translationsForm = this.querySelector("translations-form");
 
-        const translationsForm = this.querySelector("translations-form");
-        translationsForm.setAttribute(
-          "languages",
-          JSON.stringify(value),
-        );
+      if (!translationsForm) return true;
 
-        return true;
-      },
+      translationsForm.setAttribute(
+        "languages",
+        JSON.stringify(value),
+      );
     });
 
-    this.#translations = new Proxy({ value: [] }, {
-      set: (target, property, value) => {
-        target[property] = value;
+    watch(this.#translations, (value) => {
+      if (!value.length) {
+        this.#isEmpty.value = true;
+        return;
+      } else {
+        this.#isEmpty.value = false;
+      }
 
-        console.log(value);
-
-        if (!value.length) {
-          console.log("oooo");
-          this.#isEmpty.value = true;
-          return true;
-        } else {
-          this.#isEmpty.value = false;
-        }
-
-        this.buildTableBody(value, this.#languages.value);
-
-        return true;
-      },
+      this.buildTableBody(value, this.#languages.value);
     });
 
-    this.#isLoading = new Proxy({ value: false }, {
-      set: (target, property, value) => {
-        target[property] = value;
+    watch(this.#isLoading, (value) => {
+      if (value) {
+        this.#isEmpty.value = false;
+      }
 
-        if (value) {
-          this.#isEmpty.value = false;
-        }
-
-        this.setLoaderState(value);
-
-        return true;
-      },
+      this.setLoaderState(value);
     });
 
-    this.#isEmpty = new Proxy({ value: false }, {
-      set: (target, property, value) => {
-        target[property] = value;
+    watch(this.#isEmpty, (value) => {
+      const empty = this.querySelector("empty-state");
 
-        const empty = this.querySelector("empty-state");
+      if (!empty) return true;
 
-        empty.style.display = value ? "block" : "none";
-
-        return true;
-      },
+      empty.style.display = value ? "block" : "none";
     });
 
     this.#collectionId = router.route.params.id;
@@ -84,6 +64,8 @@ export class TranslationsPage extends HTMLElement {
 
   setLoaderState(state) {
     const loader = this.querySelector("app-loader");
+
+    if (!loader) return;
 
     loader.style.display = state ? "block" : "none";
   }
@@ -128,6 +110,8 @@ export class TranslationsPage extends HTMLElement {
   buildTableHeader(languages) {
     const table = this.querySelector("table");
 
+    if (!table) return;
+
     const tHead = document.createElement("thead");
     const row = document.createElement("tr");
 
@@ -151,6 +135,8 @@ export class TranslationsPage extends HTMLElement {
   }
 
   buildTableBody(translations, languages) {
+    if (!languages?.length) return;
+
     const rowsByKeys = {};
     const languagesCodesByIds = {};
 
