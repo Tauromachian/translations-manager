@@ -136,5 +136,6 @@ export class FormField extends HTMLElement {
 
     this.handleLabel();
     this.handleWrappedField();
+    this.updateValidity();
   }
 }
