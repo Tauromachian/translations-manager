@@ -47,12 +47,22 @@ export class FormField extends HTMLElement {
   }
 
   handleWrappedField() {
+    this.addElement();
+    this.handleAttrs();
+    this.handleEvents();
+  }
+
+  addElement() {
     this.#wrappedField = this.getWrappedField();
 
     if (!this.#wrappedField) return;
 
     this.#wrappedField.classList.add("wrapped-field");
     this.root.appendChild(this.#wrappedField);
+  }
+
+  handleAttrs() {
+    this.handleLabel();
 
     const required = this.getAttribute("required");
     if (typeof required === "string" || required) {
@@ -61,7 +71,9 @@ export class FormField extends HTMLElement {
 
     const name = this.getAttribute("name");
     this.#wrappedField.setAttribute("name", name);
+  }
 
+  handleEvents() {
     this.#wrappedField.addEventListener("input", () => {
       this.updateValidity();
 
