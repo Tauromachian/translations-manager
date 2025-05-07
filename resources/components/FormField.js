@@ -2,16 +2,14 @@ export class FormField extends HTMLElement {
   #internals;
   #wrappedField;
 
+  static formAssociated = true;
+
   constructor() {
     super();
     this.root = this.attachShadow({ mode: "open" });
 
     this.#internals = this.attachInternals();
     this.#wrappedField = null;
-  }
-
-  static get formAssociated() {
-    return true;
   }
 
   static get observedAttributes() {
