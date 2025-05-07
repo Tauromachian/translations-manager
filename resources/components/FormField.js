@@ -63,6 +63,8 @@ export class FormField extends HTMLElement {
     this.#wrappedField.setAttribute("name", name);
 
     this.#wrappedField.addEventListener("input", () => {
+      this.updateValidity();
+
       this.#internals.setFormValue(this.#wrappedField.value);
     });
 
