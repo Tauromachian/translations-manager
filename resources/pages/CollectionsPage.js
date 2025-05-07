@@ -85,7 +85,16 @@ export class CollectionsPage extends HTMLElement {
   onSubmit(event) {
     event.preventDefault();
 
-    const data = new FormData(event.target);
+    const form = event.target;
+
+    if (!form) return;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = new FormData(form);
     const jsonData = Object.fromEntries(data);
 
     if (this.#isFormInserting) {
