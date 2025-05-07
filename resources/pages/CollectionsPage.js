@@ -38,8 +38,6 @@ export class CollectionsPage extends HTMLElement {
       if (!dataTable) return true;
 
       dataTable.setAttribute("items", JSON.stringify(value));
-
-      return true;
     });
 
     watch(this.#isLoading, (value) => {
@@ -48,8 +46,6 @@ export class CollectionsPage extends HTMLElement {
       }
 
       this.setLoaderState(value);
-
-      return true;
     });
 
     watch(this.#isEmpty, (value) => {
@@ -58,8 +54,6 @@ export class CollectionsPage extends HTMLElement {
       if (!empty) return;
 
       empty.style.display = value ? "block" : "none";
-
-      return true;
     });
   }
 
