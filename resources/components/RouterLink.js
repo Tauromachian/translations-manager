@@ -28,3 +28,5 @@ export class RouterLink extends HTMLElement {
     });
   }
 }
+
+customElements.define("router-link", RouterLink);

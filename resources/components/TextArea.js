@@ -11,3 +11,5 @@ export class TextArea extends FormField {
 
   getEnterEvent() {}
 }
+
+customElements.define("text-area", TextArea);

@@ -21,3 +21,5 @@ export class AppLoader extends HTMLElement {
         `;
   }
 }
+
+customElements.define("app-loader", AppLoader);

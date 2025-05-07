@@ -62,3 +62,5 @@ export class EmptyState extends HTMLElement {
     `;
   }
 }
+
+customElements.define("empty-state", EmptyState);

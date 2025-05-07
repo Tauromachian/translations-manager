@@ -1,3 +1,6 @@
+import "./TextField.js";
+import "./AppButton.js";
+
 export class TableToolbar extends HTMLElement {
   constructor() {
     super();
@@ -53,3 +56,5 @@ export class TableToolbar extends HTMLElement {
       });
   }
 }
+
+customElements.define("table-toolbar", TableToolbar);

@@ -141,3 +141,5 @@ export class DataTable extends HTMLElement {
     this.root.appendChild(template.content.cloneNode(true));
   }
 }
+
+customElements.define("data-table", DataTable);

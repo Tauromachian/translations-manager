@@ -53,3 +53,5 @@ export class ModalConfirmDelete extends HTMLElement {
     });
   }
 }
+
+customElements.define("modal-confirm-delete", ModalConfirmDelete);

@@ -1,3 +1,5 @@
+import "../components/RouterLink.js";
+
 export class AppBreadcrumbs extends HTMLElement {
   constructor() {
     super();
@@ -74,3 +76,5 @@ export class AppBreadcrumbs extends HTMLElement {
     });
   }
 }
+
+customElements.define("app-breadcrumbs", AppBreadcrumbs);

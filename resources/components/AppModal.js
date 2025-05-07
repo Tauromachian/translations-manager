@@ -106,3 +106,5 @@ export class AppModal extends HTMLElement {
     }
   }
 }
+
+customElements.define("app-modal", AppModal);

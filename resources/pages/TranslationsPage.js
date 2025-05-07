@@ -1,3 +1,16 @@
+import "../components/AppBreadcrumbs.js";
+import "../components/AppLoader.js";
+import "../components/DataTable.js";
+import "../components/EmptyState.js";
+import "../components/AppModal.js";
+import "../components/AppButton.js";
+import "../components/TableToolbar.js";
+import "../components/TextArea.js";
+import "../components/TextField.js";
+import "../components/ModalConfirmDelete.js";
+import "../components/LanguageForm.js";
+import "../components/TranslationsForm.js";
+
 import { getLanguages, postLanguage } from "../services/languages-req.js";
 import { getTranslations } from "../services/translations-req.js";
 

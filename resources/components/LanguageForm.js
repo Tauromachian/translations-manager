@@ -41,3 +41,5 @@ export class LanguageForm extends HTMLElement {
     });
   }
 }
+
+customElements.define("language-form", LanguageForm);

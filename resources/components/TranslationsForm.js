@@ -58,3 +58,5 @@ export class TranslationsForm extends HTMLElement {
         `;
   }
 }
+
+customElements.define("translations-form", TranslationsForm);

@@ -104,3 +104,5 @@ export class AppButton extends HTMLElement {
     }
   }
 }
+
+customElements.define("app-button", AppButton);

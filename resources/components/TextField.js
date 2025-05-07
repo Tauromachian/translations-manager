@@ -28,3 +28,5 @@ export class TextField extends FormField {
     }
   }
 }
+
+customElements.define("text-field", TextField);
