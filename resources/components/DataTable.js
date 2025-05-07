@@ -45,7 +45,14 @@ export class DataTable extends HTMLElement {
 
     const table = this.root.querySelector("table");
 
-    const tHead = document.createElement("thead");
+    let tHead = table.querySelector("thead");
+
+    if (tHead) {
+      table.removeChild(tHead);
+    }
+
+    tHead = document.createElement("thead");
+
     const row = document.createElement("tr");
 
     for (const header of this.#headers) {
@@ -65,7 +72,14 @@ export class DataTable extends HTMLElement {
     }
 
     const table = this.root.querySelector("table");
-    const tBody = document.createElement("tbody");
+
+    let tBody = table.querySelector("tbody");
+
+    if (tBody) {
+      table.removeChild(tBody);
+    }
+
+    tBody = document.createElement("tbody");
 
     for (const item of this.#items) {
       const row = document.createElement("tr");
