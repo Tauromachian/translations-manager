@@ -6,8 +6,8 @@ export class LanguageForm extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
             <form>
-                <text-field label="Name" name="name"></text-field>
-                <text-field label="Code" name="code"></text-field>
+                <text-field label="Name" name="name" required></text-field>
+                <text-field label="Code" name="code" required></text-field>
 
                 <div class="modal-actions">
                     <app-button type="submit">Add Language</app-button>
@@ -18,6 +18,15 @@ export class LanguageForm extends HTMLElement {
     const form = this.querySelector("form");
     form.addEventListener("submit", (event) => {
       event.preventDefault();
+
+      const form = event.target;
+
+      if (!form) return;
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
 
       const formData = new FormData(event.target);
       const jsonData = Object.fromEntries(formData);
