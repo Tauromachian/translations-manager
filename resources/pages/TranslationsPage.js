@@ -215,24 +215,6 @@ export class TranslationsPage extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
-            <style>
-                .actions-column {
-                    display: flex;
-                    gap: .5rem;
-                    justify-content: left;
-                }
-                
-                .actions-column app-button {
-                    width: fit-content;
-                }
-
-                .modal-actions {
-                    display: flex;
-                    justify-content: flex-end;
-                    width: 100%;
-                    margin-top: 0.5rem;
-                }
-            </style>
             <div class="container mt-5">
                 <div class="breadcrumbs-wrapper my-2"></div>
 
@@ -260,7 +242,6 @@ export class TranslationsPage extends HTMLElement {
             <app-modal title="Add Translations" width="400px">
                 <translations-form></translations-form>
             </app-modal>
-
         `;
 
     this.loadData();
