@@ -256,7 +256,7 @@ export class CollectionsPage extends HTMLElement {
             <app-modal title="Create Collection" width="400px">
                 <form>
                     <text-field label="Name" name="name" required></text-field>
-                    <text-area label="Description" name="description"></text-area>
+                    <text-area label="Description (optional)" name="description"></text-area>
 
                     <div class="modal-actions">
                         <app-button type="submit">Create</app-button>
