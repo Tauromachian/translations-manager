@@ -70,7 +70,10 @@ export class TranslationsPage extends HTMLElement {
         this.#isEmpty.value = false;
       }
 
-      this.setLoaderState(value);
+      const loader = this.querySelector("app-loader");
+      if (!loader) return;
+
+      loader.style.display = state ? "block" : "none";
     });
 
     watch(this.#isEmpty, (value) => {
@@ -82,14 +85,6 @@ export class TranslationsPage extends HTMLElement {
     });
 
     this.#collectionId = router.route.params.id;
-  }
-
-  setLoaderState(state) {
-    const loader = this.querySelector("app-loader");
-
-    if (!loader) return;
-
-    loader.style.display = state ? "block" : "none";
   }
 
   async loadData(searchText) {
@@ -253,5 +248,11 @@ export class TranslationsPage extends HTMLElement {
 
       this.loadData();
     });
+
+    const dataTable = this.querySelector("data-table");
+    dataTable.shadowRoot.querySelector("table").addEventListener(
+      "click",
+      this.onTableAction.bind(this),
+    );
   }
 }
