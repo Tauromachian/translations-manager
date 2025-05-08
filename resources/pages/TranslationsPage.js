@@ -53,7 +53,16 @@ export class TranslationsPage extends HTMLElement {
         this.#isEmpty.value = false;
       }
 
-      this.buildTableBody(value, this.#languages.value);
+      const dataTable = this.querySelector("data-table");
+
+      if (!dataTable) return true;
+
+      const formattedTableData = this.formatTableData(
+        value,
+        this.#languages.value,
+      );
+
+      dataTable.setAttribute("items", JSON.stringify(formattedTableData));
     });
 
     watch(this.#isLoading, (value) => {
@@ -121,35 +130,23 @@ export class TranslationsPage extends HTMLElement {
   }
 
   buildTableHeader(languages) {
-    const table = this.querySelector("table");
+    const dataTable = this.querySelector("data-table");
 
-    if (!table) return;
+    if (!dataTable) return;
 
-    const tHead = document.createElement("thead");
-    const row = document.createElement("tr");
+    const headers = [
+      { key: "key", title: "Key" },
+      ...languages.map((language) => ({
+        key: language.code,
+        title: language.name,
+      })),
+      { key: "actions", title: "Actions" },
+    ];
 
-    const keyTh = document.createElement("th");
-    keyTh.innerHTML = "Key";
-    row.appendChild(keyTh);
-
-    for (const language of languages) {
-      const th = document.createElement("th");
-      th.innerHTML = language.name;
-      row.appendChild(th);
-    }
-
-    const actionsTh = document.createElement("th");
-    actionsTh.innerHTML = "Actions";
-    row.appendChild(actionsTh);
-
-    tHead.appendChild(row);
-
-    table.appendChild(tHead);
+    dataTable.setAttribute("headers", JSON.stringify(headers));
   }
 
-  buildTableBody(translations, languages) {
-    if (!languages?.length) return;
-
+  formatTableData(translations, languages) {
     const rowsByKeys = {};
     const languagesCodesByIds = {};
 
@@ -175,35 +172,7 @@ export class TranslationsPage extends HTMLElement {
       }
     }
 
-    const tableEl = this.querySelector("table");
-    const tableBodyEl = document.createElement("tbody");
-
-    for (const rowKey in rowsByKeys) {
-      const row = document.createElement("tr");
-
-      for (const cell in rowsByKeys[rowKey]) {
-        const cellEl = document.createElement("td");
-        cellEl.textContent = rowsByKeys[rowKey][cell];
-
-        row.appendChild(cellEl);
-      }
-
-      const actionsCell = document.createElement("td");
-      actionsCell.innerHTML = `
-            <span class="actions-column">
-                <app-button class="edit" data-value="${rowKey}">
-                    Edit
-                </app-button>
-                <app-button class="delete" data-value="${rowKey}">
-                    Delete
-                </app-button>
-            </span>
-            `;
-
-      row.appendChild(actionsCell);
-      tableBodyEl.appendChild(row);
-    }
-    tableEl.appendChild(tableBodyEl);
+    return Object.values(rowsByKeys);
   }
 
   buildBreadcrumbs() {
@@ -227,7 +196,16 @@ export class TranslationsPage extends HTMLElement {
                         </div>
                     </table-toolbar>
 
-                    <table></table>
+                    <data-table>
+                        <div slot="actions" part="actions-column" class="actions-column">
+                            <app-button class="edit">
+                                Edit
+                            </app-button>
+                            <app-button class="delete">
+                                Delete
+                            </app-button>
+                        </div>
+                    </data-table>
 
                     <empty-state></empty-state>
 
