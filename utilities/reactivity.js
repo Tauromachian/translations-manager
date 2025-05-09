@@ -1,10 +1,10 @@
-export function ref(value) {
-  return new Proxy({ value }, {
-    set: (target, property, value) => {
+export function reactive(objectToWrap) {
+  return new Proxy(objectToWrap, {
+    set(target, property, value) {
       target[property] = value;
 
-      if (target?.watchers?.length) {
-        target.watchers.forEach((callback) => callback(value));
+      if (target?._watchers?.length) {
+        target._watchers.forEach((callback) => callback(value));
       }
 
       return true;
@@ -12,10 +12,14 @@ export function ref(value) {
   });
 }
 
+export function ref(value) {
+  return reactive({ value, _watchers: [] });
+}
+
 export function watch(ref, callback) {
-  if (ref?.watchers?.length) {
-    ref.watchers.push(callback);
+  if (ref?._watchers?.length) {
+    ref._watchers.push(callback);
   } else {
-    ref.watchers = [callback];
+    ref._watchers = [callback];
   }
 }
