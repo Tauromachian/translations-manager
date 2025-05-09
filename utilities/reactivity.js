@@ -1,6 +1,5 @@
 export function ref(value) {
   return new Proxy({ value }, {
-    get: (target, property) => target[property],
     set: (target, property, value) => {
       target[property] = value;
 
