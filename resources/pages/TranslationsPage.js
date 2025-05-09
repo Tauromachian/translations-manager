@@ -170,6 +170,32 @@ export class TranslationsPage extends HTMLElement {
     return Object.values(rowsByKeys);
   }
 
+  onTableAction(event) {
+    const button = event.target;
+    const closestTd = button.closest("tr");
+
+    const collectionId = closestTd.dataset.value;
+
+    if (event.target.closest(".delete")) {
+      this.#modalConfirmDelete.setAttribute("open", true);
+      this.#selectedId = collectionId;
+    }
+
+    if (event.target.closest(".edit")) {
+      this.openModal.call(this, false, collectionId);
+    }
+
+    if (event.target.closest(".go-to-translation")) {
+      router.go(`/app/collection/${collectionId}`);
+    }
+  }
+
+  onModalDeleteConfirmation() {
+    this.deleteCollection(this.#selectedId);
+    this.#modalConfirmDelete.setAttribute("open", false);
+    this.loadData();
+  }
+
   buildBreadcrumbs() {
     const breadcrumbs = document.createElement("app-breadcrumbs");
     breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
@@ -215,6 +241,8 @@ export class TranslationsPage extends HTMLElement {
             <app-modal title="Add Translations" width="400px">
                 <translations-form></translations-form>
             </app-modal>
+
+            <modal-confirm-delete></modal-confirm-delete>
         `;
 
     this.loadData();
@@ -253,6 +281,12 @@ export class TranslationsPage extends HTMLElement {
     dataTable.shadowRoot.querySelector("table").addEventListener(
       "click",
       this.onTableAction.bind(this),
+    );
+
+    this.#modalConfirmDelete = this.querySelector("modal-confirm-delete");
+    this.#modalConfirmDelete.addEventListener(
+      "click-delete",
+      this.onModalDeleteConfirmation.bind(this),
     );
   }
 }
