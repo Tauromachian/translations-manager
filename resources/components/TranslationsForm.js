@@ -12,6 +12,10 @@ export class TranslationsForm extends HTMLElement {
 
   attributeChangedCallback(name, _, newValue) {
     if (name === "languages") {
+      if (this.#form) {
+        this.#form.remove();
+      }
+
       this.#form = document.createElement("form");
       this.appendChild(this.#form);
 
