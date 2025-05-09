@@ -1,4 +1,6 @@
 export class TranslationsForm extends HTMLElement {
+  #fields = [];
+
   constructor() {
     super();
   }
@@ -13,7 +15,7 @@ export class TranslationsForm extends HTMLElement {
       const form = document.createElement("form");
       formWrapper.appendChild(form);
 
-      const fields = JSON.parse(newValue)
+      this.#fields = JSON.parse(newValue)
         .map(
           (lang) => `
                             <text-field label="${lang.name}"></text-field>
@@ -22,7 +24,7 @@ export class TranslationsForm extends HTMLElement {
         .join("");
 
       form.innerHTML = `
-            ${fields}
+            ${this.#fields}
             <div class="modal-actions">
                 <app-button>Add Translations</app-button>
             </div>
