@@ -1,5 +1,6 @@
 export class TranslationsForm extends HTMLElement {
   #fields = [];
+  #form;
 
   constructor() {
     super();
@@ -11,8 +12,8 @@ export class TranslationsForm extends HTMLElement {
 
   attributeChangedCallback(name, _, newValue) {
     if (name === "languages") {
-      const form = document.createElement("form");
-      this.appendChild(form);
+      this.#form = document.createElement("form");
+      this.appendChild(this.#form);
 
       this.#fields = JSON.parse(newValue)
         .map(
@@ -22,7 +23,7 @@ export class TranslationsForm extends HTMLElement {
         )
         .join("");
 
-      form.innerHTML = `
+      this.#form.innerHTML = `
             ${this.#fields}
             <div class="modal-actions">
                 <app-button>Add Translations</app-button>
