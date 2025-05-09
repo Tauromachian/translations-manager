@@ -21,7 +21,7 @@ import { ref, watch } from "../../utilities/reactivity.js";
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
     { name: "Collections", url: "/app" },
-    { name: "Languages", url: "" },
+    { name: "Translations", url: "" },
   ];
   #collectionId;
   #languages = ref([]);
@@ -182,7 +182,7 @@ export class TranslationsPage extends HTMLElement {
             <div class="container mt-5">
                 <div class="breadcrumbs-wrapper my-2"></div>
 
-                <h1>Languages</h1>
+                <h1>Translations</h1>
 
                 <div class="card">
                     <table-toolbar class="p-1" action-button-text="Add Language">
