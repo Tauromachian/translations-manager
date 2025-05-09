@@ -73,7 +73,7 @@ export class TranslationsPage extends HTMLElement {
       const loader = this.querySelector("app-loader");
       if (!loader) return;
 
-      loader.style.display = state ? "block" : "none";
+      loader.style.display = value ? "block" : "none";
     });
 
     watch(this.#isEmpty, (value) => {
