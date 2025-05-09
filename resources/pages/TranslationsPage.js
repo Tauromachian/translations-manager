@@ -28,6 +28,8 @@ export class TranslationsPage extends HTMLElement {
   #translations = ref([]);
   #isLoading = ref(false);
   #isEmpty = ref(false);
+  #modalConfirmDelete = false;
+  #selectedId;
 
   constructor() {
     super();
