@@ -11,9 +11,8 @@ export class TranslationsForm extends HTMLElement {
 
   attributeChangedCallback(name, _, newValue) {
     if (name === "languages") {
-      const formWrapper = this.querySelector("div");
       const form = document.createElement("form");
-      formWrapper.appendChild(form);
+      this.appendChild(form);
 
       this.#fields = JSON.parse(newValue)
         .map(
@@ -55,8 +54,6 @@ export class TranslationsForm extends HTMLElement {
                     margin-top: 0.5rem;
                 }
             </style>
-
-            <div></div>
         `;
   }
 }
