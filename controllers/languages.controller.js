@@ -15,15 +15,21 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const { name, code } = req.body;
-
-  if (!name) {
+  if (!req.body.name) {
     return res.status(400).json({ error: "Name is required" });
+  }
+
+  if (!req.body.code) {
+    return res.status(400).json({ error: "Code is required" });
+  }
+
+  if (!req.body.collectionId) {
+    return res.status(400).json({ error: "Collection ID is required" });
   }
 
   const language = await db
     .insert(languagesSchema)
-    .values({ name, code })
+    .values(req.body)
     .returning();
 
   res.json(language);
