@@ -270,8 +270,15 @@ export class TranslationsPage extends HTMLElement {
 
     const languageForm = this.querySelector("language-form");
 
-    languageForm.addEventListener("form-submit", (event) => {
-      this.postLanguageData(event.detail);
+    languageForm.addEventListener("form-submit", async (event) => {
+      if (!router?.route?.params?.id) return;
+
+      const language = {
+        ...event.detail,
+        collectionId: router.route.params.id,
+      };
+
+      await this.postLanguageData(language);
 
       const languagesModal = this.querySelector("app-modal");
       languagesModal.setAttribute("open", false);
