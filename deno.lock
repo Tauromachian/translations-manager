@@ -11,6 +11,7 @@
     "npm:drizzle-orm@*": "0.42.0_@types+pg@8.11.13_pg@8.14.1",
     "npm:drizzle-orm@0.42": "0.42.0_@types+pg@8.11.13_pg@8.14.1",
     "npm:express@5": "5.1.0",
+    "npm:iconify-icon@3": "3.0.0",
     "npm:morgan@*": "1.10.0",
     "npm:node-postgres@~0.6.2": "0.6.2",
     "npm:pg@^8.14.1": "8.14.1",
@@ -185,6 +186,9 @@
     },
     "@esbuild/win32-x64@0.25.2": {
       "integrity": "sha512-kM3HKb16VIXZyIeVrM1ygYmZBKybX8N4p754bw390wGO3Tf2j4L2/WYL+4suWujpgf6GBYs3jv7TyUivdd05JA=="
+    },
+    "@iconify/types@2.0.0": {
+      "integrity": "sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg=="
     },
     "@jogarcia/mgrid@1.1.0": {
       "integrity": "sha512-gX7g+U6dbv/dHMhiMIEenTDdHLbczMjL4hPKfZ3TDF6WLBG+0eX3F0U2nnJSF/lmt9zrOv/95G+rnJvmVDLUAQ=="
@@ -561,6 +565,12 @@
         "setprototypeof",
         "statuses",
         "toidentifier"
+      ]
+    },
+    "iconify-icon@3.0.0": {
+      "integrity": "sha512-yPcnpkn8HUEUckrxxJBOer3jbGv3bqozHsLMLBRxhk3As1X76BgV2mS2a1HTNOIagR8nUs30H3qAd9GLe8Mnlg==",
+      "dependencies": [
+        "@iconify/types"
       ]
     },
     "iconv-lite@0.6.3": {
@@ -1046,6 +1056,7 @@
       "npm:dotenv@^16.5.0",
       "npm:drizzle-kit@0.31",
       "npm:drizzle-orm@0.42",
+      "npm:iconify-icon@3",
       "npm:node-postgres@~0.6.2",
       "npm:pg@^8.14.1"
     ]
