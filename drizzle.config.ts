@@ -11,6 +11,7 @@ ${process.env.DB_USER}:${process.env.DB_PASSWORD}@${process.env.DB_HOST}:${proce
 export default defineConfig({
   dialect: "postgresql",
   schema: "./database/schema/*",
+  out: "./database/drizzle",
   dbCredentials: {
     url: postgresUrl,
   },
