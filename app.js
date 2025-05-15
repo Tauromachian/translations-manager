@@ -15,7 +15,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.use(express.static(join(Deno.cwd(), "dist")));
+app.use(express.static(join(Deno.cwd(), "public")));
 
 app.set("query parser", "extended");
 

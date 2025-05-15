@@ -2,9 +2,9 @@ import { defineConfig } from "npm:vite";
 import { join } from "https://deno.land/std/path/mod.ts";
 
 export default defineConfig({
-  root: "client", // Source directory for frontend
+  publicDir: false,
   build: {
-    outDir: "../dist", // Output to project root/dist/
+    outDir: "public", // Output to project root/dist/
     emptyOutDir: true, // Clear dist/ before building
     minify: Deno.env.get("APP_ENV") === "production",
     rollupOptions: {
