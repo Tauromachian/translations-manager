@@ -36,7 +36,7 @@ export class TableToolbar extends HTMLElement {
               }
           </style>
 
-          <text-field></text-field>
+          <text-field append-inner-icon="material-symbols:search"></text-field>
           <app-button>${actionButtonText}</app-button>
           <slot name="append"></slot>
       `;
