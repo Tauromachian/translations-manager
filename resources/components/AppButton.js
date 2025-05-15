@@ -11,25 +11,26 @@ export class AppButton extends HTMLElement {
   }
 
   makeButton() {
-    const to = this.getAttribute("to");
     const type = this.getAttribute("type");
-
-    let buttonDefinition = "";
-
-    buttonDefinition = `<button class="button"><slot></slot></button>`;
-
-    if (type) {
-      buttonDefinition =
-        `<button type="${type}" class="button"><slot></slot></button>`;
-    }
+    const to = this.getAttribute("to");
 
     if (to) {
-      buttonDefinition = `<router-link to="/app/${
-        to === "/" ? "" : to
-      }" class="button"><slot></slot></router-link>`;
+      const button = document.createElement("router-link");
+      button.setAttribute("to", to);
+      button.setAttribute("class", "button");
+      button.innerHTML = `<slot></slot>`;
+      return button;
     }
 
-    return buttonDefinition;
+    const button = document.createElement("button");
+    button.setAttribute("class", "button");
+    button.innerHTML = `<slot></slot><span class="loader"></span>`;
+
+    if (type) {
+      button.setAttribute("type", type);
+    }
+
+    return button;
   }
 
   handleFormSubmit() {
@@ -62,8 +63,6 @@ export class AppButton extends HTMLElement {
 
   connectedCallback() {
     const template = document.createElement("template");
-
-    const buttonString = this.makeButton();
 
     template.innerHTML = `
             <style>
@@ -109,13 +108,14 @@ export class AppButton extends HTMLElement {
                     color: var(--black);
                 }
             </style>
-
-            ${buttonString}
         `;
 
     this.root.appendChild(template.content.cloneNode(true));
 
     this.#button = this.root.querySelector("button");
+
+    const button = this.makeButton();
+    this.root.appendChild(button);
 
     this.handleFormSubmit();
     this.handleButtonVariants();
