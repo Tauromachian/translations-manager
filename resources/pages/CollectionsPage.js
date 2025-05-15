@@ -16,10 +16,10 @@ import {
   putCollection,
 } from "../services/collections-req.js";
 
-import debounce from "../../utilities/debouncer.js";
+import debounce from "../../utils/debouncer.js";
 
 import { router } from "../services/router.js";
-import { ref, watch } from "../../utilities/reactivity.js";
+import { ref, watch } from "../../utils/reactivity.js";
 
 export class CollectionsPage extends HTMLElement {
   #isFormInserting = false;

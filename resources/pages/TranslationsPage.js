@@ -16,7 +16,7 @@ import { getTranslations } from "../services/translations-req.js";
 
 import { router } from "../services/router.js";
 
-import { ref, watch } from "../../utilities/reactivity.js";
+import { ref, watch } from "../../utils/reactivity.js";
 
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
