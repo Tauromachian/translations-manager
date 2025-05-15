@@ -13,7 +13,7 @@ export class FormField extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["label", "name", "required", "apppend-inner-icon"];
+    return ["label", "name", "required", "apppend-inner-icon", "disabled"];
   }
 
   get value() {
