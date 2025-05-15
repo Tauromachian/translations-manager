@@ -1,3 +1,5 @@
+import "iconify-icon";
+
 export class FormField extends HTMLElement {
   #internals;
   #wrappedField;
@@ -58,7 +60,13 @@ export class FormField extends HTMLElement {
     if (!this.#wrappedField) return;
 
     this.#wrappedField.classList.add("wrapped-field");
-    this.root.appendChild(this.#wrappedField);
+
+    const wrapper = this.root.querySelector(".wrapper");
+
+    if (!wrapper) return;
+
+    wrapper.appendChild(this.#wrappedField);
+    this.handleIcons();
   }
 
   handleAttrs() {
@@ -83,6 +91,26 @@ export class FormField extends HTMLElement {
     this.#wrappedField.addEventListener("keydown", (event) => {
       this.getKeydownEvent(event, this.#internals, this.#wrappedField);
     });
+  }
+
+  handleIcons() {
+    const iconString = this.getAttribute("append-inner-icon");
+
+    if (!iconString) return;
+
+    if (typeof iconString !== "string") {
+      throw new Error("Iconify icon is used. Icon should be a string");
+    }
+
+    const icon = document.createElement("iconify-icon");
+    icon.setAttribute("icon", iconString);
+    icon.setAttribute("width", 24);
+    icon.setAttribute("height", 24);
+    icon.classList += "append-inner-icon";
+
+    const wrapper = this.root.querySelector(".wrapper");
+
+    wrapper.appendChild(icon);
   }
 
   formAssociatedCallback(form) {
@@ -111,6 +139,12 @@ export class FormField extends HTMLElement {
                   width: 100%;
               }
 
+              .wrapper {
+                  position: relative;
+                  display: inline-block;
+                  width: fit-content;
+              }
+
               .wrapped-field {
                   padding: 10px 12px;
                   font-family: Arial, sans-serif;
@@ -127,9 +161,20 @@ export class FormField extends HTMLElement {
                   border-color: var(--primary-10);
                   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
               }
+
+              .append-inner-icon {
+                  position: absolute;
+                  right: 8px;
+                  top: 50%;
+                  transform: translateY(-50%);
+                  display: flex;
+                  align-items: center;
+              }
           </style>
 
           <label></label>
+
+          <div class="wrapper"></div>
       `;
 
     this.root.appendChild(template.content.cloneNode(true));
