@@ -10,12 +10,9 @@ export class AppButton extends HTMLElement {
     return ["to", "type", "color"];
   }
 
-  connectedCallback() {
-    const template = document.createElement("template");
-
+  makeButton() {
     const to = this.getAttribute("to");
     const type = this.getAttribute("type");
-    const color = this.getAttribute("color");
 
     let buttonDefinition = "";
 
@@ -31,6 +28,42 @@ export class AppButton extends HTMLElement {
         to === "/" ? "" : to
       }" class="button"><slot></slot></router-link>`;
     }
+
+    return buttonDefinition;
+  }
+
+  handleFormSubmit() {
+    const form = this.closest("form");
+
+    if (!form) return;
+
+    this.#button.addEventListener("click", () => {
+      this.dispatchEvent(new CustomEvent("click"));
+
+      if (form && type === "submit") {
+        const submitEvent = new Event("submit", {
+          cancelable: true,
+          bubbles: true,
+        });
+        form.dispatchEvent(submitEvent);
+      }
+    });
+  }
+
+  handleButtonVariants() {
+    const color = this.getAttribute("color");
+
+    if (!color) return;
+
+    if (color === "danger") {
+      this.#button.classList.add("button--danger");
+    }
+  }
+
+  connectedCallback() {
+    const template = document.createElement("template");
+
+    const buttonString = this.makeButton();
 
     template.innerHTML = `
             <style>
@@ -77,31 +110,15 @@ export class AppButton extends HTMLElement {
                 }
             </style>
 
-            ${buttonDefinition}
+            ${buttonString}
         `;
 
     this.root.appendChild(template.content.cloneNode(true));
+
     this.#button = this.root.querySelector("button");
 
-    if (!this.#button) return;
-
-    const form = this.closest("form");
-
-    this.#button.addEventListener("click", () => {
-      this.dispatchEvent(new CustomEvent("click"));
-
-      if (form && type === "submit") {
-        const submitEvent = new Event("submit", {
-          cancelable: true,
-          bubbles: true,
-        });
-        form.dispatchEvent(submitEvent);
-      }
-    });
-
-    if (color === "danger") {
-      this.#button.classList.add("button--danger");
-    }
+    this.handleFormSubmit();
+    this.handleButtonVariants();
   }
 }
 
