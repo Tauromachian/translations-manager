@@ -112,10 +112,8 @@ export class AppButton extends HTMLElement {
 
     this.root.appendChild(template.content.cloneNode(true));
 
-    this.#button = this.root.querySelector("button");
-
-    const button = this.makeButton();
-    this.root.appendChild(button);
+    this.#button = this.makeButton();
+    this.root.appendChild(this.#button);
 
     this.handleFormSubmit();
     this.handleButtonVariants();
