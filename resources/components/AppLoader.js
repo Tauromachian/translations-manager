@@ -1,4 +1,33 @@
 export class AppLoader extends HTMLElement {
+  get observedAttributes() {
+    return ["width", "height"];
+  }
+
+  handleSize() {
+    const loader = this.querySelector(".loader");
+
+    let width = this.getAttribute("width");
+    let height = this.getAttribute("height");
+
+    if (width) {
+      if (!Number.isNaN(Number(width))) {
+        width = `${width}px`;
+      }
+
+      loader.style.width = width;
+      console.log(width);
+      console.log(loader.style.width);
+    }
+
+    if (height) {
+      if (!Number.isNaN(Number(height))) {
+        height = `${height}px`;
+      }
+
+      loader.style.height = height;
+    }
+  }
+
   connectedCallback() {
     this.innerHTML = `
             <style>
@@ -9,7 +38,6 @@ export class AppLoader extends HTMLElement {
                     width: 40px;
                     height: 40px;
                     animation: spin 0.5s linear infinite;
-                    margin: 50px auto;
                 }
 
                 @keyframes spin {
@@ -19,6 +47,8 @@ export class AppLoader extends HTMLElement {
             </style>
             <div class="loader"></div>
         `;
+
+    this.handleSize();
   }
 }
 
