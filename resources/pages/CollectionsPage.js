@@ -228,7 +228,9 @@ export class CollectionsPage extends HTMLElement {
 
                     <empty-state></empty-state>
 
-                    <app-loader class="py-5"></app-loader>
+                    <div class="table-loader">
+                        <app-loader class="py-5"></app-loader>
+                    </div>
                 </div>
             </div>
 

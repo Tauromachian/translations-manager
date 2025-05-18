@@ -232,7 +232,9 @@ export class TranslationsPage extends HTMLElement {
 
                     <empty-state></empty-state>
 
-                    <app-loader class="py-5"></app-loader>
+                    <div class="table-loaderl">
+                        <app-loader class="py-5"></app-loader>
+                    </div>
                 </div>
             </div>
 

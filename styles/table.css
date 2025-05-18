@@ -30,3 +30,8 @@ tr:hover {
 td {
   font-size: 0.95em;
 }
+
+.table-loader {
+  display: flex;
+  justify-content: center;
+}
