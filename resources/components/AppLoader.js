@@ -15,8 +15,6 @@ export class AppLoader extends HTMLElement {
       }
 
       loader.style.width = width;
-      console.log(width);
-      console.log(loader.style.width);
     }
 
     if (height) {
