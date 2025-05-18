@@ -3,6 +3,7 @@ import { db } from "../config/db.ts";
 import { eq, sql } from "drizzle-orm";
 
 import { collections as collectionsSchema } from "../database/schema/collections.ts";
+import { CollectionSchema } from "../dtos/collection.js";
 
 async function doFullTextSearch(query) {
   const result = await db.execute(sql`
@@ -34,8 +35,10 @@ export async function index(req, res) {
 export async function store(req, res) {
   const { name, description } = req.body;
 
-  if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+  const result = CollectionSchema.omit({ id: true }).safeParse(req.body);
+
+  if (!result.success) {
+    return res.status(400).json(result.error);
   }
 
   const collection = await db
@@ -47,11 +50,15 @@ export async function store(req, res) {
 }
 
 export async function edit(req, res) {
-  const { name } = req.body;
   const { id } = req.params;
 
-  if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+  const result = CollectionSchema.safeParse({
+    ...req.body,
+    id,
+  });
+
+  if (!result.success) {
+    return res.status(400).json(result.error);
   }
 
   const collection = await db.insert(collectionsSchema).values({
