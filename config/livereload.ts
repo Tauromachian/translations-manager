@@ -18,26 +18,14 @@ export function start() {
   });
 
   (async function startFileWatcher() {
-    const distWatcher = Deno.watchFs(join(Deno.cwd(), "public"), {
-      recursive: true,
-    });
-    const viewsWatcher = Deno.watchFs(join(Deno.cwd(), "views"), {
+    const distWatcher = Deno.watchFs([
+      join(Deno.cwd(), "public"),
+      join(Deno.cwd(), "views"),
+    ], {
       recursive: true,
     });
 
     for await (const event of distWatcher) {
-      console.log(`File changed: ${event.paths[0]}`);
-
-      sockets.forEach((socket) => {
-        try {
-          socket.send("reload");
-        } catch {
-          sockets.delete(socket);
-        }
-      });
-    }
-
-    for await (const event of viewsWatcher) {
       console.log(`File changed: ${event.paths[0]}`);
 
       sockets.forEach((socket) => {
