@@ -26,6 +26,8 @@ export function start() {
     });
 
     for await (const event of distWatcher) {
+      if (!event.paths.length) return;
+
       console.log(`File changed: ${event.paths[0]}`);
 
       sockets.forEach((socket) => {
