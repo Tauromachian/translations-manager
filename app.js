@@ -1,8 +1,6 @@
 import express from "npm:express@5";
 import morgan from "npm:morgan";
 
-import { join } from "https://deno.land/std/path/mod.ts";
-
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 
 import { start as livereloadStart } from "./config/livereload.ts";
@@ -15,7 +13,7 @@ const app = express();
 app.use(morgan("dev"));
 app.use(express.json());
 
-app.use(express.static(join(Deno.cwd(), "public")));
+app.use(express.static(Deno.cwd() + "/public"));
 
 app.set("query parser", "extended");
 
