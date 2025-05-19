@@ -108,6 +108,10 @@ export class FormField extends HTMLElement {
     icon.setAttribute("height", 24);
     icon.classList += "append-inner-icon";
 
+    icon.addEventListener("click", () => {
+      this.#wrappedField.focus();
+    });
+
     const wrapper = this.root.querySelector(".wrapper");
 
     wrapper.appendChild(icon);
