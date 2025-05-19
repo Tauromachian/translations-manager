@@ -172,6 +172,7 @@ export class FormField extends HTMLElement {
                   transform: translateY(-50%);
                   display: flex;
                   align-items: center;
+                  cursor: text;
               }
           </style>
 
