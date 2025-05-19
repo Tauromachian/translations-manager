@@ -3,6 +3,7 @@ import { db } from "../config/db.ts";
 import { eq } from "drizzle-orm";
 
 import { languages as languagesSchema } from "../database/schema/languages.ts";
+import { LanguageSchema } from "../dtos/languages.js";
 
 export async function index(req, res) {
   const { filter } = req.query;
@@ -15,16 +16,10 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  if (!req.body.name) {
-    return res.status(400).json({ error: "Name is required" });
-  }
+  const result = LanguageSchema.omit({ id: true }).safeParse(req.body);
 
-  if (!req.body.code) {
-    return res.status(400).json({ error: "Code is required" });
-  }
-
-  if (!req.body.collectionId) {
-    return res.status(400).json({ error: "Collection ID is required" });
+  if (!result.success) {
+    return res.status(400).json(result.error);
   }
 
   const language = await db
@@ -36,11 +31,12 @@ export async function store(req, res) {
 }
 
 export async function edit(req, res) {
-  const { name } = req.body;
   const { id } = req.params;
 
-  if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+  const result = LanguageSchema.safeParse({ ...req.body, id });
+
+  if (!result.success) {
+    return res.status(400).json(result.error);
   }
 
   const language = await db.insert(languagesSchema).values({
