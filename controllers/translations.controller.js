@@ -3,6 +3,7 @@ import { db } from "../config/db.ts";
 import { and, eq, sql } from "drizzle-orm";
 
 import { translations as translationsSchema } from "../database/schema/translations.ts";
+import { TranslationsSchema } from "../dtos/translations.js";
 
 export async function index(req, res) {
   const { search, filter } = req.query;
@@ -20,26 +21,30 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const { name, description } = req.body;
+  const result = TranslationsSchema.omit({ id: true }).safeParse(req.body);
 
-  if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+  if (!result.success) {
+    return res.status(400).json(result.error);
   }
 
   const translation = await db
     .insert(translationsSchema)
-    .values({ name, description })
+    .values(req.body)
     .returning();
 
   res.json(translation);
 }
 
 export async function edit(req, res) {
-  const { name } = req.body;
   const { id } = req.params;
 
-  if (!name) {
-    return res.status(400).json({ error: "Name is required" });
+  const result = TranslationsSchema.safeParse({
+    ...req.body,
+    id,
+  });
+
+  if (!result.success) {
+    return res.status(400).json(result.error);
   }
 
   const translation = await db.insert(translationsSchema).values({
