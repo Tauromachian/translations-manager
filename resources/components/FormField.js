@@ -137,23 +137,26 @@ export class FormField extends HTMLElement {
                   flex-direction: column;
                   gap: 4px;
                   width: 100%;
+
+                  --padding-x: 12px;
+                  --border: 1px;
               }
 
               .wrapper {
                   position: relative;
                   display: inline-block;
-                  width: fit-content;
               }
 
               .wrapped-field {
-                  padding: 10px 12px;
+                  padding: 10px var(--padding-x);
                   font-family: Arial, sans-serif;
                   font-size: 1em;
                   color: #333;
                   background: #fff;
-                  border: 1px solid var(--gray);
+                  border: var(--border) solid var(--gray);
                   border-radius: 4px;
                   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+                  width: calc(100% - (var(--padding-x) + var(--border)) * 2);
               }
 
               .wrapped-field:focus {
