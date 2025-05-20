@@ -57,19 +57,18 @@ export class AppButton extends HTMLElement {
 
   handleFormSubmit() {
     const form = this.closest("form");
+    const type = this.getAttribute("type");
 
-    if (!form) return;
+    if (!form || !type) return;
 
     this.#button.addEventListener("click", () => {
       this.dispatchEvent(new CustomEvent("click"));
 
-      if (form && type === "submit") {
-        const submitEvent = new Event("submit", {
-          cancelable: true,
-          bubbles: true,
-        });
-        form.dispatchEvent(submitEvent);
-      }
+      const submitEvent = new Event("submit", {
+        cancelable: true,
+        bubbles: true,
+      });
+      form.dispatchEvent(submitEvent);
     });
   }
 
