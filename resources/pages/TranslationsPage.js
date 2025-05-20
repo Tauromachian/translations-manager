@@ -12,7 +12,11 @@ import "../components/LanguageForm.js";
 import "../components/TranslationsForm.js";
 
 import { getLanguages, postLanguage } from "../services/languages-req.js";
-import { getTranslations } from "../services/translations-req.js";
+import {
+  getTranslations,
+  postTranslation,
+  putTranslation,
+} from "../services/translations-req.js";
 
 import { router } from "../services/router.js";
 
@@ -29,6 +33,8 @@ export class TranslationsPage extends HTMLElement {
   #isLoading = ref(false);
   #isEmpty = ref(false);
   #modalConfirmDelete = false;
+  #isTranslationFormInserting = true;
+  #translationForm;
   #selectedId;
 
   constructor() {
@@ -176,19 +182,44 @@ export class TranslationsPage extends HTMLElement {
     const button = event.target;
     const closestTd = button.closest("tr");
 
-    const collectionId = closestTd.dataset.value;
+    const translationId = closestTd.dataset.value;
 
     if (event.target.closest(".delete")) {
       this.#modalConfirmDelete.setAttribute("open", true);
-      this.#selectedId = collectionId;
+      this.#selectedId = translationId;
     }
 
     if (event.target.closest(".edit")) {
-      this.openModal.call(this, false, collectionId);
+      this.openTranslationModal(false, translationId);
+    }
+  }
+
+  openTranslationModal(isInserting, id) {
+    const translationsModal = this.querySelectorAll("app-modal")[1];
+
+    translationsModal.setAttribute("open", true);
+    this.#isTranslationFormInserting = isInserting;
+    this.#selectedId = id;
+
+    if (isInserting) {
+      this.#translationForm.reset();
+      return;
     }
 
-    if (event.target.closest(".go-to-translation")) {
-      router.go(`/app/collection/${collectionId}`);
+    if (!id) return;
+
+    const translation = this.#translations.value.find((translation) =>
+      translation.id == id
+    );
+
+    if (translation) {
+      const textField = translationsModal.querySelector(
+        "text-field[name='name']",
+      );
+      textField.value = translation.name;
+
+      translationsModal.querySelector("text-area[name='description']").value =
+        translation.description;
     }
   }
 
@@ -203,6 +234,18 @@ export class TranslationsPage extends HTMLElement {
     breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
     return breadcrumbs;
+  }
+
+  onTranslationFormSubmit(event) {
+    const form = event.target;
+
+    if (!form?.detail) return;
+
+    if (this.#isTranslationFormInserting) {
+      postTranslation(form.detail);
+    } else {
+      putTranslation(form.detail);
+    }
   }
 
   connectedCallback() {
@@ -252,7 +295,8 @@ export class TranslationsPage extends HTMLElement {
     this.loadData();
 
     const languagesModal = this.querySelector("app-modal");
-    const translationsModal = this.querySelectorAll("app-modal")[1];
+
+    this.#translationForm = this.querySelector("translations-form");
 
     const tableToolbar = this.querySelector("table-toolbar");
     const translationsCreateButton = this.querySelector(
@@ -267,7 +311,7 @@ export class TranslationsPage extends HTMLElement {
     });
 
     translationsCreateButton.addEventListener("click", () => {
-      translationsModal.setAttribute("open", true);
+      this.openTranslationModal(true);
     });
 
     const languageForm = this.querySelector("language-form");

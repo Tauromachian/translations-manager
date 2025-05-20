@@ -1,6 +1,7 @@
 export class TranslationsForm extends HTMLElement {
   #fields = [];
   #form;
+  #hasEventListener;
 
   constructor() {
     super();
@@ -12,6 +13,30 @@ export class TranslationsForm extends HTMLElement {
 
   static get observedAttributes() {
     return ["languages"];
+  }
+
+  onSubmit(event) {
+    event.preventDefault();
+
+    const form = event.target;
+
+    if (!form) return;
+
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const data = new FormData(form);
+    const jsonData = Object.fromEntries(data);
+
+    this.dispatchEvent(
+      new CustomEvent("form-submit", {
+        bubbles: true,
+        cancelable: true,
+        detail: jsonData,
+      }),
+    );
   }
 
   attributeChangedCallback(name, _, newValue) {
@@ -34,9 +59,17 @@ export class TranslationsForm extends HTMLElement {
       this.#form.innerHTML = `
             ${this.#fields}
             <div class="modal-actions">
-                <app-button>Add Translations</app-button>
+                <app-button type="submit">Add Translations</app-button>
             </div>
         `;
+
+      if (!this.#hasEventListener) {
+        this.#hasEventListener = true;
+        this.#form.addEventListener(
+          "submit",
+          this.onSubmit.bind(this),
+        );
+      }
     }
   }
 
