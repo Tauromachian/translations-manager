@@ -6,6 +6,10 @@ export class TranslationsForm extends HTMLElement {
     super();
   }
 
+  reset() {
+    this.#form.reset();
+  }
+
   static get observedAttributes() {
     return ["languages"];
   }
