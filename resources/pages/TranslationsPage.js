@@ -252,7 +252,7 @@ export class TranslationsPage extends HTMLElement {
     this.loadData();
 
     const languagesModal = this.querySelector("app-modal");
-    const collectionsModal = this.querySelectorAll("app-modal")[1];
+    const translationsModal = this.querySelectorAll("app-modal")[1];
 
     const tableToolbar = this.querySelector("table-toolbar");
     const translationsCreateButton = this.querySelector(
@@ -267,7 +267,7 @@ export class TranslationsPage extends HTMLElement {
     });
 
     translationsCreateButton.addEventListener("click", () => {
-      collectionsModal.setAttribute("open", true);
+      translationsModal.setAttribute("open", true);
     });
 
     const languageForm = this.querySelector("language-form");
