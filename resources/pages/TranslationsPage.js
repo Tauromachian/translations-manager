@@ -183,9 +183,9 @@ export class TranslationsPage extends HTMLElement {
 
   onTableAction(event) {
     const button = event.target;
-    const closestTd = button.closest("tr");
+    const closestTr = button.closest("tr");
 
-    const translationId = closestTd.dataset.value;
+    const translationId = closestTr.dataset.value;
 
     if (event.target.closest(".delete")) {
       this.#modalConfirmDelete.setAttribute("open", true);
