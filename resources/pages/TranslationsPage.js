@@ -167,11 +167,14 @@ export class TranslationsPage extends HTMLElement {
       const key = translation.key;
       if (!rowsByKeys[key]) {
         rowsByKeys[key] = {
+          id: key,
+          ids: [translation.id],
           key,
           [code]: translation.translation,
         };
       } else {
         rowsByKeys[key][code] = translation.translation;
+        rowsByKeys[key]["ids"].push(translation.id);
       }
     }
 
