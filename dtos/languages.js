@@ -1,6 +1,6 @@
 import { z } from "npm:zod";
 
-export const LanguageSchema = {
+export const LanguageSchema = z.object({
   id: z.number().int().positive(),
   collectionId: z.number().int().positive(),
   name: z.string({
@@ -11,4 +11,4 @@ export const LanguageSchema = {
     required_error: "Code is required",
     invalid_type_error: "Code must be a string",
   }),
-};
+});
