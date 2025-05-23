@@ -12,7 +12,7 @@ export class TranslationsForm extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["languages"];
+    return ["languages", "translations-set"];
   }
 
   onSubmit(event) {
@@ -71,9 +71,29 @@ export class TranslationsForm extends HTMLElement {
     }
   }
 
+  handleTranslationsChange(newValue) {
+    const textFields = this.querySelectorAll("text-field");
+
+    const translations = JSON.parse(newValue);
+
+    textFields.forEach((field) => {
+      const code = field.getAttribute("data-code");
+
+      for (const key in translations) {
+        if (code === key) {
+          field.value = translations[key];
+        }
+      }
+    });
+  }
+
   attributeChangedCallback(name, _, newValue) {
     if (name === "languages") {
       this.handleLanguagesChange.call(this, newValue);
+    }
+
+    if (name === "translations-set") {
+      this.handleTranslationsChange.call(this, newValue);
     }
   }
 

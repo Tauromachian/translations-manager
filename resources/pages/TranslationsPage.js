@@ -212,19 +212,18 @@ export class TranslationsPage extends HTMLElement {
 
     if (!id) return;
 
-    const translation = this.#translations.value.find((translation) =>
-      translation.id == id
-    );
+    let translationsSet;
 
-    if (translation) {
-      const textField = translationsModal.querySelector(
-        "text-field[name='name']",
-      );
-      textField.value = translation.name;
-
-      translationsModal.querySelector("text-area[name='description']").value =
-        translation.description;
+    for (const key in this.#translationsByKeys) {
+      if (key === id) {
+        translationsSet = this.#translationsByKeys[key];
+      }
     }
+
+    this.#translationForm.setAttribute(
+      "translations-set",
+      JSON.stringify(translationsSet),
+    );
   }
 
   onModalDeleteConfirmation() {
