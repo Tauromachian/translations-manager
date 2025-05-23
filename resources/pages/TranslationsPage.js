@@ -30,6 +30,7 @@ export class TranslationsPage extends HTMLElement {
   #collectionId;
   #languages = ref([]);
   #translations = ref([]);
+  #translationsByKeys = {};
   #isLoading = ref(false);
   #isEmpty = ref(false);
   #modalConfirmDelete = false;
@@ -150,7 +151,7 @@ export class TranslationsPage extends HTMLElement {
   }
 
   formatTableData(translations, languages) {
-    const rowsByKeys = {};
+    this.#translationsByKeys = {};
     const languagesCodesByIds = {};
 
     for (const translation of translations) {
@@ -165,20 +166,20 @@ export class TranslationsPage extends HTMLElement {
       }
 
       const key = translation.key;
-      if (!rowsByKeys[key]) {
-        rowsByKeys[key] = {
+      if (!this.#translationsByKeys[key]) {
+        this.#translationsByKeys[key] = {
           id: key,
           ids: [translation.id],
           key,
           [code]: translation.translation,
         };
       } else {
-        rowsByKeys[key][code] = translation.translation;
-        rowsByKeys[key]["ids"].push(translation.id);
+        this.#translationsByKeys[key][code] = translation.translation;
+        this.#translationsByKeys[key]["ids"].push(translation.id);
       }
     }
 
-    return Object.values(rowsByKeys);
+    return Object.values(this.#translationsByKeys);
   }
 
   onTableAction(event) {
