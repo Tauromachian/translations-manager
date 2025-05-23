@@ -50,7 +50,7 @@ export class TranslationsForm extends HTMLElement {
     this.#fields = JSON.parse(newValue)
       .map(
         (lang) => `
-                            <text-field label="${lang.name}"></text-field>
+                            <text-field data-code="${lang.code}" label="${lang.name}"></text-field>
                         `,
       )
       .join("");
