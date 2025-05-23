@@ -324,7 +324,7 @@ export class TranslationsPage extends HTMLElement {
 
       const language = {
         ...event.detail,
-        collectionId: router.route.params.id,
+        collectionId: Number(router.route.params.id),
       };
 
       await this.postLanguageData(language);
