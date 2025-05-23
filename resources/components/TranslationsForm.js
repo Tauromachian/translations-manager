@@ -39,37 +39,41 @@ export class TranslationsForm extends HTMLElement {
     );
   }
 
-  attributeChangedCallback(name, _, newValue) {
-    if (name === "languages") {
-      if (this.#form) {
-        this.#form.remove();
-      }
+  handleLanguagesChange(newValue) {
+    if (this.#form) {
+      this.#form.remove();
+    }
 
-      this.#form = document.createElement("form");
-      this.appendChild(this.#form);
+    this.#form = document.createElement("form");
+    this.appendChild(this.#form);
 
-      this.#fields = JSON.parse(newValue)
-        .map(
-          (lang) => `
+    this.#fields = JSON.parse(newValue)
+      .map(
+        (lang) => `
                             <text-field label="${lang.name}"></text-field>
                         `,
-        )
-        .join("");
+      )
+      .join("");
 
-      this.#form.innerHTML = `
+    this.#form.innerHTML = `
             ${this.#fields}
             <div class="modal-actions">
                 <app-button type="submit">Add Translations</app-button>
             </div>
         `;
 
-      if (!this.#hasEventListener) {
-        this.#hasEventListener = true;
-        this.#form.addEventListener(
-          "submit",
-          this.onSubmit.bind(this),
-        );
-      }
+    if (!this.#hasEventListener) {
+      this.#hasEventListener = true;
+      this.#form.addEventListener(
+        "submit",
+        this.onSubmit.bind(this),
+      );
+    }
+  }
+
+  attributeChangedCallback(name, _, newValue) {
+    if (name === "languages") {
+      this.handleLanguagesChange.call(this, newValue);
     }
   }
 
