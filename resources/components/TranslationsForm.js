@@ -50,13 +50,16 @@ export class TranslationsForm extends HTMLElement {
     this.#fields = JSON.parse(newValue)
       .map(
         (lang) => `
-                            <text-field data-code="${lang.code}" label="${lang.name}"></text-field>
+                            <text-field data-value="${lang.code}" label="${lang.name}"></text-field>
                         `,
-      )
-      .join("");
+      );
+
+    this.#fields.unshift(
+      `<text-field data-value="key" label="Key"></text-field>`,
+    );
 
     this.#form.innerHTML = `
-            ${this.#fields}
+            ${this.#fields.join("")}
             <div class="modal-actions">
                 <app-button type="submit">Add Translations</app-button>
             </div>
@@ -77,7 +80,7 @@ export class TranslationsForm extends HTMLElement {
     const translations = JSON.parse(newValue);
 
     textFields.forEach((field) => {
-      const code = field.getAttribute("data-code");
+      const code = field.getAttribute("data-value");
 
       for (const key in translations) {
         if (code === key) {
