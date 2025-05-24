@@ -9,7 +9,7 @@ export class TextArea extends FormField {
     return document.createElement("textarea");
   }
 
-  getEnterEvent() {}
+  getKeydownEvent() {}
 }
 
 customElements.define("text-area", TextArea);
