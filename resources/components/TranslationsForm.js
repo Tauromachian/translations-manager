@@ -47,15 +47,14 @@ export class TranslationsForm extends HTMLElement {
     this.#form = document.createElement("form");
     this.appendChild(this.#form);
 
-    this.#fields = JSON.parse(newValue)
-      .map(
-        (lang) => `
-                            <text-field data-value="${lang.code}" label="${lang.name}"></text-field>
-                        `,
-      );
+    const languages = JSON.parse(newValue);
+
+    this.#fields = languages.map((lang) => {
+      return `<text-field data-value="${lang.code}" label="${lang.name}"></text-field>`;
+    });
 
     this.#fields.unshift(
-      `<text-field data-value="key" label="Key"></text-field>`,
+      '<text-field data-value="key" label="Key"></text-field>',
     );
 
     this.#form.innerHTML = `
