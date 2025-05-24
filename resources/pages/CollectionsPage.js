@@ -82,7 +82,7 @@ export class CollectionsPage extends HTMLElement {
     loader.style.display = state ? "block" : "none";
   }
 
-  onSubmit(event) {
+  async onSubmit(event) {
     event.preventDefault();
 
     const form = event.target;
@@ -98,9 +98,9 @@ export class CollectionsPage extends HTMLElement {
     const jsonData = Object.fromEntries(data);
 
     if (this.#isFormInserting) {
-      this.postData(jsonData);
+      await this.postData(jsonData);
     } else {
-      this.putData(jsonData);
+      await this.putData(jsonData);
     }
 
     const appModal = this.querySelector("app-modal");
