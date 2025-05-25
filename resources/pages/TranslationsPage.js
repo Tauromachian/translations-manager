@@ -257,6 +257,23 @@ export class TranslationsPage extends HTMLElement {
     this.loadData();
   }
 
+  async onLanguageFormSubmit(event) {
+    const languagesModal = this.querySelector("app-modal");
+
+    if (!router?.route?.params?.id) return;
+
+    const language = {
+      ...event.detail,
+      collectionId: Number(router.route.params.id),
+    };
+
+    await this.postLanguageData(language);
+
+    languagesModal.setAttribute("open", false);
+
+    this.loadData();
+  }
+
   connectedCallback() {
     this.innerHTML = `
             <div class="container mt-5">
@@ -303,8 +320,6 @@ export class TranslationsPage extends HTMLElement {
 
     this.loadData();
 
-    const languagesModal = this.querySelector("app-modal");
-
     this.#translationForm = this.querySelector("translations-form");
 
     const tableToolbar = this.querySelector("table-toolbar");
@@ -324,21 +339,10 @@ export class TranslationsPage extends HTMLElement {
     });
 
     const languageForm = this.querySelector("language-form");
-
-    languageForm.addEventListener("form-submit", async (event) => {
-      if (!router?.route?.params?.id) return;
-
-      const language = {
-        ...event.detail,
-        collectionId: Number(router.route.params.id),
-      };
-
-      await this.postLanguageData(language);
-
-      languagesModal.setAttribute("open", false);
-
-      this.loadData();
-    });
+    languageForm.addEventListener(
+      "form-submit",
+      this.onLanguageFormSubmit.bind(this),
+    );
 
     const dataTable = this.querySelector("data-table");
     dataTable.shadowRoot.querySelector("table").addEventListener(
