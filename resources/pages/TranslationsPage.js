@@ -335,7 +335,6 @@ export class TranslationsPage extends HTMLElement {
 
       await this.postLanguageData(language);
 
-      const languagesModal = this.querySelector("app-modal");
       languagesModal.setAttribute("open", false);
 
       this.loadData();
