@@ -15,6 +15,26 @@ export async function getTranslations(options) {
   return data;
 }
 
+export async function postTranslationSet(translationSet, languages) {
+  for (const language of languages) {
+    const translation = {
+      key: translationSet.key,
+      languageId: language.id,
+      translation: "",
+    };
+
+    const key = Object.keys(translationSet).find(
+      (key) => key === language.code,
+    );
+
+    if (!key) continue;
+
+    translation.translation = translationSet[key];
+
+    await postTranslation(translation);
+  }
+}
+
 export async function postTranslation(data) {
   const response = await fetch(baseUrl, {
     method: "POST",
