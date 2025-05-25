@@ -301,7 +301,7 @@ export class TranslationsPage extends HTMLElement {
 
                     <empty-state></empty-state>
 
-                    <div class="table-loaderl">
+                    <div class="table-loader">
                         <app-loader class="py-5"></app-loader>
                     </div>
                 </div>
