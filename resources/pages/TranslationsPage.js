@@ -15,6 +15,7 @@ import { getLanguages, postLanguage } from "../services/languages-req.js";
 import {
   getTranslations,
   postTranslation,
+  postTranslationSet,
   putTranslation,
 } from "../services/translations-req.js";
 
@@ -239,16 +240,21 @@ export class TranslationsPage extends HTMLElement {
     return breadcrumbs;
   }
 
-  onTranslationFormSubmit(event) {
-    const form = event.target;
+  async onTranslationFormSubmit(event) {
+    const data = event.detail;
 
-    if (!form?.detail) return;
+    if (!data) return;
 
     if (this.#isTranslationFormInserting) {
-      postTranslation(form.detail);
+      await postTranslationSet(data, this.#languages.value);
     } else {
       putTranslation(form.detail);
     }
+
+    const appModal = this.querySelectorAll("app-modal")[1];
+    appModal.setAttribute("open", false);
+
+    this.loadData();
   }
 
   connectedCallback() {
@@ -345,6 +351,11 @@ export class TranslationsPage extends HTMLElement {
     this.#modalConfirmDelete.addEventListener(
       "click-delete",
       this.onModalDeleteConfirmation.bind(this),
+    );
+
+    this.#translationForm.addEventListener(
+      "form-submit",
+      this.onTranslationFormSubmit.bind(this),
     );
   }
 }
