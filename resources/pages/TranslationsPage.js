@@ -258,7 +258,7 @@ export class TranslationsPage extends HTMLElement {
   }
 
   async onLanguageFormSubmit(event) {
-    const languagesModal = this.querySelector("app-modal");
+    const languagesModal = this.querySelector("#languages-modal");
 
     if (!router?.route?.params?.id) return;
 
@@ -307,7 +307,7 @@ export class TranslationsPage extends HTMLElement {
                 </div>
             </div>
 
-            <app-modal title="Add Language" width="400px">
+            <app-modal title="Add Language" width="400px" id="languages-modal">
                 <language-form></language-form>
             </app-modal>
 
@@ -321,6 +321,8 @@ export class TranslationsPage extends HTMLElement {
     this.loadData();
 
     this.#translationForm = this.querySelector("translations-form");
+
+    const languagesModal = document.querySelector("#languages-modal");
 
     const tableToolbar = this.querySelector("table-toolbar");
     const translationsCreateButton = this.querySelector(
