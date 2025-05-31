@@ -13,6 +13,7 @@ import "../components/TranslationsForm.js";
 
 import { getLanguages, postLanguage } from "../services/languages-req.js";
 import {
+  deleteTranslationSet,
   getTranslations,
   postTranslationSet,
   putTranslation,
@@ -226,9 +227,14 @@ export class TranslationsPage extends HTMLElement {
     );
   }
 
-  onModalDeleteConfirmation() {
-    this.deleteCollection(this.#selectedId);
+  async onModalDeleteConfirmation() {
+    const translationsSet = this.#translationsByKeys[this.#selectedId];
+
+    if (!translationsSet) return;
+
+    await deleteTranslationSet(translationsSet.ids);
     this.#modalConfirmDelete.setAttribute("open", false);
+
     this.loadData();
   }
 
