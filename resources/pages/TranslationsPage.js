@@ -14,7 +14,6 @@ import "../components/TranslationsForm.js";
 import { getLanguages, postLanguage } from "../services/languages-req.js";
 import {
   getTranslations,
-  postTranslation,
   postTranslationSet,
   putTranslation,
 } from "../services/translations-req.js";
