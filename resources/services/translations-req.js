@@ -15,6 +15,12 @@ export async function getTranslations(options) {
   return data;
 }
 
+export async function deleteTranslationSet(translationsIds) {
+  for (const id of translationsIds) {
+    await deleteTranslation(id);
+  }
+}
+
 export async function postTranslationSet(translationSet, languages) {
   for (const language of languages) {
     const translation = {
