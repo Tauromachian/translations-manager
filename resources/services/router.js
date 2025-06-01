@@ -24,7 +24,7 @@ export const router = {
     }
 
     globalThis.addEventListener("popstate", (event) => {
-      this.go(event.state.route, false);
+      this.go(event.state.pathname, false);
     });
 
     this.go(location.pathname);
@@ -35,15 +35,15 @@ export const router = {
     this._mainEl.appendChild(pageElement);
   },
 
-  getMatchingRoute(route) {
-    if (this._routes[route]) {
-      return this._routes[route];
+  getMatchingRoute(pathname) {
+    if (this._routes[pathname]) {
+      return this._routes[pathname];
     }
 
     let matchedRoute;
 
     for (const key in this._regexRoutes) {
-      if (new RegExp(key).test(route)) {
+      if (new RegExp(key).test(pathname)) {
         matchedRoute = this._regexRoutes[key];
       }
     }
@@ -96,19 +96,19 @@ export const router = {
     );
   },
 
-  async go(route, addToHistory = true) {
+  async go(pathname, addToHistory = true) {
     if (addToHistory) {
-      history.pushState({ route }, "", route);
+      history.pushState({ pathname }, "", pathname);
     }
 
-    if (route.endsWith("/")) {
-      route = route.slice(0, -1);
+    if (pathname.endsWith("/")) {
+      pathname = pathname.slice(0, -1);
     }
 
-    let pageElement = this.getMatchingPage(route);
+    let pageElement = this.getMatchingPage(pathname);
 
     if (pageElement) {
-      await this.definePage(route);
+      await this.definePage(pathname);
       this.renderPage(pageElement);
 
       return;
