@@ -14,8 +14,10 @@ export const router = {
         const formattedRoute = key.replace(/:(.*)$/, "(.*)");
 
         this._regexRoutes[formattedRoute] = {
-          page: routes[key],
+          page: routes[key].name,
+          name: routes[key].name,
           indexOfParam: key.indexOf(":"),
+          component: routes[key].component,
           params: [key.match(/:(.*)$/)[1]],
         };
       }
@@ -33,10 +35,26 @@ export const router = {
     this._mainEl.appendChild(pageElement);
   },
 
+  getMatchingRoute(route) {
+    if (this._routes[route]) {
+      return this._routes[route];
+    }
+
+    let matchedRoute;
+
+    for (const key in this._regexRoutes) {
+      if (new RegExp(key).test(route)) {
+        matchedRoute = this._regexRoutes[key];
+      }
+    }
+
+    return matchedRoute;
+  },
+
   getMatchingPage(route) {
     if (this._routes[route]) {
       delete route.params;
-      return document.createElement(this._routes[route]);
+      return document.createElement(this._routes[route].name);
     }
 
     let matchedRoute;
@@ -60,7 +78,25 @@ export const router = {
     return pageElement;
   },
 
-  go(route, addToHistory = true) {
+  async definePage(route) {
+    const routeObject = this.getMatchingRoute(route);
+
+    if (!routeObject) {
+      this.definePage("*");
+      return;
+    }
+
+    if (customElements.get(routeObject.name)) return;
+
+    const routeComponent = await routeObject.component();
+
+    customElements.define(
+      routeObject.name,
+      routeComponent[Object.keys(routeComponent)[0]],
+    );
+  },
+
+  async go(route, addToHistory = true) {
     if (addToHistory) {
       history.pushState({ route }, "", route);
     }
@@ -72,11 +108,14 @@ export const router = {
     let pageElement = this.getMatchingPage(route);
 
     if (pageElement) {
+      await this.definePage(route);
       this.renderPage(pageElement);
+
       return;
     }
 
-    pageElement = document.createElement(this._routes["*"]);
+    await this.definePage("*");
+    pageElement = document.createElement(this._routes["*"].name);
     this.renderPage(pageElement);
   },
 };
