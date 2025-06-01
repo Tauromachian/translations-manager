@@ -8,7 +8,16 @@ import { start as livereloadStart } from "./config/livereload.ts";
 import { router as webRouter } from "./routes/web.js";
 import { router as apiRouter } from "./routes/api.js";
 
+import { rateLimit } from "npm:express-rate-limit";
+
 const app = express();
+
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 100,
+  standardHeaders: "draft-8",
+  legacyHeaders: false,
+});
 
 app.use(morgan("dev"));
 app.use(express.json());
@@ -19,6 +28,8 @@ app.set("query parser", "extended");
 
 app.use("/app", webRouter);
 app.use("/api", apiRouter);
+
+app.use(limiter);
 
 (
   async function init() {
