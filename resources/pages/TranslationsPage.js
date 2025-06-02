@@ -93,11 +93,11 @@ export class TranslationsPage extends HTMLElement {
 
       empty.style.display = value ? "block" : "none";
     });
-
-    this.#collectionId = router.route.params.id;
   }
 
   async loadData(searchText) {
+    this.#collectionId = router.route.params.id;
+
     this.#isLoading.value = true;
 
     const languagesData = await getLanguages({
