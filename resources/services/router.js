@@ -9,6 +9,16 @@ export const router = {
     this._routes = routes;
     this._mainEl = el;
 
+    this.initRegexRoutes(routes);
+
+    globalThis.addEventListener("popstate", (event) => {
+      this.go(event.state.pathname, false);
+    });
+
+    this.go(location.pathname);
+  },
+
+  initRegexRoutes(routes) {
     for (const key in routes) {
       if (key.includes(":")) {
         const formattedRoute = key.replace(/:(.*)$/, "(.*)");
@@ -22,12 +32,6 @@ export const router = {
         };
       }
     }
-
-    globalThis.addEventListener("popstate", (event) => {
-      this.go(event.state.pathname, false);
-    });
-
-    this.go(location.pathname);
   },
 
   renderPage(pageElement) {
@@ -48,34 +52,11 @@ export const router = {
       }
     }
 
+    if (!matchedRoute && this._routes["*"]) {
+      return this._routes["*"];
+    }
+
     return matchedRoute;
-  },
-
-  getMatchingPage(route) {
-    if (this._routes[route]) {
-      delete route.params;
-      return document.createElement(this._routes[route].name);
-    }
-
-    let matchedRoute;
-
-    for (const key in this._regexRoutes) {
-      if (new RegExp(key).test(route)) {
-        matchedRoute = this._regexRoutes[key];
-      }
-    }
-
-    if (!matchedRoute) return;
-
-    const page = matchedRoute.page;
-
-    this.route.params = {
-      [matchedRoute.params[0]]: route.slice(matchedRoute.indexOfParam),
-    };
-
-    const pageElement = document.createElement(page);
-
-    return pageElement;
   },
 
   async definePage(route) {
@@ -105,17 +86,16 @@ export const router = {
       pathname = pathname.slice(0, -1);
     }
 
-    let pageElement = this.getMatchingPage(pathname);
+    const route = this.getMatchingRoute(pathname);
+    const pageElement = document.createElement(route?.name ?? "");
 
-    if (pageElement) {
-      await this.definePage(pathname);
-      this.renderPage(pageElement);
-
-      return;
+    if (route.indexOfParam) {
+      this.route.params = {
+        [route.params[0]]: pathname.slice(route.indexOfParam),
+      };
     }
 
-    await this.definePage("*");
-    pageElement = document.createElement(this._routes["*"].name);
+    await this.definePage(pathname);
     this.renderPage(pageElement);
   },
 };
