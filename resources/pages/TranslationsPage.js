@@ -16,7 +16,7 @@ import {
   deleteTranslationSet,
   getTranslations,
   postTranslationSet,
-  putTranslation,
+  putTranslationSet,
 } from "../services/translations-req.js";
 
 import { router } from "../services/router.js";
@@ -253,7 +253,8 @@ export class TranslationsPage extends HTMLElement {
     if (this.#isTranslationFormInserting) {
       await postTranslationSet(data, this.#languages.value);
     } else {
-      putTranslation(form.detail);
+      const translationsSet = this.#translationsByKeys[this.#selectedId];
+      await putTranslationSet(data, translationsSet.ids, this.#languages.value);
     }
 
     const appModal = this.querySelectorAll("app-modal")[1];

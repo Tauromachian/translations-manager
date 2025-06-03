@@ -41,6 +41,29 @@ export async function postTranslationSet(translationSet, languages) {
   }
 }
 
+export async function putTranslationSet(translationSet, ids, languages) {
+  const newIds = [...ids];
+
+  for (const language of languages) {
+    const translation = {
+      id: Number(newIds.shift()),
+      key: translationSet.key,
+      languageId: language.id,
+      translation: "",
+    };
+
+    const key = Object.keys(translationSet).find(
+      (key) => key === language.code,
+    );
+
+    if (!key) continue;
+
+    translation.translation = translationSet[key];
+
+    await putTranslation(translation.id, translation);
+  }
+}
+
 export async function postTranslation(data) {
   const response = await fetch(baseUrl, {
     method: "POST",

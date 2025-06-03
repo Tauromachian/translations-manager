@@ -40,7 +40,7 @@ export async function edit(req, res) {
 
   const result = TranslationsSchema.safeParse({
     ...req.body,
-    id,
+    id: Number(id),
   });
 
   if (!result.success) {
