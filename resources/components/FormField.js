@@ -79,6 +79,11 @@ export class FormField extends HTMLElement {
 
     const name = this.getAttribute("name");
     this.#wrappedField.setAttribute("name", name);
+
+    const disabled = this.getAttribute("disabled");
+    if (typeof disabled === "string" || disabled) {
+      this.#wrappedField.setAttribute("disabled", disabled);
+    }
   }
 
   handleEvents() {
