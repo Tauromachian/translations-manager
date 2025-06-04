@@ -15,6 +15,36 @@ export async function getTranslations(options) {
   return data;
 }
 
+export async function postTranslation(data) {
+  const response = await fetch(baseUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await response.json();
+}
+
+export async function putTranslation(id, data) {
+  const response = await fetch(`${baseUrl}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return response.json();
+}
+
+export async function deleteTranslation(id) {
+  await fetch(`${baseUrl}/${id}`, {
+    method: "DELETE",
+  });
+}
+
 export async function deleteTranslationSet(translationsIds) {
   const promises = [];
 
@@ -73,34 +103,4 @@ export async function putTranslationSet(translationSet, ids, languages) {
   }
 
   await Promise.all(promises);
-}
-
-export async function postTranslation(data) {
-  const response = await fetch(baseUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  return await response.json();
-}
-
-export async function putTranslation(id, data) {
-  const response = await fetch(`${baseUrl}/${id}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-
-  return response.json();
-}
-
-export async function deleteTranslation(id) {
-  await fetch(`${baseUrl}/${id}`, {
-    method: "DELETE",
-  });
 }
