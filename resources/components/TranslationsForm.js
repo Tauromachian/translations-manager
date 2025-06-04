@@ -50,11 +50,11 @@ export class TranslationsForm extends HTMLElement {
     const languages = JSON.parse(newValue);
 
     this.#fields = languages.map((lang) => {
-      return `<text-field name="${lang.code}" label="${lang.name}"></text-field>`;
+      return `<text-field name="${lang.code}" label="${lang.name}" required></text-field>`;
     });
 
     this.#fields.unshift(
-      '<text-field label="Key" name="key"></text-field>',
+      '<text-field label="Key" name="key" required></text-field>',
     );
 
     this.#form.innerHTML = `
