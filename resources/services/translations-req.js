@@ -16,12 +16,18 @@ export async function getTranslations(options) {
 }
 
 export async function deleteTranslationSet(translationsIds) {
+  const promises = [];
+
   for (const id of translationsIds) {
-    await deleteTranslation(id);
+    promises.push(deleteTranslation(id));
   }
+
+  await Promise.all(promises);
 }
 
 export async function postTranslationSet(translationSet, languages) {
+  const promises = [];
+
   for (const language of languages) {
     const translation = {
       key: translationSet.key,
@@ -37,12 +43,15 @@ export async function postTranslationSet(translationSet, languages) {
 
     translation.translation = translationSet[key];
 
-    await postTranslation(translation);
+    promises.push(postTranslation(translation));
   }
+
+  await Promise.all(promises);
 }
 
 export async function putTranslationSet(translationSet, ids, languages) {
   const newIds = [...ids];
+  const promises = [];
 
   for (const language of languages) {
     const translation = {
@@ -60,8 +69,10 @@ export async function putTranslationSet(translationSet, ids, languages) {
 
     translation.translation = translationSet[key];
 
-    await putTranslation(translation.id, translation);
+    promises.push(putTranslation(translation.id, translation));
   }
+
+  await Promise.all(promises);
 }
 
 export async function postTranslation(data) {
