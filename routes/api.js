@@ -6,6 +6,65 @@ import * as collectionsController from "../controllers/collections.controller.js
 import * as languagesController from "../controllers/languages.controller.js";
 import * as translationsController from "../controllers/translations.controller.js";
 
+/**
+ * @openapi
+ * /collections:
+ *   get:
+ *     summary: Retrieves collections
+ *     responses:
+ *       200:
+ *         description: A successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   id:
+ *                     type: string
+ *                     example: 1
+ *                   name:
+ *                     type: string
+ *                     example: "AximandiasCorp"
+ *                   description:
+ *                     type: string
+ *                     example: "This is the description of a collection"
+ *   post:
+ *     summary: Add one collection
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "AximandiasCorp"
+ *               description:
+ *                 type: string
+ *                 example: "This is the description of a collection"
+ *     responses:
+ *       201:
+ *         description: Successful insert new collection
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: 1
+ *                 name:
+ *                   type: string
+ *                   example: "AximandiasCorp"
+ *                 description:
+ *                   type: string
+ *                   example: "This is the description of a collection"
+ */
 router.route("/collections")
   .get(collectionsController.index).post(collectionsController.store);
 
