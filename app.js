@@ -3,12 +3,15 @@ import morgan from "npm:morgan";
 
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 
+import { rateLimit } from "npm:express-rate-limit";
+
+import swaggerUi from "npm:swagger-ui-express";
+
 import { start as livereloadStart } from "./config/livereload.ts";
+import swaggerSpec from "./config/swagger.ts";
 
 import { router as webRouter } from "./routes/web.js";
 import { router as apiRouter } from "./routes/api.js";
-
-import { rateLimit } from "npm:express-rate-limit";
 
 const app = express();
 
@@ -28,6 +31,7 @@ app.set("query parser", "extended");
 
 app.use("/app", webRouter);
 app.use("/api", apiRouter);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(limiter);
 
