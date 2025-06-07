@@ -64,6 +64,12 @@ import * as translationsController from "../controllers/translations.controller.
  *                 description:
  *                   type: string
  *                   example: "This is the description of a collection"
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
  */
 router.route("/collections")
   .get(collectionsController.index).post(collectionsController.store);
