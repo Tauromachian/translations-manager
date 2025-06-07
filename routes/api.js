@@ -76,6 +76,55 @@ import * as translationsController from "../controllers/translations.controller.
 router.route("/collections")
   .get(collectionsController.index).post(collectionsController.store);
 
+/**
+ * @openapi
+ * /collections:
+ *   delete:
+ *     tags: [Collections]
+ *     204:
+ *       description: Deletes one collection
+ *   put:
+ *     summary: Edits a Collection
+ *     tags: [Collections]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - name
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "AximandiasCorp"
+ *               description:
+ *                 type: string
+ *                 example: "This is the description of a collection"
+ *     responses:
+ *       201:
+ *         description: Successful insert new collection
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: 1
+ *                 name:
+ *                   type: string
+ *                   example: "AximandiasCorp"
+ *                 description:
+ *                   type: string
+ *                   example: "This is the description of a collection"
+ *       400:
+ *         description: Invalid input
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
 router.route("/collections/:id")
   .all((req, res, next) => {
     const { id } = req.params;
