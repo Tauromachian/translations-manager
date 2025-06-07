@@ -11,6 +11,7 @@ import * as translationsController from "../controllers/translations.controller.
  * /collections:
  *   get:
  *     summary: Retrieves collections
+ *     tags: [Collections]
  *     responses:
  *       200:
  *         description: A successful response
@@ -32,6 +33,7 @@ import * as translationsController from "../controllers/translations.controller.
  *                     example: "This is the description of a collection"
  *   post:
  *     summary: Add one collection
+ *     tags: [Collections]
  *     requestBody:
  *       required: true
  *       content:
