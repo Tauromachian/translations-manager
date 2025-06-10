@@ -43,8 +43,13 @@ export class TranslationsPage extends HTMLElement {
     super();
 
     watch(this.#languages, (value) => {
+      if (!value.length) return;
+
       this.buildTableHeader(value);
 
+      const translationsCreateButton = this.querySelector(
+        "#translations-create-button",
+      );
       const translationsForm = this.querySelector("translations-form");
 
       if (!translationsForm) return true;
@@ -53,6 +58,8 @@ export class TranslationsPage extends HTMLElement {
         "languages",
         JSON.stringify(value),
       );
+
+      translationsCreateButton.style["display"] = "block";
     });
 
     watch(this.#translations, (value) => {
@@ -282,6 +289,12 @@ export class TranslationsPage extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
+            <style>
+              #translations-create-button {
+                display: none;
+              }
+            </style>
+
             <div class="container mt-5">
                 <div class="breadcrumbs-wrapper my-2"></div>
 
