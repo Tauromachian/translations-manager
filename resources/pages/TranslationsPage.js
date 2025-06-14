@@ -210,6 +210,8 @@ export class TranslationsPage extends HTMLElement {
   openLanguageModal() {
     const languagesModal = this.querySelector("app-modal");
 
+    this.#languageForm.reset();
+
     languagesModal.setAttribute("open", true);
   }
 
