@@ -37,6 +37,7 @@ export class TranslationsPage extends HTMLElement {
   #modalConfirmDelete = false;
   #isTranslationFormInserting = true;
   #translationForm;
+  #languageForm;
   #selectedId;
 
   constructor() {
@@ -340,6 +341,7 @@ export class TranslationsPage extends HTMLElement {
     this.loadData();
 
     this.#translationForm = this.querySelector("translations-form");
+    this.#languageForm = this.querySelector("language-form");
 
     const languagesModal = document.querySelector("#languages-modal");
 
@@ -359,8 +361,7 @@ export class TranslationsPage extends HTMLElement {
       this.openTranslationModal(true);
     });
 
-    const languageForm = this.querySelector("language-form");
-    languageForm.addEventListener(
+    this.#languageForm.addEventListener(
       "form-submit",
       this.onLanguageFormSubmit.bind(this),
     );
