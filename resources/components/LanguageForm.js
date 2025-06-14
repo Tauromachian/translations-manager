@@ -3,6 +3,12 @@ export class LanguageForm extends HTMLElement {
     super();
   }
 
+  reset() {
+    const form = this.querySelector("form");
+
+    form.reset();
+  }
+
   connectedCallback() {
     this.innerHTML = `
             <form>
