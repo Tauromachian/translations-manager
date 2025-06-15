@@ -1,8 +1,8 @@
-import { db } from "../config/db.ts";
+import { db } from "../../../config/db.ts";
 
 import { eq, sql } from "drizzle-orm";
 
-import { collections as collectionsSchema } from "../database/schema/collections.ts";
+import { collections as collectionsSchema } from "../../../database/schema/collections.ts";
 import { CollectionSchema } from "../dtos/collection.js";
 
 async function doFullTextSearch(query) {

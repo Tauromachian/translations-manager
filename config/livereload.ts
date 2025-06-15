@@ -20,7 +20,7 @@ export function start() {
   (async function startFileWatcher() {
     const distWatcher = Deno.watchFs([
       join(Deno.cwd(), "public"),
-      join(Deno.cwd(), "views"),
+      join(Deno.cwd(), "src/admin/index.html"),
     ], {
       recursive: true,
     });

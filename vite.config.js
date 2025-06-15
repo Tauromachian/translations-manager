@@ -8,7 +8,7 @@ export default defineConfig({
     emptyOutDir: true, // Clear dist/ before building
     minify: Deno.env.get("APP_ENV") === "production",
     rollupOptions: {
-      input: join(Deno.cwd(), "resources", "main.js"), // JS entry point
+      input: join(Deno.cwd(), "src/admin", "main.js"), // JS entry point
       output: {
         entryFileNames: "main.js", // Output JS path
         assetFileNames: "[name].[ext]", // Output CSS path

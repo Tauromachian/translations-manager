@@ -2,9 +2,9 @@ import express from "npm:express@5";
 
 export const router = express.Router();
 
-import * as collectionsController from "../controllers/collections.controller.js";
-import * as languagesController from "../controllers/languages.controller.js";
-import * as translationsController from "../controllers/translations.controller.js";
+import * as collectionsController from "../src/server/controllers/collections.controller.js";
+import * as languagesController from "../src/server/controllers/languages.controller.js";
+import * as translationsController from "../src/server/controllers/translations.controller.js";
 
 /**
  * @openapi
@@ -50,6 +50,7 @@ import * as translationsController from "../controllers/translations.controller.
  *                 type: string
  *                 example: "This is the description of a collection"
  *     responses:
+ *
  *       201:
  *         description: Successful insert new collection
  *         content:

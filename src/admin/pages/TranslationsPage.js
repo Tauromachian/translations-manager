@@ -21,7 +21,7 @@ import {
 
 import { router } from "../services/router.js";
 
-import { ref, watch } from "../../utils/reactivity.js";
+import { ref, watch } from "../../shared/utils/reactivity.js";
 
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [

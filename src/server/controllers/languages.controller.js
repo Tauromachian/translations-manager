@@ -1,8 +1,8 @@
-import { db } from "../config/db.ts";
+import { db } from "../../../config/db.ts";
 
 import { eq } from "drizzle-orm";
 
-import { languages as languagesSchema } from "../database/schema/languages.ts";
+import { languages as languagesSchema } from "../../../database/schema/languages.ts";
 import { LanguageSchema } from "../dtos/languages.js";
 
 export async function index(req, res) {

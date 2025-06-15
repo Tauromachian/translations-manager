@@ -1,4 +1,4 @@
-import { toQueryString } from "../../utils/query_string.js";
+import { toQueryString } from "../../shared/utils/query_string.js";
 
 const baseUrl = "/api/languages";
 
