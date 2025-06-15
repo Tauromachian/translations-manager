@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>i18n Translation Manager</title>
+    <style>
+      :root {
+        --color-neutral: #fdfdfd;
+        --black: #191919;
+        --primary: #a2d2ff;
+        --primary-10: #66b5ff;
+        --primary-20: #005cb3;
+        --gray: #4a5565;
+        --gray-10: #e5edef;
+        --danger: #f56565;
+        --disabled: #606064;
+
+        --font-sans: "Nunito Sans Variable", sans-serif;
+      }
+
+      body {
+        background-color: var(--color-neutral);
+        color: var(--black);
+        font-family: var(--font-sans);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        background-color: var(--primary-20);
+        color: white;
+        width: 100%;
+        text-align: center;
+      }
+
+      main {
+        max-width: 800px;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .cta-button {
+        background-color: var(--primary);
+        color: var(--black);
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 1rem;
+        display: inline-block;
+      }
+
+      .cta-button:hover {
+        background-color: var(--primary-10);
+      }
+
+      footer {
+        background-color: var(--gray-10);
+        color: var(--black);
+        width: 100%;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>i18n Translations Manager</h1>
+      <p>
+        Organize and access your internationalization translations with ease
+      </p>
+    </header>
+    <main>
+      <section>
+        <h2>Manage Your i18n Translations</h2>
+        <p>
+          Store, organize, and retrieve your multilingual translation keys and
+          values effortlessly. Streamline your app's localization process with
+          our intuitive i18n management tool.
+        </p>
+        <a href="/app" class="cta-button">Open App</a>
+        <a href="/api-docs" class="cta-button-2" target="blank">Open Docs</a>
+      </section>
+    </main>
+    <footer>
+      <p>© 2025 i18n Translation Manager. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
