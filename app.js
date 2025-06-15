@@ -10,7 +10,7 @@ import swaggerUi from "npm:swagger-ui-express";
 import { start as livereloadStart } from "./config/livereload.ts";
 import swaggerSpec from "./config/swagger.ts";
 
-import { router as webRouter } from "./routes/web.js";
+import { router as appRouter } from "./routes/app.js";
 import { router as apiRouter } from "./routes/api.js";
 
 const app = express();
@@ -29,7 +29,7 @@ app.use(express.static(Deno.cwd() + "/public"));
 
 app.set("query parser", "extended");
 
-app.use("/app", webRouter);
+app.use("/app", appRouter);
 app.use("/api", apiRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
