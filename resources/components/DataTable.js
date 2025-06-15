@@ -112,6 +112,11 @@ export class DataTable extends HTMLElement {
 
     template.innerHTML = `
         <style>
+            :host {
+              display: block;
+              overflow-x: scroll;
+            }
+            
             table {
               border-collapse: collapse;
               width: 100%;
