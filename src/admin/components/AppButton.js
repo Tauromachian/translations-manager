@@ -136,7 +136,6 @@ export class AppButton extends HTMLElement {
                 }
 
                 .button--loading {
-                    pointer-events: none;
                     cursor: not-allowed;
                 }
 
