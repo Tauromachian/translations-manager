@@ -54,7 +54,7 @@ export async function edit(req, res) {
 
   const result = CollectionSchema.safeParse({
     ...req.body,
-    id,
+    id: Number(id),
   });
 
   if (!result.success) {
