@@ -16,17 +16,7 @@ export class AppButton extends HTMLElement {
     if (!this.#button) return;
 
     if (name === "loading") {
-      const loader = this.#button.querySelector(".button-loader");
-
-      const isLoading = newValue === "true" || newValue === "";
-
-      loader.style.display = isLoading ? "flex" : "none";
-
-      if (isLoading) {
-        this.#button.classList.add("button--loading");
-      } else {
-        this.#button.classList.remove("button--loading");
-      }
+      this.handleLoadingState(newValue);
     }
   }
 
@@ -79,6 +69,24 @@ export class AppButton extends HTMLElement {
 
     if (color === "danger") {
       this.#button.classList.add("button--danger");
+    }
+  }
+
+  handleLoadingState(value) {
+    if (!value) {
+      value = this.getAttribute("loading");
+    }
+
+    const loader = this.#button.querySelector(".button-loader");
+
+    const isLoading = value === "true" || value === "";
+
+    loader.style.display = isLoading ? "flex" : "none";
+
+    if (isLoading) {
+      this.#button.classList.add("button--loading");
+    } else {
+      this.#button.classList.remove("button--loading");
     }
   }
 
@@ -160,6 +168,7 @@ export class AppButton extends HTMLElement {
 
     this.handleFormSubmit();
     this.handleButtonVariants();
+    this.handleLoadingState();
   }
 }
 
