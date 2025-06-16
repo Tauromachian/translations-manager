@@ -85,8 +85,10 @@ export class AppButton extends HTMLElement {
 
     if (isLoading) {
       this.#button.classList.add("button--loading");
+      this.style["pointer-events"] = "none";
     } else {
       this.#button.classList.remove("button--loading");
+      this.style["pointer-events"] = "auto";
     }
   }
 
