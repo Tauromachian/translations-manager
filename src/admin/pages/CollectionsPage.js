@@ -40,7 +40,6 @@ export class CollectionsPage extends HTMLElement {
     watch(this.#collections, (value) => {
       if (!value.length) {
         this.#isEmpty.value = true;
-        return true;
       } else {
         this.#isEmpty.value = false;
       }
