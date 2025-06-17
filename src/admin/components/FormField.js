@@ -168,6 +168,10 @@ export class FormField extends HTMLElement {
                   width: calc(100% - (var(--padding-x) + var(--border)) * 2);
               }
 
+              .wrapped-field:user-invalid {
+                  border-color: var(--danger);
+              }
+
               .wrapped-field:focus {
                   outline: none;
                   border-color: var(--primary-10);
