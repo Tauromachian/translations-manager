@@ -8,7 +8,7 @@ export class TableToolbar extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["action-button-text"];
+    return ["action-button-text", "disable-search"];
   }
 
   connectedCallback() {
@@ -47,13 +47,19 @@ export class TableToolbar extends HTMLElement {
       this.dispatchEvent(new CustomEvent("click-create"));
     });
 
-    this.root
-      .querySelector("text-field")
-      .addEventListener("input", (e) => {
-        this.dispatchEvent(
-          new CustomEvent("search", { detail: e.target.value }),
-        );
-      });
+    const textField = this.root.querySelector("text-field");
+
+    textField.addEventListener("input", (e) => {
+      this.dispatchEvent(
+        new CustomEvent("search", { detail: e.target.value }),
+      );
+    });
+
+    const isTextDisabled = this.getAttribute("disable-search");
+
+    if (typeof isTextDisabled === "string" && isTextDisabled !== "false") {
+      textField.style["display"] = "none";
+    }
   }
 }
 
