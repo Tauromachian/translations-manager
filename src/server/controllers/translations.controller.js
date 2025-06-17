@@ -6,14 +6,11 @@ import { translations as translationsSchema } from "../../../database/schema/tra
 import { TranslationsSchema } from "../dtos/translations.js";
 
 export async function index(req, res) {
-  const { search, filter } = req.query;
+  const { filter } = req.query;
 
   const translations = await db.select().from(translationsSchema).where(
     and(
       sql`language_id IN ${filter.languagesIds}`,
-      search && sql`setweight(to_tsvector(name), 'A') ||
-                     setweight(coalesce(to_tsvector(description), ''), 'B') 
-                     @@ to_tsquery(${search})`,
     ),
   );
 
