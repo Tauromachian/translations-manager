@@ -310,7 +310,7 @@ export class TranslationsPage extends HTMLElement {
                 <h1>Translations</h1>
 
                 <div class="card">
-                    <table-toolbar class="p-1" action-button-text="Add Language">
+                    <table-toolbar class="p-1" action-button-text="Add Language" disable-search>
                         <div slot="append">
                             <app-button id="translations-create-button">Add Translation</app-button>
                         </div>
