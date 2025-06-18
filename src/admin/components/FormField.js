@@ -8,7 +8,7 @@ export class FormField extends HTMLElement {
 
   constructor() {
     super();
-    this.root = this.attachShadow({ mode: "open" });
+    this.root = this.attachShadow({ mode: "open", delegatesFocus: true });
 
     this.#internals = this.attachInternals();
     this.#wrappedField = null;
