@@ -185,11 +185,26 @@ export class FormField extends HTMLElement {
                   align-items: center;
                   cursor: text;
               }
+
+              .error {
+                  display: none;
+                  color: #d32f2f;
+                  font-size: 0.875rem;
+                  margin-top: 0.25rem;
+                  margin-bottom: 0.25rem;
+                  line-height: 1.4;
+                  font-weight: 400;
+              }
+
+              .error--active {
+                  display: block;
+              }
           </style>
 
           <label></label>
 
           <div class="wrapper"></div>
+          <div class="error"></div>
       `;
 
     this.root.appendChild(template.content.cloneNode(true));
