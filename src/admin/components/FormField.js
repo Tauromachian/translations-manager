@@ -227,7 +227,7 @@ export class FormField extends HTMLElement {
           <label></label>
 
           <div class="wrapper"></div>
-          <div class="error"></div>
+          <span class="error"></span>
       `;
 
     this.root.appendChild(template.content.cloneNode(true));
