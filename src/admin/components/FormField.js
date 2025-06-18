@@ -1,4 +1,5 @@
 import "iconify-icon";
+import { msgByKey } from "../utils/error-messages.js";
 
 export class FormField extends HTMLElement {
   #internals;
@@ -41,9 +42,31 @@ export class FormField extends HTMLElement {
   }
 
   updateValidity() {
-    this.#internals.setValidity(
-      this.#wrappedField.validity,
-    );
+    const errorEl = this.root.querySelector(".error");
+
+    if (this.#wrappedField.validity.valid) {
+      errorEl.classList.remove("error--active");
+      this.#internals.setValidity(
+        {},
+      );
+    } else {
+      let failingKey = "valueMissing";
+
+      for (const key in this.#wrappedField.validity) {
+        if (this.#wrappedField.validity[key] === true) {
+          failingKey = key;
+          break;
+        }
+      }
+
+      errorEl.classList.add("error--active");
+      errorEl.innerText = msgByKey[failingKey];
+
+      this.#internals.setValidity(
+        this.#wrappedField.validity,
+        "-",
+      );
+    }
   }
 
   handleWrappedField() {
