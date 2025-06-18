@@ -44,7 +44,6 @@ export class FormField extends HTMLElement {
     this.#internals.setValidity(
       this.#wrappedField.validity,
       this.#wrappedField.validationMessage,
-      this.#wrappedField,
     );
   }
 
