@@ -43,7 +43,6 @@ export class FormField extends HTMLElement {
   updateValidity() {
     this.#internals.setValidity(
       this.#wrappedField.validity,
-      this.#wrappedField.validationMessage,
     );
   }
 
