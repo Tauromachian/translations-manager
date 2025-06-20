@@ -4,6 +4,7 @@ import { msgByKey } from "../utils/error-messages.js";
 export class FormField extends HTMLElement {
   #internals;
   #wrappedField;
+  #hasUserInteracted = false;
 
   static formAssociated = true;
 
@@ -44,7 +45,7 @@ export class FormField extends HTMLElement {
   updateValidity() {
     const errorEl = this.root.querySelector(".error");
 
-    if (this.#wrappedField.validity.valid) {
+    if (this.#wrappedField.validity.valid || !this.#hasUserInteracted) {
       errorEl.classList.remove("error--active");
       this.#internals.setValidity(
         {},
@@ -109,6 +110,7 @@ export class FormField extends HTMLElement {
 
   handleEvents() {
     this.#wrappedField.addEventListener("input", () => {
+      this.#hasUserInteracted = true;
       this.updateValidity();
 
       this.#internals.setFormValue(this.#wrappedField.value);
