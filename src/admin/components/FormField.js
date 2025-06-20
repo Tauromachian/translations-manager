@@ -116,6 +116,11 @@ export class FormField extends HTMLElement {
       this.#internals.setFormValue(this.#wrappedField.value);
     });
 
+    this.#wrappedField.addEventListener("blur", () => {
+      this.#hasUserInteracted = true;
+      this.updateValidity();
+    });
+
     this.#wrappedField.addEventListener("keydown", (event) => {
       this.getKeydownEvent(event, this.#internals, this.#wrappedField);
     });
