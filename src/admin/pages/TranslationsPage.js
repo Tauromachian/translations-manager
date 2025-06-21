@@ -44,13 +44,17 @@ export class TranslationsPage extends HTMLElement {
     super();
 
     watch(this.#languages, (value) => {
-      if (!value.length) return;
-
-      this.buildTableHeader(value);
-
       const translationsCreateButton = this.querySelector(
         "#translations-create-button",
       );
+
+      if (!value.length) {
+        translationsCreateButton.setAttribute("disabled", "");
+        return;
+      }
+
+      this.buildTableHeader(value);
+
       const translationsForm = this.querySelector("translations-form");
 
       if (!translationsForm) return true;
@@ -113,6 +117,7 @@ export class TranslationsPage extends HTMLElement {
     });
 
     if (!languagesData.length) {
+      this.#languages.value = [];
       this.#isLoading.value = false;
 
       this.#isEmpty.value = true;
@@ -298,12 +303,6 @@ export class TranslationsPage extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
-            <style>
-              #translations-create-button {
-                display: none;
-              }
-            </style>
-
             <div class="container mt-5">
                 <div class="breadcrumbs-wrapper my-2"></div>
 
