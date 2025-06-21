@@ -9,7 +9,7 @@
   --primary-20: #005cb3;
   --gray: #4a5565;
   --danger: #f56565;
-  --disabled: #606064;
+  --disabled: #f0f0f0;
 
   --card-background: var(--color-neutral);
 
@@ -21,7 +21,7 @@
 
   --form-field-bg: #fff;
   --form-field-color: var(--text-color);
-  --form-field-disabled-bg: #f0f0f0;
+  --form-field-disabled-bg: var(--disabled);
   --form-field-disabled-color: #a0a0a0;
   --form-field-disabled-border: #d0d0d0;
 
@@ -32,6 +32,7 @@ html[data-theme="dark"] {
   --color-neutral: #0d1b2a;
   --primary: #778da9;
   --text-color: #e0e1dd;
+  --disabled: #293139;
 
   --card-background: #1b263b;
   --card-background-10: #22304d;
@@ -44,5 +45,4 @@ html[data-theme="dark"] {
   --table-row-hover: #1d283e;
 
   --form-field-bg: #122131;
-  --form-field-disabled-bg: #293139;
 }
