@@ -3,6 +3,7 @@
 @import "@jogarcia/mgrid/dist/margin.css";
 @import "@jogarcia/mgrid/dist/padding.css";
 
+@import "vars.css";
 @import "global.css";
 
 @import "grid.css";
