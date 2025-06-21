@@ -1,12 +1,25 @@
 :root {
   --color-neutral: #fdfdfd;
-  --black: #191919;
+
+  --text-color: #191919;
+  --text-color-10: #555;
+
   --primary: #a2d2ff;
   --primary-10: #66b5ff;
   --primary-20: #005cb3;
   --gray: #4a5565;
   --danger: #f56565;
   --disabled: #606064;
+
+  --card-background: var(--color-neutral);
+
+  --table-text-color: #333;
+  --table-border-color: #e0e0e0;
+  --table-header-color: var(--text-color-10);
+  --table-header-background: #f7f7f7;
+  --table-row-hover: #f9f9f9;
+
+  --form-field-bg: #fff;
 
   --font-sans: "Nunito Sans Variable", sans-serif;
 }
