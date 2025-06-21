@@ -9,7 +9,7 @@ export class AppButton extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["to", "type", "color", "loading"];
+    return ["to", "type", "color", "loading", "disabled"];
   }
 
   attributeChangedCallback(name, _, newValue) {
@@ -17,6 +17,12 @@ export class AppButton extends HTMLElement {
 
     if (name === "loading") {
       this.handleLoadingState(newValue);
+    }
+
+    if (name === "disabled") {
+      if (typeof newValue !== "string" || newValue === "false") return;
+
+      this.#button.setAttribute("disabled", newValue);
     }
   }
 
@@ -127,7 +133,8 @@ export class AppButton extends HTMLElement {
                 }
 
                 .button:disabled {
-                    background-color: #cccccc;
+                    background-color: var(--disabled);
+                    opacity: 0.6;
                     cursor: not-allowed;
                 }
 
