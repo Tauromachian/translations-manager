@@ -21,6 +21,9 @@
 
   --form-field-bg: #fff;
   --form-field-color: var(--text-color);
+  --form-field-disabled-bg: #f0f0f0;
+  --form-field-disabled-color: #a0a0a0;
+  --form-field-disabled-border: #d0d0d0;
 
   --font-sans: "Nunito Sans Variable", sans-serif;
 }
@@ -41,6 +44,7 @@ html[data-theme="dark"] {
   --table-row-hover: #1d283e;
 
   --form-field-bg: #122131;
+  --form-field-disabled-bg: #293139;
 }
 
 @font-face {

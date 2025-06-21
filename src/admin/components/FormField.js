@@ -200,6 +200,14 @@ export class FormField extends HTMLElement {
                   border-color: var(--danger);
               }
 
+              .wrapped-field:disabled  {
+                  background-color: var(--form-field-disabled-bg);
+                  color: var(--form-field-disabled-color);
+                  border: 1px dotted var(--form-field-disabled-border);
+                  opacity: 0.6;
+                  pointer-events: none;
+              }
+
               .wrapped-field:focus {
                   outline: none;
                   border-color: var(--primary-10);
