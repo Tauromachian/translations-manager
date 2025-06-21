@@ -20,6 +20,7 @@
   --table-row-hover: #f9f9f9;
 
   --form-field-bg: #fff;
+  --form-field-color: var(--text-color);
 
   --font-sans: "Nunito Sans Variable", sans-serif;
 }

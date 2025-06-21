@@ -188,7 +188,7 @@ export class FormField extends HTMLElement {
                   padding: 10px var(--padding-x);
                   font-family: Arial, sans-serif;
                   font-size: 1em;
-                  color: #333;
+                  color: var(--form-field-color);
                   background: var(--form-field-bg);
                   border: var(--border) solid var(--gray);
                   border-radius: 4px;
