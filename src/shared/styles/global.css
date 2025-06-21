@@ -73,7 +73,7 @@ html[data-theme="dark"] {
 
 body {
   background-color: var(--color-neutral);
-  color: var(--black);
+  color: var(--text-color);
   font-family: var(--font-sans);
 }
 

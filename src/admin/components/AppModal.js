@@ -38,7 +38,8 @@ export class AppModal extends HTMLElement {
               border: none;
               border-radius: 8px;
               padding: 24px;
-              background: #fff;
+              color: var(--text-color);
+              background: var(--color-neutral);
               box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
               max-width: 500px;
               width: ${this.getAttribute("width") || "500px"};

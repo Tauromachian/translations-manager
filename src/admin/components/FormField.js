@@ -189,7 +189,7 @@ export class FormField extends HTMLElement {
                   font-family: Arial, sans-serif;
                   font-size: 1em;
                   color: #333;
-                  background: #fff;
+                  background: var(--form-field-bg);
                   border: var(--border) solid var(--gray);
                   border-radius: 4px;
                   transition: border-color 0.2s ease, box-shadow 0.2s ease;

@@ -18,7 +18,7 @@ export class EmptyState extends HTMLElement {
           font-size: 1.2rem;
           font-weight: bold;
           padding: 1rem;
-          color: var(--black);
+          color: var(--text-color);
         }
         .description {
           color: var(--gray);

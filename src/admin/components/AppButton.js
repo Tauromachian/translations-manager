@@ -105,7 +105,7 @@ export class AppButton extends HTMLElement {
                     padding: 0.5em 20px;
                     font-weight: 500;
                     background-color: var(--primary);
-                    color: var(--black);
+                    color: var(--text-color);
                     border: none;
                     border-radius: 4px;
                     cursor: pointer;
@@ -141,7 +141,7 @@ export class AppButton extends HTMLElement {
 
                 .button a {
                     text-decoration: none;
-                    color: var(--black);
+                    color: var(--text-color);
                 }
 
                 .button-loader {
