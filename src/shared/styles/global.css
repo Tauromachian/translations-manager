@@ -11,6 +11,12 @@
   --font-sans: "Nunito Sans Variable", sans-serif;
 }
 
+html[data-theme="dark"] {
+  --color-neutral: #0d1b2a;
+  --primary: #778da9;
+  --text-color: #e0e1dd;
+}
+
 @font-face {
   font-family: "Nunito Sans Variable";
   font-style: normal;
