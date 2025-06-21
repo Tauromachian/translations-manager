@@ -206,6 +206,7 @@ export class FormField extends HTMLElement {
                   border: 1px dotted var(--form-field-disabled-border);
                   opacity: 0.6;
                   pointer-events: none;
+                  cursor: not-allowed;
               }
 
               .wrapped-field:focus {
