@@ -121,21 +121,21 @@ export class DataTable extends HTMLElement {
               border-collapse: collapse;
               width: 100%;
               font-family: Arial, sans-serif;
-              color: #333;
+              color: var(--table-text-color);
             }
 
             th, td {
               padding: 12px 16px;
               text-align: left;
-              border-bottom: 1px solid #e0e0e0;
+              border-bottom: 1px solid var(--table-border-color);
             }
 
             th {
-              background-color: #f7f7f7;
+              background-color: var(--table-header-background);
               font-weight: 600;
               text-transform: uppercase;
               font-size: 0.9em;
-              color: #555;
+              color: var(--table-header-color);
             }
 
             tr:last-child td {
@@ -143,7 +143,7 @@ export class DataTable extends HTMLElement {
             }
 
             tr:hover {
-              background-color: #f9f9f9;
+              background-color: var(--table-row-hover);
             }
 
             td {
