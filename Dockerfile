@@ -6,4 +6,4 @@ RUN ["deno", "install"]
 EXPOSE 3000
 ENV PORT=3000
 
-CMD ["deno", "run", "--allow-read", "--allow-env", "--allow-net", "--allow-import", "app.js"]
+CMD ["deno", "run", "start"]
