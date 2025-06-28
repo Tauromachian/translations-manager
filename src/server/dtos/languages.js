@@ -6,9 +6,9 @@ export const LanguageSchema = z.object({
   name: z.string({
     required_error: "Name is required",
     invalid_type_error: "Name must be a string",
-  }),
+  }).min(1),
   code: z.string({
     required_error: "Code is required",
     invalid_type_error: "Code must be a string",
-  }),
+  }).min(1),
 });

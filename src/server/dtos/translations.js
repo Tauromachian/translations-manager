@@ -6,9 +6,9 @@ export const TranslationsSchema = z.object({
   key: z.string({
     required_error: "Key is required",
     invalid_type_error: "Key must be a string",
-  }),
+  }).min(1),
   translation: z.string({
     required_error: "Translation is required",
     invalid_type_error: "Translation must be a string",
-  }),
+  }).min(1),
 });
