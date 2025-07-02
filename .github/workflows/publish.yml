@@ -3,7 +3,7 @@ name: SSH into VPS and deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   DB_USER: ${{ secrets.DB_USER }}
