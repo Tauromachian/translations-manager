@@ -1,0 +1,40 @@
+name: Generate a build and push to another branch
+
+on:
+  push:
+    branches:
+      - master
+
+env:
+  DB_USER: ${{ secrets.DB_USER }}
+  DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+  DB_HOST: ${{ secrets.DB_HOST }}
+  DB_PORT: ${{ secrets.DB_PORT }}
+  DB_NAME: ${{ secrets.DB_NAME }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    name: Deploy over SSH
+
+    steps:
+      - name: Git Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up SSH key
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            if [ -d translations-manager ]; then
+              cd translation-manager
+              git pull --rebase -Xours
+            else
+              git clone https://github.com/Tauromachian/translations-manager.git
+              cd translation-manager
+            fi
+
+            docker compose up -d
