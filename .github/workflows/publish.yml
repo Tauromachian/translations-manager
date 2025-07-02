@@ -30,11 +30,11 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             if [ -d translations-manager ]; then
-              cd translation-manager
+              cd translations-manager
               git pull --rebase -Xours
             else
               git clone https://github.com/Tauromachian/translations-manager.git
-              cd translation-manager
+              cd translations-manager
             fi
 
             docker compose up -d
