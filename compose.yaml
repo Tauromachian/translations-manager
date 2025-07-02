@@ -3,6 +3,14 @@ services:
     build: .
     ports:
       - "8089:3000"
+    environment:
+      - APP_ENV=production
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_NAME=${DB_NAME}
+
   db:
     image: postgres
     volumes:
