@@ -18,9 +18,6 @@ jobs:
     name: Deploy over SSH
 
     steps:
-      - name: Git Checkout
-        uses: actions/checkout@v4
-
       - name: Deploy project over SSH
         uses: appleboy/ssh-action@v1
         with:
