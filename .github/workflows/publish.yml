@@ -21,7 +21,7 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v4
 
-      - name: Set up SSH key
+      - name: Deploy project over SSH
         uses: appleboy/ssh-action@v1
         with:
           host: ${{ secrets.SSH_HOST }}
