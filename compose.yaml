@@ -1,8 +1,31 @@
 services:
+  db:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_DB=${DB_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  migrations:
+    build: .
+    entrypoint: ["deno", "run", "migrate"]
+    restart: "no"
+    depends_on:
+      db:
+        condition: service_healthy     
+
   web:
     build: .
     depends_on:
       - db
+      - migrations
     ports:
       - "8089:3000"
     environment:
@@ -13,15 +36,6 @@ services:
       - DB_HOST=db
       - DB_PORT=${DB_PORT}
       - DB_NAME=${DB_NAME}
-
-  db:
-    image: postgres
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=${DB_PASSWORD}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_DB=${DB_NAME}
 
 volumes:
   postgres_data:
