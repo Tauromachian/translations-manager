@@ -43,6 +43,8 @@ app.use(limiter);
 
     app.listen(3000, () => console.log("Server on http://localhost:3000"));
 
-    livereloadStart();
+    if (Deno.env.get("APP_ENV") === "dev") {
+      livereloadStart();
+    }
   }
 )();
