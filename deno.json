@@ -4,7 +4,8 @@
     "watch": "deno run --allow-read --allow-sys --allow-ffi --allow-run --allow-write --allow-env npm:vite build --watch",
     "build": "deno run --allow-read --allow-sys --allow-ffi --allow-run --allow-write --allow-env npm:vite build",
     "start": "deno run --allow-read --allow-env --allow-net --allow-import app.js",
-    "migrate": "drizzle-kit migrate"
+    "migrate": "deno run --allow-read --allow-env --allow-net --allow-import drizzlemigrate",
+    "drizzlemigrate": "drizzle-kit push"
   },
   "nodeModulesDir": "auto",
   "imports": {
