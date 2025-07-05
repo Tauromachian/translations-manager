@@ -13,19 +13,11 @@ services:
       timeout: 5s
       retries: 5
 
-  migrations:
-    build: .
-    entrypoint: ["deno", "run", "migrate"]
-    restart: "no"
-    depends_on:
-      db:
-        condition: service_healthy     
-
   web:
     build: .
     depends_on:
-      - db
-      - migrations
+      db:
+        condition: service_healthy     
     ports:
       - "8089:3000"
     environment:

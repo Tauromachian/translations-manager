@@ -2,6 +2,7 @@ FROM denoland/deno:alpine AS base
 
 COPY . .
 RUN ["deno", "install"]
+RUN ["deno", "run", "migrate"]
 RUN ["deno", "run", "build"]
 
 EXPOSE 3000
