@@ -1,6 +1,7 @@
 @import "@/shared/styles/reset.css";
 
 @import "@jogarcia/mgrid/dist/margin.css";
+@import "@jogarcia/mgrid/dist/gap.css";
 
 @import "@/shared/styles/vars.css";
 @import "@/shared/styles/global.css";
