@@ -1,5 +1,15 @@
 import { defineConfig } from "npm:vite";
 import { join, resolve } from "https://deno.land/std/path/mod.ts";
+import { viteStaticCopy } from "npm:vite-plugin-static-copy";
+
+const copyPlugin = viteStaticCopy({
+  targets: [
+    {
+      src: "src/site/assets/*", // Source folder and its contents
+      dest: "assets", // Destination folder (relative to output dir, e.g., dist/assets)
+    },
+  ],
+});
 
 export default defineConfig({
   publicDir: false,
@@ -18,6 +28,7 @@ export default defineConfig({
       },
     },
   },
+  plugins: [copyPlugin],
   server: {
     port: 5173, // Vite dev server port
   },
