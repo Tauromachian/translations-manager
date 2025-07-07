@@ -10,7 +10,7 @@ export default defineConfig({
     rollupOptions: {
       input: {
         admin: join(Deno.cwd(), "src/admin", "main.js"),
-        site: join(Deno.cwd(), "src/site/views", "index.html"),
+        site: join(Deno.cwd(), "src/site", "main.js"),
       },
       output: {
         entryFileNames: "main.js", // Output JS path
