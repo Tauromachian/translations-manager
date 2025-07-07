@@ -23,9 +23,15 @@ header {
 }
 
 main {
-  max-width: 800px;
+  max-width: 1000px;
   padding: 2rem;
-  text-align: center;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .cta-button {
