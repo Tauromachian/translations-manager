@@ -29,7 +29,6 @@ header {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   align-items: center;
-  gap: 0.5rem;
 }
 
 .cta-button {
