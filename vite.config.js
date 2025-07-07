@@ -1,5 +1,5 @@
 import { defineConfig } from "npm:vite";
-import { join } from "https://deno.land/std/path/mod.ts";
+import { join, resolve } from "https://deno.land/std/path/mod.ts";
 
 export default defineConfig({
   publicDir: false,
@@ -20,5 +20,10 @@ export default defineConfig({
   },
   server: {
     port: 5173, // Vite dev server port
+  },
+  resolve: {
+    alias: {
+      "@": resolve(new URL(".", import.meta.url).pathname, "src"),
+    },
   },
 });
