@@ -28,7 +28,7 @@ header {
   display: flex;
 }
 
-.header-social > img {
+.header-social img {
   height: 42px;
   width: auto;
 }
