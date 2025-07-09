@@ -24,6 +24,11 @@ header {
   font-size: 1.5rem;
 }
 
+.header-social > img {
+  height: 42px;
+  width: auto;
+}
+
 .hero {
   display: grid;
   grid-template-columns: 1fr 1.5fr;
