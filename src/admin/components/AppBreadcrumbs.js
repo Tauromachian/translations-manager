@@ -49,7 +49,7 @@ export class AppBreadcrumbs extends HTMLElement {
                        }
 
                        .breadcrumbs li:last-child router-link{
-                           color: var(--disabled);
+                           color: var(--disabled-10);
                            pointer-events: none;
                            cursor: default;
                        }
