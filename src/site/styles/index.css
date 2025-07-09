@@ -14,21 +14,21 @@ header {
   height: 64px;
 }
 
-.header-content {
+.header__content {
   height: 100%;
   display: flex;
   align-items: center;
 }
 
-.header-title {
+.header__title {
   font-size: 1.5rem;
 }
 
-.header-social {
+.header__social {
   display: flex;
 }
 
-.header-social img {
+.header__social img {
   height: 42px;
   width: auto;
 }
