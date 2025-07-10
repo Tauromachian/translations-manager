@@ -5,6 +5,10 @@ import { viteStaticCopy } from "npm:vite-plugin-static-copy";
 const copyPlugin = viteStaticCopy({
   targets: [
     {
+      src: "src/shared/assets/*", // Source folder and its contents
+      dest: "assets", // Destination folder (relative to output dir, e.g., dist/assets)
+    },
+    {
       src: "src/site/assets/*", // Source folder and its contents
       dest: "assets", // Destination folder (relative to output dir, e.g., dist/assets)
     },
