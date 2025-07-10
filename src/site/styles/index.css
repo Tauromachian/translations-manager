@@ -28,6 +28,10 @@ header {
   display: flex;
 }
 
+.header__logo {
+  height: 42px;
+}
+
 .header__social img {
   height: 42px;
   width: auto;
