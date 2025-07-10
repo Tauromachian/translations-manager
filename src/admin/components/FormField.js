@@ -42,7 +42,7 @@ export class FormField extends HTMLElement {
     }
   }
 
-  updateValidity() {
+  validate() {
     const errorEl = this.root.querySelector(".error");
 
     if (this.#wrappedField.validity.valid || !this.#hasUserInteracted) {
@@ -111,14 +111,14 @@ export class FormField extends HTMLElement {
   handleEvents() {
     this.#wrappedField.addEventListener("input", () => {
       this.#hasUserInteracted = true;
-      this.updateValidity();
+      this.validate();
 
       this.#internals.setFormValue(this.#wrappedField.value);
     });
 
     this.#wrappedField.addEventListener("blur", () => {
       this.#hasUserInteracted = true;
-      this.updateValidity();
+      this.validate();
     });
 
     this.#wrappedField.addEventListener("keydown", (event) => {
@@ -250,6 +250,6 @@ export class FormField extends HTMLElement {
 
     this.handleLabel();
     this.handleWrappedField();
-    this.updateValidity();
+    this.validate();
   }
 }
