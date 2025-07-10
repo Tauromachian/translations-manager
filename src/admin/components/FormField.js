@@ -154,6 +154,11 @@ export class FormField extends HTMLElement {
     form.addEventListener("reset", () => {
       this.value = "";
     });
+
+    form.addEventListener("submit", () => {
+      this.#hasUserInteracted = true;
+      this.validate();
+    });
   }
 
   getWrappedField() {
