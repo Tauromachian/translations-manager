@@ -7,6 +7,14 @@
 @import "@/shared/styles/global.css";
 @import "@/shared/styles/grid.css";
 
+body {
+  --footer-height: 80px;
+
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: calc(var(--footer-height) + 2rem);
+}
+
 header {
   background-color: var(--primary-20);
   color: white;
@@ -70,10 +78,13 @@ header {
 }
 
 footer {
-  background-color: var(--gray-10);
+  background-color: #eae9f0;
   color: var(--black);
   width: 100%;
   text-align: center;
-  position: fixed;
+  position: absolute;
   bottom: 0;
+  height: var(--footer-height);
+  display: flex;
+  align-items: center;
 }
