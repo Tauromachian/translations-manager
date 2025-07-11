@@ -55,6 +55,7 @@ export class TranslationsPage extends HTMLElement {
 
       this.buildTableHeader(value);
 
+      translationsCreateButton.removeAttribute("disabled");
       const translationsForm = this.querySelector("translations-form");
 
       if (!translationsForm) return true;
@@ -63,8 +64,6 @@ export class TranslationsPage extends HTMLElement {
         "languages",
         JSON.stringify(value),
       );
-
-      translationsCreateButton.style["display"] = "block";
     });
 
     watch(this.#translations, (value) => {
@@ -118,8 +117,8 @@ export class TranslationsPage extends HTMLElement {
 
     if (!languagesData.length) {
       this.#languages.value = [];
-      this.#isLoading.value = false;
 
+      this.#isLoading.value = false;
       this.#isEmpty.value = true;
 
       return;
