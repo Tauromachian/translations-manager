@@ -27,7 +27,7 @@ export class FormField extends HTMLElement {
   set value(value) {
     this.#wrappedField.value = value;
     this.#internals.setFormValue(value);
-    this.updateValidity();
+    this.validate();
   }
 
   handleLabel() {
