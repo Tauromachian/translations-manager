@@ -37,16 +37,22 @@ header {
   width: auto;
 }
 
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 800px) {
+  .hero {
+    grid-template-columns: 1fr 1.5fr;
+    align-items: center;
+  }
+}
+
 .about-section {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.hero {
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  align-items: center;
 }
 
 .cta-button {
