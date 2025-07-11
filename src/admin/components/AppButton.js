@@ -20,7 +20,10 @@ export class AppButton extends HTMLElement {
     }
 
     if (name === "disabled") {
-      if (typeof newValue !== "string" || newValue === "false") return;
+      if (typeof newValue !== "string" || newValue === "false") {
+        this.#button.removeAttribute("disabled");
+        return;
+      }
 
       this.#button.setAttribute("disabled", newValue);
     }
