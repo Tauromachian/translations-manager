@@ -1,3 +1,8 @@
+.button--text {
+  background: transparent;
+  border: none;
+}
+
 .button--cta {
   background-color: var(--primary);
   color: var(--black);
