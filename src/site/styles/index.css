@@ -7,6 +7,8 @@
 @import "@/shared/styles/global.css";
 @import "@/shared/styles/grid.css";
 
+@import "button.css";
+
 body {
   --footer-height: 80px;
 
@@ -61,20 +63,6 @@ header {
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-}
-
-.button--cta {
-  background-color: var(--primary);
-  color: var(--black);
-  padding: 0.75rem 1.5rem;
-  text-decoration: none;
-  border-radius: 5px;
-  margin-top: 1rem;
-  display: inline-block;
-}
-
-.button--cta:hover {
-  background-color: var(--primary-10);
 }
 
 footer {
