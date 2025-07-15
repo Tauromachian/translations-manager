@@ -8,6 +8,7 @@
   --primary-10: #66b5ff;
   --primary-20: #005cb3;
   --gray: #4a5565;
+  --gray-10: #eae9f0;
   --danger: #f56565;
   --disabled: #f0h0f0;
   --disabled-10: #878691;
@@ -34,6 +35,7 @@ html[data-theme="dark"] {
   --primary: #778da9;
   --text-color: #e0e1dd;
   --disabled: #293139;
+  --gray-10: #0d1a28;
 
   --card-background: #1b263b;
   --card-background-10: #22304d;
