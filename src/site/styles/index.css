@@ -77,7 +77,10 @@ footer {
   position: absolute;
   bottom: 0;
   height: var(--footer-height);
+}
+
+.footer__container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  height: 100%;
 }
