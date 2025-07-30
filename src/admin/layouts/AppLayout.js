@@ -5,6 +5,8 @@ import gridCss from "@/shared/styles/grid.css?inline";
 export class AppLayout extends HTMLElement {
   constructor() {
     super();
+
+    this.root = this.attachShadow({ mode: "open" });
   }
 
   static get observedAttributes() {
