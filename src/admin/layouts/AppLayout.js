@@ -1,4 +1,6 @@
-import "../components/AppBreadcrumbs.js";
+import "@/admin/components/AppBreadcrumbs.js";
+
+import gridCss from "@/shared/styles/grid.css?inline";
 
 export class AppLayout extends HTMLElement {
   constructor() {
@@ -32,7 +34,11 @@ export class AppLayout extends HTMLElement {
   connectedCallback() {
     const title = this.getAttribute("title");
 
-    this.innerHTML = `
+    this.root.innerHTML = `
+        <style>
+        ${gridCss}
+        </style>
+
         <div class="container mt-5">
             <div class="breadcrumbs-wrapper my-2"></div>
 
