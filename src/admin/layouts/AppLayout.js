@@ -46,7 +46,7 @@ export class AppLayout extends HTMLElement {
 
             <h1>${title}</h1>
 
-            <slot></slot>
+            <slot name="content"></slot>
         </div> 
     `;
   }
