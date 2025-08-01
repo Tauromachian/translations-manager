@@ -1,3 +1,5 @@
+import "@/admin/layouts/AppLayout.js";
+
 import "../components/AppBreadcrumbs.js";
 import "../components/AppLoader.js";
 import "../components/DataTable.js";
@@ -180,13 +182,6 @@ export class CollectionsPage extends HTMLElement {
     }
   }
 
-  buildBreadcrumbs() {
-    const breadcrumbs = document.createElement("app-breadcrumbs");
-    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
-
-    return breadcrumbs;
-  }
-
   connectedCallback() {
     const headers = [
       {
@@ -204,12 +199,8 @@ export class CollectionsPage extends HTMLElement {
     ];
 
     this.innerHTML = `
-            <div class="container mt-5">
-                <div class="breadcrumbs-wrapper my-2"></div>
-
-                <h1>Collections</h1>
-
-                <div class="card">
+            <app-layout class="app-layout" title="Collections">
+                <div class="card" slot="content">
                     <table-toolbar class="p-1"></table-toolbar>
 
                     <data-table>
@@ -232,7 +223,7 @@ export class CollectionsPage extends HTMLElement {
                         <app-loader class="py-5"></app-loader>
                     </div>
                 </div>
-            </div>
+            </app-layout>
 
             <app-modal title="Create Collection" width="400px">
                 <form>
@@ -256,8 +247,8 @@ export class CollectionsPage extends HTMLElement {
       this.openModal(true);
     });
 
-    const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
-    breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
+    const appLayout = this.querySelector(".app-layout");
+    appLayout.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
     tableToolbar.addEventListener("search", this.onSearch.bind(this));
 
