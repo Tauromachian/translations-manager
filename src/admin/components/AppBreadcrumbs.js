@@ -9,10 +9,8 @@ export class AppBreadcrumbs extends HTMLElement {
     return ["breadcrumbs"];
   }
 
-  buildBreadcrumbs() {
-    if (!this.getAttribute("breadcrumbs")) {
-      return "";
-    }
+  buildBreadcrumbs(breadcrumbsData) {
+    if (!breadcrumbsData) return [];
 
     let breadcrumbs = this.getAttribute("breadcrumbs");
     breadcrumbs = JSON.parse(breadcrumbs);
@@ -25,6 +23,30 @@ export class AppBreadcrumbs extends HTMLElement {
 
       return liEl;
     });
+  }
+
+  renderBreadcrumbs(breadcrumbsItems) {
+    const ulEl = this.querySelector(".breadcrumbs");
+    ulEl.innerHTML = "";
+
+    breadcrumbsItems.forEach((listItem, index) => {
+      const separatorLi = document.createElement("li");
+      separatorLi.innerHTML = "/";
+
+      ulEl.appendChild(listItem);
+
+      if (index !== breadcrumbsItems.length - 1) {
+        ulEl.appendChild(separatorLi);
+      }
+    });
+  }
+
+  attributeChangedCallback(name, _, newValue) {
+    if (name === "breadcrumbs") {
+      const breadcrumbsListItems = this.buildBreadcrumbs(newValue);
+
+      this.renderBreadcrumbs(breadcrumbsListItems);
+    }
   }
 
   connectedCallback() {
@@ -60,20 +82,11 @@ export class AppBreadcrumbs extends HTMLElement {
                     </ul>
                 `;
 
-    const breadCrumbsItems = this.buildBreadcrumbs();
+    const breadcrumbs = this.getAttribute("breadcrumbs");
+    if (!breadcrumbs) return;
 
-    const ulEl = this.querySelector(".breadcrumbs");
-
-    breadCrumbsItems.forEach((listItem, index) => {
-      const separatorLi = document.createElement("li");
-      separatorLi.innerHTML = "/";
-
-      ulEl.appendChild(listItem);
-
-      if (index !== breadCrumbsItems.length - 1) {
-        ulEl.appendChild(separatorLi);
-      }
-    });
+    const breadcrumbsLiItems = this.buildBreadcrumbs(breadcrumbs);
+    this.renderBreadcrumbs(breadcrumbsLiItems);
   }
 }
 
