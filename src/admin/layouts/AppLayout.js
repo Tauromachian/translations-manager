@@ -13,23 +13,10 @@ export class AppLayout extends HTMLElement {
     return ["title", "breadcrumbs"];
   }
 
-  buildBreadcrumbs(breadcrumbs) {
-    const breadcrumbsEl = document.createElement("app-breadcrumbs");
-
-    breadcrumbsEl.setAttribute(
-      "breadcrumbs",
-      breadcrumbs,
-    );
-
-    return breadcrumbsEl;
-  }
-
   attributeChangedCallback(name, _, newValue) {
     if (name === "breadcrumbs") {
-      const breadcrumbsEl = this.buildBreadcrumbs(newValue);
-
-      const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
-      breadcrumbsWrapper.appendChild(breadcrumbsEl);
+      const breadcrumbsEl = this.root.querySelector("app-breadcrumbs");
+      breadcrumbsEl.setAttribute("breadcrumbs", newValue);
     }
   }
 
@@ -41,8 +28,11 @@ export class AppLayout extends HTMLElement {
         ${gridCss}
         </style>
 
+
         <div class="container mt-5">
-            <div class="breadcrumbs-wrapper my-2"></div>
+            <div class="breadcrumbs-wrapper my-2">
+                <app-breadcrumbs></app-breadcrumbs>
+            </div>
 
             <h1>${title}</h1>
 
