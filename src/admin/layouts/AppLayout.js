@@ -1,3 +1,5 @@
+import marginCss from "@jogarcia/mgrid/dist/margin.css?inline";
+
 import "@/admin/components/AppBreadcrumbs.js";
 
 import gridCss from "@/shared/styles/grid.css?inline";
@@ -25,6 +27,7 @@ export class AppLayout extends HTMLElement {
 
     this.root.innerHTML = `
         <style>
+        ${marginCss}
         ${gridCss}
         </style>
 
