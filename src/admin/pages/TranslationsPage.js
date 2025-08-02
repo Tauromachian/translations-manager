@@ -1,3 +1,5 @@
+import "@/admin/layouts/AppLayout.js";
+
 import "../components/AppBreadcrumbs.js";
 import "../components/AppLoader.js";
 import "../components/DataTable.js";
@@ -258,13 +260,6 @@ export class TranslationsPage extends HTMLElement {
     this.loadData();
   }
 
-  buildBreadcrumbs() {
-    const breadcrumbs = document.createElement("app-breadcrumbs");
-    breadcrumbs.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
-
-    return breadcrumbs;
-  }
-
   async onTranslationFormSubmit(event) {
     const data = event.detail;
 
@@ -302,12 +297,8 @@ export class TranslationsPage extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
-            <div class="container mt-5">
-                <div class="breadcrumbs-wrapper my-2"></div>
-
-                <h1>Translations</h1>
-
-                <div class="card">
+            <app-layout class="app-layout" title="Translations">
+                <div class="card" slot="content">
                     <table-toolbar class="p-1" action-button-text="Add Language" disable-search>
                         <div slot="append">
                             <app-button id="translations-create-button">Add Translation</app-button>
@@ -331,7 +322,7 @@ export class TranslationsPage extends HTMLElement {
                         <app-loader class="py-5"></app-loader>
                     </div>
                 </div>
-            </div>
+            </app-layout>
 
             <app-modal title="Add Language" width="400px" id="languages-modal">
                 <language-form></language-form>
@@ -354,8 +345,8 @@ export class TranslationsPage extends HTMLElement {
       "#translations-create-button",
     );
 
-    const breadcrumbsWrapper = this.querySelector(".breadcrumbs-wrapper");
-    breadcrumbsWrapper.appendChild(this.buildBreadcrumbs());
+    const appLayout = this.querySelector("app-layout");
+    appLayout.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
     tableToolbar.addEventListener(
       "click-create",
