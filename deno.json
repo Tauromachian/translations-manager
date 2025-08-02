@@ -17,6 +17,7 @@
     "drizzle-orm": "npm:drizzle-orm@^0.42.0",
     "iconify-icon": "npm:iconify-icon@^3.0.0",
     "node-postgres": "npm:node-postgres@^0.6.2",
-    "pg": "npm:pg@^8.14.1"
+    "pg": "npm:pg@^8.14.1",
+    "@/": "./src/"
   }
 }
