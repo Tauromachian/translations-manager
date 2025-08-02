@@ -247,7 +247,7 @@ export class CollectionsPage extends HTMLElement {
       this.openModal(true);
     });
 
-    const appLayout = this.querySelector(".app-layout");
+    const appLayout = this.querySelector("app-layout");
     appLayout.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
     tableToolbar.addEventListener("search", this.onSearch.bind(this));
