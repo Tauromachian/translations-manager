@@ -10,7 +10,11 @@ export async function index(req, res) {
 
   const translations = await db.select().from(translationsSchema).where(
     filter?.languagesIds && and(
-      sql`language_id IN ${filter.languagesIds}`,
+      sql`language_id IN ${
+        Array.isArray(filter.languagesIds)
+          ? filter.languagesIds
+          : [filter.languagesIds]
+      }`,
     ),
   );
 
