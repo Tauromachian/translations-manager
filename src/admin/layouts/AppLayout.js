@@ -1,3 +1,5 @@
+import "iconify-icon";
+
 import marginCss from "@jogarcia/mgrid/dist/margin.css?inline";
 
 import "@/admin/components/AppBreadcrumbs.js";
@@ -29,8 +31,26 @@ export class AppLayout extends HTMLElement {
         <style>
         ${marginCss}
         ${gridCss}
+
+        button {
+          background: transparent;
+          border: none;
+          cursor: pointer;
+          padding: 0.5em 0.5em;
+          background-color: var(--primary);
+          border-radius: 0px 0px 4px 4px;
+        }
         </style>
 
+        <div class="container">
+            <button class="button--text ml-auto">
+                <iconify-icon
+                    width="42"
+                    height="42"
+                    icon="material-symbols:invert-colors"
+                ></iconify-icon>
+            </button>
+        </div>
 
         <div class="container mt-5">
             <div class="breadcrumbs-wrapper my-2">
