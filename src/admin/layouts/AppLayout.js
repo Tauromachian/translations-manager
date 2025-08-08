@@ -24,6 +24,31 @@ export class AppLayout extends HTMLElement {
     }
   }
 
+  loadTheme() {
+    const theme = localStorage.getItem("theme");
+
+    const htmlEl = document.querySelector("html");
+    if (theme === "dark") {
+      htmlEl.setAttribute("data-theme", "dark");
+    }
+  }
+
+  toggleTheme() {
+    const htmlEl = document.querySelector("html");
+
+    let htmlElDarkAttr = htmlEl.getAttribute("data-theme");
+
+    if (htmlElDarkAttr) {
+      htmlEl.removeAttribute("data-theme");
+    } else {
+      htmlEl.setAttribute("data-theme", "dark");
+    }
+
+    htmlElDarkAttr = htmlEl.getAttribute("data-theme");
+
+    localStorage.setItem("theme", htmlElDarkAttr ?? "light");
+  }
+
   connectedCallback() {
     const title = this.getAttribute("title");
 
@@ -62,6 +87,9 @@ export class AppLayout extends HTMLElement {
             <slot name="content"></slot>
         </div> 
     `;
+
+    const themeButton = this.root.querySelector("button");
+    themeButton.addEventListener("click", this.toggleTheme);
   }
 }
 
