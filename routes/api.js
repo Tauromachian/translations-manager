@@ -351,6 +351,17 @@ router.route("/languages/:id")
  *   get:
  *     summary: Retrieve a list of all translations
  *     tags: [Translations]
+ *     parameters:
+ *       - in: query
+ *         name: filter
+ *         style: deepObject
+ *         explode: false
+ *         schema:
+ *            type: object
+ *            properties:
+ *              languageIds:
+ *                type: array
+ *                example: [1,2,3]
  *     responses:
  *       200:
  *         description: A successful response
