@@ -52,6 +52,8 @@ export class AppLayout extends HTMLElement {
   connectedCallback() {
     const title = this.getAttribute("title");
 
+    this.loadTheme();
+
     this.root.innerHTML = `
         <style>
         ${marginCss}
