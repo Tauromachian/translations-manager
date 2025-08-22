@@ -46,6 +46,7 @@ export class FormField extends HTMLElement {
     const errorEl = this.root.querySelector(".error");
 
     if (this.#wrappedField.validity.valid || !this.#hasUserInteracted) {
+      this.#wrappedField.classList.remove("wrapped-field--invalid");
       errorEl.classList.remove("error--active");
       this.#internals.setValidity(
         {},
@@ -62,6 +63,8 @@ export class FormField extends HTMLElement {
 
       errorEl.classList.add("error--active");
       errorEl.innerText = msgByKey[failingKey];
+
+      this.#wrappedField.classList.add("wrapped-field--invalid");
 
       this.#internals.setValidity(
         this.#wrappedField.validity,
@@ -218,6 +221,10 @@ export class FormField extends HTMLElement {
                   outline: none;
                   border-color: var(--primary-10);
                   box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+              }
+
+              .wrapped-field--invalid {
+                  border-color: var(--danger);
               }
 
               .append-inner-icon {
