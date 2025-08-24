@@ -353,15 +353,14 @@ router.route("/languages/:id")
  *     tags: [Translations]
  *     parameters:
  *       - in: query
- *         name: filter
- *         style: deepObject
- *         explode: false
+ *         name: filter[languagesIds]
+ *         style: form
+ *         explode: true
  *         schema:
- *            type: object
- *            properties:
- *              languagesIds:
- *                type: array
- *                example: [1,2,3]
+ *            type: array
+ *            example: [1,2,3]
+ *            items:
+ *              type: integer
  *     responses:
  *       200:
  *         description: A successful response
