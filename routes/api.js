@@ -359,7 +359,7 @@ router.route("/languages/:id")
  *         schema:
  *            type: object
  *            properties:
- *              languageIds:
+ *              languagesIds:
  *                type: array
  *                example: [1,2,3]
  *     responses:
