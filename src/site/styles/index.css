@@ -42,6 +42,12 @@ header {
   display: flex;
 }
 
+@media (prefers-color-scheme: dark) {
+  .header__social {
+    filter: invert(var(--filter));
+  }
+}
+
 .header__logo {
   height: 42px;
 }

@@ -48,4 +48,6 @@ html[data-theme="dark"] {
   --table-row-hover: #1d283e;
 
   --form-field-bg: #122131;
+
+  --filter: 100%;
 }
