@@ -18,6 +18,8 @@
     "iconify-icon": "npm:iconify-icon@^3.0.0",
     "node-postgres": "npm:node-postgres@^0.6.2",
     "pg": "npm:pg@^8.14.1",
+    "drizzle-orm/node-postgres": "npm:drizzle-orm/node-postgres",
+    "std/dotenv": "https://deno.land/std@0.224.0/dotenv/mod.ts",
     "@/": "./src/"
   }
 }

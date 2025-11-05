@@ -1,6 +1,6 @@
-import { drizzle } from "npm:drizzle-orm/node-postgres";
+import { drizzle } from "drizzle-orm/node-postgres";
 
-import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
+import { load } from "std/dotenv";
 
 import pg from "pg";
 import { enforceEnvironmentVariables } from "@/server/utils/envVariables.js";
