@@ -3,10 +3,19 @@ import { drizzle } from "npm:drizzle-orm/node-postgres";
 import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
 
 import pg from "pg";
+import { enforceEnvironmentVariables } from "@/server/utils/envVariables.js";
 
 const { Pool } = pg;
 
 await load({ export: true });
+
+enforceEnvironmentVariables([
+  "DB_USER",
+  "DB_PASSWORD",
+  "DB_HOST",
+  "DB_PORT",
+  "DB_NAME",
+]);
 
 const postgresUrl = `postgresql://${Deno.env.get("DB_USER")}:${
   Deno.env.get("DB_PASSWORD")
