@@ -2,6 +2,8 @@
 
 Project build to handle translations. Self host this thing if you like it. Maybe I'll do my own hosting solution.
 
+Take a look at the [demo](https://translations-manager.jose-garcia.net/) to see how it is going.
+
 ## Tech Stack
 
 - [Deno](https://deno.land/)
