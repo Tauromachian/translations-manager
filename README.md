@@ -12,11 +12,31 @@ Project build to handle translations. Self host this thing if you like it. Maybe
 
 Everything else is pure javascript.
 
-## Who is this for?
+## Why another SaaS?
 
-As your app and the translations gets bigger, you may bring in someone that can translate but can't code.
+**I dislike doing translations**. I want to spend my time building good software not writing half assed translations that my manager will re-write any way.
 
-Also, you don't want to be running your pipelines for every change to the translations.
-That stuff costs money
+So, I thought to myself: How can I make it so I can keep my manager and possibly the owner of the company happy while at the same time I avoid writing translations.
 
-Aaaand you would be able to reuse translations across different projects.
+How about a SaaS that returns a JSON that integrates with i18n?
+
+## How does this keeps me, the developer, happy?
+
+- I has to be fast. Nobody likes slow code. 
+- No weird integrations. This should return i18n compatible JSON. Ideally to give it to your preferred i18n library.
+- Decent docs, decent API. Usage and integration with my favorite FE or BE should be as easy as possible.
+- Versioning of the returned translations. New translations shouldn't break old ones. (No idea how I will implement this)
+- Reusable and clonable translations. (Not done)
+- Import i18n JSON files. Because I don't hate myself. I want migration to be as easy as possible. (Not done)
+- Export i18n JSON files that you can throw into your project instead of calling the API if you so feel like so. (Not done)
+
+## How does this keeps my manager happy?
+
+- He gets a nice GUI to edit the translations.
+- He gets translations by project.
+- He gets to manage user permissions to said translations. (Not done)
+
+## How does this makes the owner of the company I am working for happy?
+
+- He gets to not spend money paying his developers for something they don't want to do and are unproductive at.
+- He gets to save money on pipelines. No need to run them for small changes.
