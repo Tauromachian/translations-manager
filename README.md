@@ -41,4 +41,4 @@ How about a SaaS that returns a JSON that integrates with i18n?
 ## How does this makes the owner of the company I am working for happy?
 
 - He gets to not spend money paying his developers for something they don't want to do and are unproductive at.
-- He gets to save money on pipelines. No need to run them for small changes.
+- He gets to save money on pipelines. No need to run them for translations changes.
