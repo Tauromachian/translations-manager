@@ -1,11 +1,10 @@
-import express from "npm:express@5";
-import morgan from "npm:morgan";
+import express from "express";
 
-import { load } from "https://deno.land/std@0.224.0/dotenv/mod.ts";
+import { load } from "std/dotenv";
 
-import { rateLimit } from "npm:express-rate-limit";
-
-import swaggerUi from "npm:swagger-ui-express";
+import morgan from "morgan";
+import { rateLimit } from "express-rate-limit";
+import swaggerUi from "swagger-ui-express";
 
 import { start as livereloadStart } from "./config/livereload.ts";
 import swaggerSpec from "./config/swagger.ts";

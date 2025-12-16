@@ -17,11 +17,14 @@
     "drizzle-kit": "npm:drizzle-kit@^0.31.0",
     "drizzle-orm": "npm:drizzle-orm@^0.42.0",
     "express": "npm:express@^5.2.1",
+    "express-rate-limit": "npm:express-rate-limit@^8.2.1",
     "iconify-icon": "npm:iconify-icon@^3.0.0",
+    "morgan": "npm:morgan@^1.10.1",
     "node-postgres": "npm:node-postgres@^0.6.2",
     "pg": "npm:pg@^8.14.1",
     "drizzle-orm/node-postgres": "npm:drizzle-orm/node-postgres",
     "std/dotenv": "https://deno.land/std@0.224.0/dotenv/mod.ts",
-    "@/": "./src/"
+    "@/": "./src/",
+    "swagger-ui-express": "npm:swagger-ui-express@^5.0.1"
   }
 }
