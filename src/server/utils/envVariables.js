@@ -8,7 +8,6 @@ export function enforceEnvironmentVariables(environmentVariables) {
     if (!Deno.env.get(variable)) {
       const errMessage = `The ${variable} environment variable is required`;
       console.error(errMessage);
-      console.trace();
       throw new Error(errMessage);
     }
   }
