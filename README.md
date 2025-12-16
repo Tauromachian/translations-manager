@@ -25,7 +25,7 @@ How about a SaaS that returns a JSON that integrates with i18n?
 ## How does this keeps me, the developer, happy?
 
 - I has to be fast. Nobody likes slow code. 
-- No weird integrations. This should return i18n compatible JSON. Ideally to give it to your preferred i18n library.
+- i18n compatibility. This should return i18n compatible JSON. Ideally to give it to your preferred i18n library.
 - Decent docs, decent API. Usage and integration with my favorite FE or BE should be as easy as possible.
 - Versioning of the returned translations. New translations shouldn't break old ones. (No idea how I will implement this)
 - Reusable and clonable translations. (Not done)
