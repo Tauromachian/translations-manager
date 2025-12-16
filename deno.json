@@ -16,6 +16,7 @@
     "@types/pg": "npm:@types/pg@^8.11.13",
     "drizzle-kit": "npm:drizzle-kit@^0.31.0",
     "drizzle-orm": "npm:drizzle-orm@^0.42.0",
+    "express": "npm:express@^5.2.1",
     "iconify-icon": "npm:iconify-icon@^3.0.0",
     "node-postgres": "npm:node-postgres@^0.6.2",
     "pg": "npm:pg@^8.14.1",
