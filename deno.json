@@ -12,7 +12,6 @@
     "@jogarcia/mgrid": "npm:@jogarcia/mgrid@^1.1.0",
     "@std/assert": "jsr:@std/assert@1",
     "@types/pg": "npm:@types/pg@^8.11.13",
-    "dotenv": "npm:dotenv@^16.5.0",
     "drizzle-kit": "npm:drizzle-kit@^0.31.0",
     "drizzle-orm": "npm:drizzle-orm@^0.42.0",
     "iconify-icon": "npm:iconify-icon@^3.0.0",
