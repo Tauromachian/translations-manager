@@ -9,6 +9,8 @@ import swaggerUi from "swagger-ui-express";
 import { start as livereloadStart } from "./config/livereload.ts";
 import swaggerSpec from "./config/swagger.ts";
 
+import "./config/logger.ts";
+
 import { router as siteRouter } from "./routes/site.js";
 import { router as appRouter } from "./routes/app.js";
 import { router as apiRouter } from "./routes/api.js";
