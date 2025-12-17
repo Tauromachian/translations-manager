@@ -14,6 +14,7 @@ import "./config/logger.ts";
 import { router as siteRouter } from "./routes/site.js";
 import { router as appRouter } from "./routes/app.js";
 import { router as apiRouter } from "./routes/api.js";
+import { errorHandler } from "@/server/middlewares/errorHandler.js";
 
 const app = express();
 
@@ -37,6 +38,8 @@ app.use("/api", apiRouter);
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(limiter);
+
+app.use(errorHandler);
 
 (
   async function init() {
