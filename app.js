@@ -39,7 +39,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(limiter);
 
-app.use("*", (_, _1, next) => {
+app.use((_, _1, next) => {
   next({ statusCode: 404 });
 });
 
