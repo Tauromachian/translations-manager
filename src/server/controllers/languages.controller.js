@@ -13,9 +13,9 @@ export async function getLanguageTranslationsForI18N(req, res, next) {
   }
 
   const result = await db.execute(sql`
-        SELECT jsonb_object_agg(code, translation) AS json_result FROM 
+        SELECT jsonb_object_agg(key, translation) AS json_result FROM 
         (
-            SELECT code, translation FROM translations
+            SELECT key, translation FROM translations
             INNER JOIN languages ON translations.language_id = languages.id
             WHERE languages.code = ${languageCode} AND languages.collection_id = ${collectionId}
         ) AS codes_translations_table
