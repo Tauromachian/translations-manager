@@ -222,6 +222,33 @@ router.route("/collections/:id")
 router.route("/languages")
   .get(languagesController.index).post(languagesController.store);
 
+/**
+ * @openapi
+ * /language-translations-i18n/code/{languageCode}/collection-id/{collectionId}:
+ *   get:
+ *     summary: Retrieve a i18n compatible JSON of translations of a language and its collection.
+ *     tags: [Languages]
+ *     parameters:
+ *       - in: path
+ *         name: languageCode
+ *         type: string
+ *         required: true
+ *         description: Code of the language
+ *       - in: path
+ *         name: collectionId
+ *         type: integer
+ *         required: true
+ *         description: Collection id of the language
+ *     responses:
+ *       200:
+ *         description: A successful response
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       400:
+ *          description: Bad request
+ */
 router.get(
   "/language-translations-i18n/code/:languageCode/collection-id/:collectionId",
   languagesController.getLanguageTranslationsForI18N,
