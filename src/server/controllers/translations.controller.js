@@ -18,7 +18,7 @@ export async function index(req, res) {
     ),
   );
 
-  res.status(200).json(translations);
+  res.json(translations);
 }
 
 export async function store(req, res) {
