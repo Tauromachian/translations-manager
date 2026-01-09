@@ -222,6 +222,11 @@ router.route("/collections/:id")
 router.route("/languages")
   .get(languagesController.index).post(languagesController.store);
 
+router.get(
+  "/language-translations-i18n/code/:languageCode/collection-id/:collectionId",
+  languagesController.getLanguageTranslationsForI18N,
+);
+
 /**
  * @openapi
  * /languages/{id}:

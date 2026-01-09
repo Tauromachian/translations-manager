@@ -1,9 +1,28 @@
 import { db } from "../../../config/db.ts";
 
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 
 import { languages as languagesSchema } from "../../../database/schema/languages.ts";
 import { LanguageSchema } from "../dtos/languages.js";
+
+export async function getLanguageTranslationsForI18N(req, res, next) {
+  const { languageCode, collectionId } = req.params;
+
+  if (!languageCode || !collectionId) {
+    return next({ message: "Language code and collection ID required" });
+  }
+
+  const result = await db.execute(sql`
+        SELECT jsonb_object_agg(code, translation) AS json_result FROM 
+        (
+            SELECT code, translation FROM translations
+            INNER JOIN languages ON translations.language_id = languages.id
+            WHERE languages.code = ${languageCode} AND languages.collection_id = ${collectionId}
+        ) AS codes_translations_table
+        `);
+
+  return res.json(result.rows[0].json_result);
+}
 
 export async function index(req, res) {
   const { filter } = req.query;
