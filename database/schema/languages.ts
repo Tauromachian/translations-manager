@@ -1,4 +1,4 @@
-import { integer, pgTable, serial, text } from "drizzle-orm/pg-core";
+import { integer, pgTable, serial, text, unique } from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
 
 import { collections } from "./collections.ts";
@@ -10,7 +10,9 @@ export const languages = pgTable("languages", {
   }),
   name: text().notNull(),
   code: text().notNull(),
-});
+}, (l) => [
+  unique().on(l.collectionId, l.code),
+]);
 
 export const languagesRelations = relations(languages, ({ one }) => ({
   collections: one(collections, {
