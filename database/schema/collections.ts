@@ -16,11 +16,9 @@ export const collections = pgTable("collections", {
   description: text("description"),
   searchVector: tsVector("search_vector").generatedAlwaysAs(() =>
     sql`
-        SELECT * 
-          FROM collections 
-          WHERE (setweight(to_tsvector(name), 'A') ||
-                 setweight(coalesce(to_tsvector(description), ''), 'B') 
-        `
+        setweight(to_tsvector('simple', name), 'A') ||
+        setweight(coalesce(to_tsvector('simple', description), ''), 'B') 
+    `
   ),
 }, (table) => [
   index("index_search_vector").using("gin", table.searchVector),
