@@ -5,18 +5,6 @@ import { eq, sql } from "drizzle-orm";
 import { collections as collectionsSchema } from "../../../database/schema/collections.ts";
 import { CollectionSchema } from "../dtos/collection.js";
 
-async function doFullTextSearch(query) {
-  const result = await db.execute(sql`
-        SELECT * 
-          FROM collections 
-          WHERE (setweight(to_tsvector(name), 'A') ||
-                 setweight(coalesce(to_tsvector(description), ''), 'B') 
-                 @@ to_tsquery(${query}))
-    `);
-
-  return result;
-}
-
 export async function index(req, res) {
   const { search } = req.query;
 
@@ -25,8 +13,11 @@ export async function index(req, res) {
   if (!search) {
     collections = await db.select().from(collectionsSchema);
   } else {
-    const result = await doFullTextSearch(search);
-    collections = result.rows;
+    const result = await db.select().from(collectionsSchema).where(
+      sql`search_vector @@ to_tsquery(${search})`,
+    );
+
+    collections = result;
   }
 
   res.status(200).json(collections);
