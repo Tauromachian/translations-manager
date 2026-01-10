@@ -15,7 +15,7 @@ function getMessageByCode(statusCode) {
 }
 
 export function errorHandler(err, req, res, _) {
-  logger.error(err);
+  logger.error(err.message);
 
   const statusCode = err.statusCode || 500;
 
