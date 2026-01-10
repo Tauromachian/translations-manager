@@ -11,6 +11,6 @@ await configure({
     }),
   },
   loggers: [
-    { category: [], sinks: ["console"] },
+    { category: "app", lowestLevel: "debug", sinks: ["console"] },
   ],
 });
