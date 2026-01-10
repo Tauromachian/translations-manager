@@ -1,10 +1,10 @@
-import express from "npm:express@5";
+import express from "express";
 
 export const router = express.Router();
 
-import * as collectionsController from "../src/server/controllers/collections.controller.js";
-import * as languagesController from "../src/server/controllers/languages.controller.js";
-import * as translationsController from "../src/server/controllers/translations.controller.js";
+import * as collectionsController from "@/server/controllers/collections.controller.js";
+import * as languagesController from "@/server/controllers/languages.controller.js";
+import * as translationsController from "@/server/controllers/translations.controller.js";
 
 /**
  * @openapi
