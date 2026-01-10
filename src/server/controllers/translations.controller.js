@@ -22,39 +22,26 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const result = TranslationsSchema.omit({ id: true }).safeParse(req.body);
-
-  if (!result.success) {
-    return res.status(400).json(result.error);
-  }
+  const data = TranslationsSchema.omit({ id: true }).parse(req.body);
 
   const translation = await db
     .insert(translationsSchema)
-    .values(req.body)
+    .values(data)
     .returning();
 
   res.json(translation);
 }
 
 export async function edit(req, res) {
-  const { id } = req.params;
-
-  const result = TranslationsSchema.safeParse({
+  const data = TranslationsSchema.safeParse({
     ...req.body,
     id: Number(id),
   });
 
-  if (!result.success) {
-    return res.status(400).json(result.error);
-  }
-
-  const translation = await db.insert(translationsSchema).values({
-    ...req.body,
-    id,
-  })
+  const translation = await db.insert(translationsSchema).values(data)
     .onConflictDoUpdate({
       target: translationsSchema.id,
-      set: { ...req.body, id },
+      set: data,
     })
     .returning();
 

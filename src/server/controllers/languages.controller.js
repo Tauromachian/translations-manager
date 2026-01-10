@@ -35,15 +35,11 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const result = LanguageSchema.omit({ id: true }).safeParse(req.body);
-
-  if (!result.success) {
-    return res.status(400).json(result.error);
-  }
+  const data = LanguageSchema.omit({ id: true }).parse(req.body);
 
   const language = await db
     .insert(languagesSchema)
-    .values(req.body)
+    .values(data)
     .returning();
 
   res.json(language);
@@ -52,19 +48,12 @@ export async function store(req, res) {
 export async function edit(req, res) {
   const { id } = req.params;
 
-  const result = LanguageSchema.safeParse({ ...req.body, id });
+  const data = LanguageSchema.parse({ ...req.body, id });
 
-  if (!result.success) {
-    return res.status(400).json(result.error);
-  }
-
-  const language = await db.insert(languagesSchema).values({
-    ...req.body,
-    id,
-  })
+  const language = await db.insert(languagesSchema).values(data)
     .onConflictDoUpdate({
       target: languagesSchema.id,
-      set: { ...req.body, id },
+      set: data,
     })
     .returning();
 

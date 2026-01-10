@@ -24,13 +24,9 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const { name, description } = req.body;
-
-  const result = CollectionSchema.omit({ id: true }).safeParse(req.body);
-
-  if (!result.success) {
-    return res.status(400).json(result.error);
-  }
+  const { name, description } = CollectionSchema.omit({ id: true }).parse(
+    req.body,
+  );
 
   const collection = await db
     .insert(collectionsSchema)
@@ -43,22 +39,15 @@ export async function store(req, res) {
 export async function edit(req, res) {
   const { id } = req.params;
 
-  const result = CollectionSchema.safeParse({
+  const data = CollectionSchema.parse({
     ...req.body,
     id: Number(id),
   });
 
-  if (!result.success) {
-    return res.status(400).json(result.error);
-  }
-
-  const collection = await db.insert(collectionsSchema).values({
-    ...req.body,
-    id,
-  })
+  const collection = await db.insert(collectionsSchema).values(data)
     .onConflictDoUpdate({
       target: collectionsSchema.id,
-      set: { ...req.body, id },
+      set: data,
     })
     .returning();
 
