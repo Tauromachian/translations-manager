@@ -2,7 +2,7 @@ import z from "zod";
 
 import { getLogger } from "@logtape/logtape";
 
-const logger = getLogger([]);
+const logger = getLogger(["app"]);
 
 function getMessageByCode(statusCode) {
   if (statusCode >= 500) return "Internal Server Error";
