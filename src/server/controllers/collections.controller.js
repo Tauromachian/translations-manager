@@ -61,3 +61,45 @@ export async function destroy(req, res) {
 
   res.status(204).send();
 }
+
+export async function clone(req, res) {
+  const { id, name, description } = CollectionSchema.parse(
+    req.body,
+  );
+
+  await db.execute(sql`
+            START TRANSACTION;
+
+            CREATE TEMP TABLE languages_tmp_map (old_id INT, new_id INT);
+
+            WITH new_collection AS
+            (
+                INSERT INTO collections (name, description) VALUES (
+                    ${name},
+                    ${description}
+                ) 
+                RETURNING id AS new_collection_id
+            ), languages_map AS 
+            (
+                INSERT INTO languages (collection_id, name, code)
+                SELECT new_collection.new_collection_id AS collection_id, languages.name AS name, languages.code AS code 
+                FROM languages
+                CROSS JOIN new_collection
+                WHERE languages.collection_id = ${id}
+                RETURNING id, code
+            ) 
+            INSERT INTO languages_tmp_map (old_id, new_id)
+                SELECT old_languages.id AS old_id, new_languages.id AS new_id
+                FROM languages AS old_languages
+                INNER JOIN languages_map AS new_languages ON old_languages.code = new_languages.code
+                WHERE old_languages.collection_id = 2;
+
+            INSERT INTO translations (language_id, key, translation)
+            SELECT new_id AS language_id, key, translation FROM translations
+            INNER JOIN languages_tmp_map ON languages_tmp_map.old_id = translations.language_id;
+
+
+            COMMIT;`);
+
+  return res.send({ message: "ok" });
+}

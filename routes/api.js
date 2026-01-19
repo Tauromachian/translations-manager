@@ -77,6 +77,8 @@ import * as translationsController from "@/server/controllers/translations.contr
 router.route("/collections")
   .get(collectionsController.index).post(collectionsController.store);
 
+router.post("/collections/clone", collectionsController.clone);
+
 /**
  * @openapi
  * /collections:
