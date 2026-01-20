@@ -3,7 +3,7 @@ import { db } from "../../../config/db.ts";
 import { eq, sql } from "drizzle-orm";
 
 import { collections as collectionsSchema } from "../../../database/schema/collections.ts";
-import { CollectionSchema } from "../dtos/collection.js";
+import { CollectionDto } from "../dtos/collection.js";
 
 export async function index(req, res) {
   const { search } = req.query;
@@ -24,7 +24,7 @@ export async function index(req, res) {
 }
 
 export async function store(req, res) {
-  const { name, description } = CollectionSchema.omit({ id: true }).parse(
+  const { name, description } = CollectionDto.omit({ id: true }).parse(
     req.body,
   );
 
@@ -39,7 +39,7 @@ export async function store(req, res) {
 export async function edit(req, res) {
   const { id } = req.params;
 
-  const data = CollectionSchema.parse({
+  const data = CollectionDto.parse({
     ...req.body,
     id: Number(id),
   });
@@ -63,7 +63,7 @@ export async function destroy(req, res) {
 }
 
 export async function clone(req, res) {
-  const { id, name, description } = CollectionSchema.parse(
+  const { id, name, description } = CollectionDto.parse(
     req.body,
   );
 
