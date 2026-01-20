@@ -64,7 +64,7 @@ export async function destroy(req, res) {
 
 export async function clone(req, res) {
   const { id, name, description } = CollectionDto.parse(
-    req.body,
+    { ...req.body, id: Number(req.body?.id) },
   );
 
   await db.execute(sql`
