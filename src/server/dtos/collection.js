@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CollectionSchema = z.object({
+export const CollectionDto = z.object({
   id: z.number().int().positive(),
   name: z.string({
     required_error: "Name is required",
