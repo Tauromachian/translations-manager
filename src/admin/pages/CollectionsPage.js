@@ -12,6 +12,7 @@ import "../components/TextField.js";
 import "../components/ModalConfirmDelete.js";
 
 import {
+  cloneCollection,
   deleteCollection,
   getCollections,
   postCollection,
@@ -103,6 +104,8 @@ export class CollectionsPage extends HTMLElement {
       await this.postData(jsonData);
     } else if (this.#modalMode === "update") {
       await this.putData(jsonData);
+    } else {
+      await cloneCollection({ ...jsonData, id: this.#selectedId });
     }
 
     const appModal = this.querySelector("app-modal");
@@ -128,6 +131,10 @@ export class CollectionsPage extends HTMLElement {
 
     if (event.target.closest(".go-to-translation")) {
       router.go(`/app/collection/${collectionId}`);
+    }
+
+    if (event.target.closest(".clone")) {
+      this.openModal.call(this, "clone", collectionId);
     }
   }
 
@@ -213,6 +220,9 @@ export class CollectionsPage extends HTMLElement {
                             </app-button>
                             <app-button class="go-to-translation">
                                 Manage Translations
+                            </app-button>
+                            <app-button class="clone">
+                                Clone
                             </app-button>
                         </div>
                     </data-table>
