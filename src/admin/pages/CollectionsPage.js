@@ -25,7 +25,7 @@ import { router } from "../services/router.js";
 import { ref, watch } from "../../shared/utils/reactivity.js";
 
 export class CollectionsPage extends HTMLElement {
-  #isFormInserting = false;
+  #modalMode = "update";
   #selectedId;
   #form;
   #modalConfirmDelete;
@@ -99,9 +99,9 @@ export class CollectionsPage extends HTMLElement {
     const data = new FormData(form);
     const jsonData = Object.fromEntries(data);
 
-    if (this.#isFormInserting) {
+    if (this.#modalMode === "insert") {
       await this.postData(jsonData);
-    } else {
+    } else if (this.#modalMode === "update") {
       await this.putData(jsonData);
     }
 
@@ -123,7 +123,7 @@ export class CollectionsPage extends HTMLElement {
     }
 
     if (event.target.closest(".edit")) {
-      this.openModal.call(this, false, collectionId);
+      this.openModal.call(this, "edit", collectionId);
     }
 
     if (event.target.closest(".go-to-translation")) {
