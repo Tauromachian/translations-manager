@@ -42,3 +42,15 @@ export async function deleteCollection(id) {
     method: "DELETE",
   });
 }
+
+export async function cloneCollection(data) {
+  const res = await fetch(`${baseUrl}/clone`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+
+  return await res.json();
+}
