@@ -67,11 +67,12 @@ export async function clone(req, res) {
     { ...req.body, id: Number(req.body?.id) },
   );
 
-  await db.execute(sql`
-            START TRANSACTION;
-
+  await db.transaction(async (tx) => {
+    await tx.execute(sql`
             CREATE TEMP TABLE languages_tmp_map (old_id INT, new_id INT);
+    `);
 
+    await tx.execute(sql`
             WITH new_collection AS
             (
                 INSERT INTO collections (name, description) VALUES (
@@ -94,12 +95,14 @@ export async function clone(req, res) {
                 INNER JOIN languages_map AS new_languages ON old_languages.code = new_languages.code
                 WHERE old_languages.collection_id = 2;
 
+    `);
+
+    await tx.execute(sql`
             INSERT INTO translations (language_id, key, translation)
             SELECT new_id AS language_id, key, translation FROM translations
             INNER JOIN languages_tmp_map ON languages_tmp_map.old_id = translations.language_id;
-
-
-            COMMIT;`);
+    `);
+  });
 
   return res.send({ message: "ok" });
 }
