@@ -158,13 +158,13 @@ export class CollectionsPage extends HTMLElement {
     await deleteCollection(id);
   }
 
-  openModal(isInserting, id) {
+  openModal(mode, id) {
     const modal = this.querySelector("app-modal");
     modal.setAttribute("open", true);
-    this.#isFormInserting = isInserting;
+    this.#modalMode = mode;
     this.#selectedId = id;
 
-    if (isInserting) {
+    if (mode === "insert" || mode === "clone") {
       this.#form.reset();
       return;
     }
