@@ -15,8 +15,6 @@ function getMessageByCode(statusCode) {
 }
 
 export function errorHandler(err, req, res, _) {
-  logger.error(err.message);
-
   const statusCode = err.statusCode || 500;
 
   res.status(statusCode);
@@ -41,6 +39,8 @@ export function errorHandler(err, req, res, _) {
     prodErrorObject.details = err;
     devErrorObject.details = err;
   }
+
+  logger.error(devErrorObject);
 
   if (Deno.env.get("NODE_ENV") === "development") {
     return res.json(devErrorObject);
