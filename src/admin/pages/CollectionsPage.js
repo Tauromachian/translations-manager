@@ -258,7 +258,7 @@ export class CollectionsPage extends HTMLElement {
     const tableToolbar = this.querySelector("table-toolbar");
 
     tableToolbar.addEventListener("click-create", () => {
-      this.openModal(true);
+      this.openModal.call(this, "insert");
     });
 
     const appLayout = this.querySelector("app-layout");
