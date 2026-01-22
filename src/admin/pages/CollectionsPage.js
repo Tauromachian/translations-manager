@@ -165,6 +165,10 @@ export class CollectionsPage extends HTMLElement {
     await deleteCollection(id);
   }
 
+  /**
+   * @param {('insert'|'clone'|'edit')} mode - Mode in which to open the modal
+   * @param {number|string|undefined} id - ID of the collection to edit or clone
+   */
   openModal(mode, id) {
     const modal = this.querySelector("app-modal");
     modal.setAttribute("open", true);
