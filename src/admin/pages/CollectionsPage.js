@@ -138,8 +138,8 @@ export class CollectionsPage extends HTMLElement {
     }
   }
 
-  onModalDeleteConfirmation() {
-    this.deleteCollection(this.#selectedId);
+  async onModalDeleteConfirmation() {
+    await deleteCollection(this.#selectedId);
     this.#modalConfirmDelete.setAttribute("open", false);
     this.loadData();
   }
@@ -159,10 +159,6 @@ export class CollectionsPage extends HTMLElement {
 
   async putData(data) {
     await putCollection(this.#selectedId, data);
-  }
-
-  async deleteCollection(id) {
-    await deleteCollection(id);
   }
 
   /**
