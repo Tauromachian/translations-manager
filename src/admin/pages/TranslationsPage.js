@@ -23,7 +23,7 @@ import {
 
 import { router } from "../services/router.js";
 
-import { ref, watch } from "../../shared/utils/reactivity.js";
+import { computed, ref, watch } from "../../shared/utils/reactivity.js";
 
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
@@ -44,6 +44,12 @@ export class TranslationsPage extends HTMLElement {
 
   constructor() {
     super();
+
+    this.#isEmpty = computed(() => {
+      if (this.#isLoading.value) return false;
+
+      return !this.#translations.value.length;
+    });
 
     watch(this.#languages, (value) => {
       const translationsCreateButton = this.querySelector(
@@ -69,13 +75,6 @@ export class TranslationsPage extends HTMLElement {
     });
 
     watch(this.#translations, (value) => {
-      if (!value.length) {
-        this.#isEmpty.value = true;
-        return;
-      } else {
-        this.#isEmpty.value = false;
-      }
-
       const dataTable = this.querySelector("data-table");
 
       if (!dataTable) return true;
@@ -88,24 +87,24 @@ export class TranslationsPage extends HTMLElement {
       dataTable.setAttribute("items", JSON.stringify(formattedTableData));
     });
 
-    watch(this.#isLoading, (value) => {
-      if (value) {
-        this.#isEmpty.value = false;
-      }
+    watch(this.#isLoading, this.setLoaderState.bind(this));
+    watch(this.#isEmpty, this.setEmptyState.bind(this));
+  }
 
-      const loader = this.querySelector("app-loader");
-      if (!loader) return;
+  setEmptyState(value) {
+    const empty = this.querySelector("empty-state");
 
-      loader.style.display = value ? "block" : "none";
-    });
+    if (!empty) return;
 
-    watch(this.#isEmpty, (value) => {
-      const empty = this.querySelector("empty-state");
+    empty.style.display = value ? "block" : "none";
+  }
 
-      if (!empty) return true;
+  setLoaderState(state) {
+    const loader = this.querySelector("app-loader");
 
-      empty.style.display = value ? "block" : "none";
-    });
+    if (!loader) return;
+
+    loader.style.display = state ? "block" : "none";
   }
 
   async loadData(searchText) {
@@ -121,7 +120,6 @@ export class TranslationsPage extends HTMLElement {
       this.#languages.value = [];
 
       this.#isLoading.value = false;
-      this.#isEmpty.value = true;
 
       return;
     }
