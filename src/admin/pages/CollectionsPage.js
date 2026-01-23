@@ -23,7 +23,7 @@ import debounce from "../../shared/utils/debouncer.js";
 
 import { router } from "../services/router.js";
 
-import { ref, watch } from "../../shared/utils/reactivity.js";
+import { computed, ref, watch } from "../../shared/utils/reactivity.js";
 
 export class CollectionsPage extends HTMLElement {
   #modalMode = "update";
@@ -40,13 +40,13 @@ export class CollectionsPage extends HTMLElement {
   constructor() {
     super();
 
-    watch(this.#collections, (value) => {
-      if (!value.length) {
-        this.#isEmpty.value = true;
-      } else {
-        this.#isEmpty.value = false;
-      }
+    this.#isEmpty = computed(() => {
+      if (this.#isLoading.value) return false;
 
+      return !this.#collections.value.length;
+    });
+
+    watch(this.#collections, (value) => {
       const dataTable = this.querySelector("data-table");
 
       if (!dataTable) return true;
@@ -55,10 +55,6 @@ export class CollectionsPage extends HTMLElement {
     });
 
     watch(this.#isLoading, (value) => {
-      if (value) {
-        this.#isEmpty.value = false;
-      }
-
       this.setLoaderState(value);
     });
 
