@@ -1,4 +1,6 @@
 export function reactive(objectToWrap) {
+  objectToWrap["_watchers"] = [];
+
   return new Proxy(objectToWrap, {
     set(target, property, value) {
       target[property] = value;
@@ -15,13 +17,9 @@ export function reactive(objectToWrap) {
 }
 
 export function ref(value) {
-  return reactive({ value, _watchers: [] });
+  return reactive({ value });
 }
 
 export function watch(ref, callback) {
-  if (ref?._watchers?.length) {
-    ref._watchers.push(callback);
-  } else {
-    ref._watchers = [callback];
-  }
+  ref._watchers.push(callback);
 }
