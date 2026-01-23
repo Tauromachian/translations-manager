@@ -8,10 +8,9 @@
     "npm:@jogarcia/mgrid@^1.1.0": "1.1.0",
     "npm:@types/node@24.0.7": "24.0.7",
     "npm:@types/pg@^8.11.13": "8.16.0",
-    "npm:drizzle-kit@*": "0.31.8_esbuild@0.25.12",
-    "npm:drizzle-kit@0.31": "0.31.8_esbuild@0.25.12",
-    "npm:drizzle-orm@*": "0.42.0_@types+pg@8.16.0_pg@8.16.3",
-    "npm:drizzle-orm@0.42": "0.42.0_@types+pg@8.16.0_pg@8.16.3",
+    "npm:drizzle-kit@~0.31.8": "0.31.8_esbuild@0.25.12",
+    "npm:drizzle-orm@*": "0.45.1_@types+pg@8.16.0_pg@8.16.3",
+    "npm:drizzle-orm@~0.45.1": "0.45.1_@types+pg@8.16.0_pg@8.16.3",
     "npm:express-rate-limit@^8.2.1": "8.2.1_express@5.2.1",
     "npm:express@5": "5.2.1",
     "npm:express@^5.2.1": "5.2.1",
@@ -753,8 +752,8 @@
       ],
       "bin": true
     },
-    "drizzle-orm@0.42.0_@types+pg@8.16.0_pg@8.16.3": {
-      "integrity": "sha512-pS8nNJm2kBNZwrOjTHJfdKkaU+KuUQmV/vk5D57NojDq4FG+0uAYGMulXtYT///HfgsMF0hnFFvu1ezI3OwOkg==",
+    "drizzle-orm@0.45.1_@types+pg@8.16.0_pg@8.16.3": {
+      "integrity": "sha512-Te0FOdKIistGNPMq2jscdqngBRfBpC8uMFVwqjf6gtTVJHIQ/dosgV/CLBU2N4ZJBsXL5savCba9b0YJskKdcA==",
       "dependencies": [
         "@types/pg",
         "pg"
@@ -1672,9 +1671,9 @@
       "jsr:@std/assert@1",
       "npm:@jogarcia/mgrid@^1.1.0",
       "npm:@types/pg@^8.11.13",
-      "npm:drizzle-kit@0.31",
+      "npm:drizzle-kit@~0.31.8",
       "npm:drizzle-orm@*",
-      "npm:drizzle-orm@0.42",
+      "npm:drizzle-orm@~0.45.1",
       "npm:express-rate-limit@^8.2.1",
       "npm:express@^5.2.1",
       "npm:iconify-icon@3",
