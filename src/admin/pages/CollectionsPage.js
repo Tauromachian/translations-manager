@@ -46,31 +46,31 @@ export class CollectionsPage extends HTMLElement {
       return !this.#collections.value.length;
     });
 
-    watch(this.#collections, (value) => {
-      const dataTable = this.querySelector("data-table");
-
-      if (!dataTable) return true;
-
-      dataTable.setAttribute("items", JSON.stringify(value));
-    });
-
-    watch(this.#isLoading, (value) => {
-      this.setLoaderState(value);
-    });
-
-    watch(this.#isEmpty, (value) => {
-      const empty = this.querySelector("empty-state");
-
-      if (!empty) return;
-
-      empty.style.display = value ? "block" : "none";
-    });
+    watch(this.#collections, this.populateTable.bind(this));
+    watch(this.#isLoading, this.setLoaderState.bind(this));
+    watch(this.#isEmpty, this.setEmptyState.bind(this));
   }
 
   onSearch(event) {
     debounce(() => {
       this.loadData(event.detail);
     });
+  }
+
+  populateTable(data) {
+    const dataTable = this.querySelector("data-table");
+
+    if (!dataTable) return true;
+
+    dataTable.setAttribute("items", JSON.stringify(data));
+  }
+
+  setEmptyState(value) {
+    const empty = this.querySelector("empty-state");
+
+    if (!empty) return;
+
+    empty.style.display = value ? "block" : "none";
   }
 
   setLoaderState(state) {
