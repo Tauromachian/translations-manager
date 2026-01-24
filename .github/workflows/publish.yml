@@ -19,11 +19,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            echo '${{ secrets.DB_USER }}' > .env
-            echo '${{ secrets.DB_PASSWORD }}' >> .env
-            echo '${{ secrets.DB_PORT }}' >> .env
-            echo '${{ secrets.DB_NAME }}' >> .env
-
             if [ -d translations-manager ]; then
               cd translations-manager
               git pull --rebase -Xours
@@ -31,6 +26,11 @@ jobs:
               git clone https://github.com/Tauromachian/translations-manager.git
               cd translations-manager
             fi
+
+            echo '${{ secrets.DB_USER }}' > .env
+            echo '${{ secrets.DB_PASSWORD }}' >> .env
+            echo '${{ secrets.DB_PORT }}' >> .env
+            echo '${{ secrets.DB_NAME }}' >> .env
 
             docker compose down
             docker compose build --no-cache
