@@ -29,6 +29,7 @@ jobs:
               git pull --rebase -Xours
             else
               git clone https://github.com/Tauromachian/translations-manager.git
+              cd translations-manager
             fi
 
             docker compose down
