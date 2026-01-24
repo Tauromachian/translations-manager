@@ -26,7 +26,7 @@ import { router } from "../services/router.js";
 import { computed, ref, watch } from "../../shared/utils/reactivity.js";
 
 export class CollectionsPage extends HTMLElement {
-  #modalMode = "update";
+  #modalMode = "edit";
   #selectedId;
   #form;
   #modalConfirmDelete;
@@ -98,7 +98,7 @@ export class CollectionsPage extends HTMLElement {
 
     if (this.#modalMode === "insert") {
       await this.postData(jsonData);
-    } else if (this.#modalMode === "update") {
+    } else if (this.#modalMode === "edit") {
       await this.putData(jsonData);
     } else {
       await cloneCollection({ ...jsonData, id: this.#selectedId });
