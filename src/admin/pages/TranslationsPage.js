@@ -41,6 +41,7 @@ export class TranslationsPage extends HTMLElement {
   #translationForm;
   #languageForm;
   #selectedId;
+  #isLanguagesEmpty;
 
   constructor() {
     super();
@@ -51,19 +52,29 @@ export class TranslationsPage extends HTMLElement {
       return !this.#translations.value.length;
     });
 
-    watch(this.#languages, (value) => {
+    this.#isLanguagesEmpty = computed(() => {
+      if (!this.#languages.value.length) {
+        return true;
+      }
+
+      return false;
+    });
+
+    watch(this.#isLanguagesEmpty, (value) => {
       const translationsCreateButton = this.querySelector(
         "#translations-create-button",
       );
 
-      if (!value.length) {
+      if (value) {
         translationsCreateButton.setAttribute("disabled", "");
-        return;
+      } else {
+        translationsCreateButton.removeAttribute("disabled");
       }
+    });
 
+    watch(this.#languages, (value) => {
       this.buildTableHeader(value);
 
-      translationsCreateButton.removeAttribute("disabled");
       const translationsForm = this.querySelector("translations-form");
 
       if (!translationsForm) return true;
