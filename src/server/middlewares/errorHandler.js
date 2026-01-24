@@ -42,7 +42,7 @@ export function errorHandler(err, req, res, _) {
 
   logger.error(devErrorObject);
 
-  if (Deno.env.get("NODE_ENV") === "development") {
+  if (Deno.env.get("APP_ENV") === "development") {
     return res.json(devErrorObject);
   } else {
     return res.json(prodErrorObject);
