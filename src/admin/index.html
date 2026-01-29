@@ -12,13 +12,16 @@
 
     <script>
       // Live reload WebSocket
-      const ws = new WebSocket("ws://127.0.0.1:35989");
 
-      ws.onmessage = (event) => {
-        if (event.data === "reload") {
-          history.go(0);
-        }
-      };
+      document.addEventListener("DOMContentLoaded", () => {
+        const ws = new WebSocket("ws://127.0.0.1:35989");
+
+        ws.onmessage = (event) => {
+          if (event.data === "reload") {
+            history.go(0);
+          }
+        };
+      });
     </script>
   </head>
   <body>
