@@ -45,6 +45,9 @@ export class DataTable extends HTMLElement {
 
     const table = this.root.querySelector("table");
 
+    const headersSlot = document.createElement("slot");
+    headersSlot.setAttribute("name", "headers");
+
     let tHead = table.querySelector("thead");
 
     if (tHead) {
@@ -61,6 +64,7 @@ export class DataTable extends HTMLElement {
       row.appendChild(th);
     }
 
+    headersSlot.appendChild(tHead);
     tHead.appendChild(row);
     table.appendChild(tHead);
   }
