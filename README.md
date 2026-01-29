@@ -12,7 +12,7 @@ Take a look at the [demo](https://translations-manager.jose-garcia.net/) to see 
 - [Express](https://expressjs.com/)
 - [Postgres](https://www.postgresql.org/)
 
-Everything else is pure javascript.
+Everything else is pure javascript. With heavy use of web components.
 
 ## Why another SaaS?
 
