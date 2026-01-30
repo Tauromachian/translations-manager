@@ -12,8 +12,15 @@ import "../components/TextField.js";
 import "../components/ModalConfirmDelete.js";
 import "../components/LanguageForm.js";
 import "../components/TranslationsForm.js";
+import "../components/AppMenu.js";
+import "../components/AppList.js";
 
-import { getLanguages, postLanguage } from "../services/languages-req.js";
+import {
+  deleteLanguage,
+  getLanguages,
+  postLanguage,
+  putLanguage,
+} from "../services/languages-req.js";
 import {
   deleteTranslationSet,
   getTranslations,
@@ -159,19 +166,69 @@ export class TranslationsPage extends HTMLElement {
 
   buildTableHeader(languages) {
     const dataTable = this.querySelector("data-table");
+    const headerSelect = this.querySelector("#header-select");
 
     if (!dataTable) return;
 
+    const dynamicHeaders = languages.map((language) => ({
+      key: language.code,
+      title: language.name,
+    }));
+
     const headers = [
       { key: "key", title: "Key" },
-      ...languages.map((language) => ({
-        key: language.code,
-        title: language.name,
-      })),
+      ...dynamicHeaders,
       { key: "actions", title: "Actions" },
     ];
 
     dataTable.setAttribute("headers", JSON.stringify(headers));
+
+    for (const header of dynamicHeaders) {
+      const th = document.createElement("th");
+      const div = document.createElement("div");
+      const span = document.createElement("span");
+      const headerSelectClone = headerSelect.content.cloneNode(true);
+
+      th.setAttribute("slot", `header-${header.key}`);
+      th.appendChild(div);
+      div.appendChild(span);
+      div.appendChild(headerSelectClone);
+      div.classList += "table-header-container";
+
+      span.textContent = header.title;
+
+      dataTable.appendChild(th);
+
+      const appList = div.querySelector("app-list");
+      appList.setAttribute("value", header.key);
+      appList.setAttribute(
+        "items",
+        JSON.stringify([
+          { value: "delete", text: "Delete" },
+        ]),
+      );
+
+      appList.addEventListener("click", (event) => {
+        const action = event.target.getAttribute("value");
+        const lang = event.target.closest("app-list").getAttribute("value");
+
+        this.onLangAction(lang, action);
+      });
+    }
+  }
+
+  async onLangAction(langCode, action) {
+    const language = this.#languages.value.find((language) =>
+      language.code = langCode
+    );
+    const langId = language.id;
+
+    const actions = {
+      delete: deleteLanguage,
+    };
+
+    await actions[action](langId);
+    this.loadData();
   }
 
   formatTableData(translations, languages) {
@@ -209,6 +266,8 @@ export class TranslationsPage extends HTMLElement {
   onTableAction(event) {
     const button = event.target;
     const closestTr = button.closest("tr");
+
+    if (!closestTr) return;
 
     const translationId = closestTr.dataset.value;
 
@@ -306,6 +365,14 @@ export class TranslationsPage extends HTMLElement {
 
   connectedCallback() {
     this.innerHTML = `
+            <style>
+            .table-header-container {
+                display: flex;
+                align-items: center;
+            }
+
+            </style>
+
             <app-layout class="app-layout" title="Translations">
                 <div class="card" slot="content">
                     <table-toolbar class="p-1" action-button-text="Add Language" disable-search>
@@ -324,6 +391,12 @@ export class TranslationsPage extends HTMLElement {
                             </app-button>
                         </div>
                     </data-table>
+
+                    <template id="header-select">
+                        <app-menu activator-button-text="Actions" class="ml-4">
+                            <app-list></app-list>
+                        </app-menu>
+                    </template>
 
                     <empty-state></empty-state>
 
