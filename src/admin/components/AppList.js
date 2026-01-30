@@ -18,7 +18,9 @@ class AppList extends HTMLElement {
 
     for (const item of items) {
       const li = document.createElement("li");
-      li.innerText = item.value;
+
+      li.setAttribute("value", item.value);
+      li.innerText = item.text;
 
       ul.appendChild(li);
     }
