@@ -29,11 +29,15 @@ class AppList extends HTMLElement {
             <style>
                 ul  {
                     list-style: none;
-                    padding: 0 8px;
                 }
 
                 ul > li {
-                    margin-top: 0.5em;
+                    padding: 8px;
+                    cursor: pointer;
+                }
+
+                ul > li:hover {
+                    background: var(--table-row-hover);
                 }
             </style>
     
