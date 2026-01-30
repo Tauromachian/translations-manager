@@ -59,9 +59,12 @@ export class DataTable extends HTMLElement {
     const row = document.createElement("tr");
 
     for (const header of this.#headers) {
+      const headerSlot = document.createElement("slot");
       const th = document.createElement("th");
+      headerSlot.setAttribute("name", `header-${header.key}`);
       th.textContent = header.title;
-      row.appendChild(th);
+      headerSlot.appendChild(th);
+      row.appendChild(headerSlot);
     }
 
     headersSlot.appendChild(tHead);
