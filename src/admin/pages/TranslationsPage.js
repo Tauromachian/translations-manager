@@ -160,10 +160,6 @@ export class TranslationsPage extends HTMLElement {
     this.#isLoading.value = false;
   }
 
-  async postLanguageData(data) {
-    await postLanguage(data);
-  }
-
   buildTableHeader(languages) {
     const dataTable = this.querySelector("data-table");
     const headerSelect = this.querySelector("#header-select");
@@ -356,7 +352,7 @@ export class TranslationsPage extends HTMLElement {
       collectionId: Number(router.route.params.id),
     };
 
-    await this.postLanguageData(language);
+    await postLanguage(language);
 
     languagesModal.setAttribute("open", false);
 
