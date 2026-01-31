@@ -45,31 +45,35 @@ export class DataTable extends HTMLElement {
 
     const table = this.root.querySelector("table");
 
-    const headersSlot = document.createElement("slot");
-    headersSlot.setAttribute("name", "headers");
-
-    let tHead = table.querySelector("thead");
-
-    if (tHead) {
-      table.removeChild(tHead);
+    let headersSlot = table.querySelector('slot[name="headers"]');
+    if (!headersSlot) {
+      headersSlot = document.createElement("slot");
+      headersSlot.setAttribute("name", "headers");
+      table.appendChild(headersSlot);
     }
 
-    tHead = document.createElement("thead");
+    let tHead = headersSlot.firstChild;
+    if (!tHead) {
+      tHead = document.createElement("thead");
+      headersSlot.appendChild(tHead);
+    }
 
-    const row = document.createElement("tr");
+    let row = tHead.firstChild;
+    row ??= document.createElement("tr");
+    row.innerHTML = "";
 
     for (const header of this.#headers) {
-      const headerSlot = document.createElement("slot");
       const th = document.createElement("th");
-      headerSlot.setAttribute("name", `header-${header.key}`);
       th.textContent = header.title;
+
+      const headerSlot = document.createElement("slot");
+      headerSlot.setAttribute("name", `header-${header.key}`);
       headerSlot.appendChild(th);
+
       row.appendChild(headerSlot);
     }
 
-    headersSlot.appendChild(tHead);
-    tHead.appendChild(row);
-    table.appendChild(tHead);
+    tHead.replaceChildren(row);
   }
 
   buildTableBody() {
