@@ -60,11 +60,7 @@ export class TranslationsPage extends HTMLElement {
     });
 
     this.#isLanguagesEmpty = computed(() => {
-      if (!this.#languages.value.length) {
-        return true;
-      }
-
-      return false;
+      return !this.#languages.value.length;
     });
 
     watch(this.#isLanguagesEmpty, (value) => {
