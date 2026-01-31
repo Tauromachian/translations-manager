@@ -85,12 +85,8 @@ export class DataTable extends HTMLElement {
     const table = this.root.querySelector("table");
 
     let tBody = table.querySelector("tbody");
-
-    if (tBody) {
-      table.removeChild(tBody);
-    }
-
-    tBody = document.createElement("tbody");
+    tBody ??= document.createElement("tbody");
+    tBody.innerHTML = "";
 
     for (const item of this.#items) {
       const row = document.createElement("tr");
