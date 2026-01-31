@@ -226,7 +226,7 @@ export class TranslationsPage extends HTMLElement {
 
   async onLangAction(langCode, action) {
     const language = this.#languages.value.find((language) =>
-      language.code = langCode
+      language.code === langCode
     );
     const langId = language.id;
 
