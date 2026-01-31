@@ -46,11 +46,6 @@ class AppList extends HTMLElement {
             <ul>
             </ul>
         `;
-
-    const ul = this.querySelector("ul");
-    ul.addEventListener("click", (event) => {
-      console.log(event.target);
-    });
   }
 }
 
