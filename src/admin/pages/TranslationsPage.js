@@ -126,9 +126,22 @@ export class TranslationsPage extends HTMLElement {
   }
 
   async loadData(searchText) {
-    this.#collectionId = router.route.params.id;
-
     this.#isLoading.value = true;
+
+    const isLangLoaded = await this.loadLanguages();
+
+    if (!isLangLoaded) {
+      this.#isLoading.value = false;
+      return;
+    }
+
+    await this.loadTranslations(searchText, this.#languages.value);
+
+    this.#isLoading.value = false;
+  }
+
+  async loadLanguages() {
+    this.#collectionId = router.route.params.id;
 
     const languagesData = await getLanguages({
       "filter[collectionId]": this.#collectionId,
@@ -137,27 +150,26 @@ export class TranslationsPage extends HTMLElement {
     if (!languagesData.length) {
       this.#languages.value = [];
 
-      this.#isLoading.value = false;
-
       return;
     }
 
+    this.#languages.value = languagesData;
+
+    return true;
+  }
+
+  async loadTranslations(searchText, languagesData) {
     const filterFields = {
       "filter[languagesIds]": languagesData.map((language) => language.id),
     };
 
-    if (searchText) {
-      filterFields.search = searchText;
-    }
+    if (searchText) filterFields.search = searchText;
 
     const translations = await getTranslations(
       filterFields,
     );
 
-    this.#languages.value = languagesData;
     this.#translations.value = translations;
-
-    this.#isLoading.value = false;
   }
 
   buildTableHeader(languages) {
@@ -180,7 +192,10 @@ export class TranslationsPage extends HTMLElement {
     dataTable.setAttribute("headers", JSON.stringify(headers));
 
     for (const header of dynamicHeaders) {
-      const th = document.createElement("th");
+      let th = this.querySelector(`th[slot="header-${header.key}"]`);
+      if (th) continue;
+
+      th = document.createElement("th");
       const div = document.createElement("div");
       const span = document.createElement("span");
       const headerSelectClone = headerSelect.content.cloneNode(true);
