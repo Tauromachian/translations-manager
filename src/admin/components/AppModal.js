@@ -17,10 +17,13 @@ export class AppModal extends HTMLElement {
     }
   }
 
-  setDialogState(value) {
+  /**
+   * @param {boolean} newState - New state for the native dialog
+   */
+  setDialogState(newState) {
     if (!this.#dialog) return;
 
-    if (value) {
+    if (newState) {
       this.#dialog.showModal();
     } else {
       this.#dialog.close();
