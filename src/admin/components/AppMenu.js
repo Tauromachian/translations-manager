@@ -10,7 +10,7 @@ export class AppMenu extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["open", "activator-button-text", "width"];
+    return ["open", "icon", "width"];
   }
 
   attributeChangedCallback(name, _, newValue) {
@@ -21,8 +21,9 @@ export class AppMenu extends HTMLElement {
 
   renderButton() {
     const buttonEl = this.root.querySelector("app-button");
-    const buttonText = this.getAttribute("activator-button-text");
-    buttonEl.innerText = buttonText;
+    const icon = this.getAttribute("icon");
+    console.log(icon);
+    buttonEl.setAttribute("icon", icon);
 
     buttonEl.addEventListener("click", this.onButtonClick.bind(this));
   }
