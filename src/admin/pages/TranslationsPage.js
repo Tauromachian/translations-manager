@@ -49,6 +49,7 @@ export class TranslationsPage extends HTMLElement {
   #languageForm;
   #selectedId;
   #isLanguagesEmpty;
+  #modals = {};
 
   constructor() {
     super();
@@ -297,11 +298,11 @@ export class TranslationsPage extends HTMLElement {
   }
 
   openTranslationModal(isInserting, id) {
-    const translationsModal = this.querySelector(
+    this.#modals["translation"] ??= this.querySelector(
       "#translations-modal",
     );
 
-    translationsModal.setAttribute("open", true);
+    this.#modals.translation.setAttribute("open", true);
     this.#isTranslationFormInserting = isInserting;
     this.#selectedId = id;
 
@@ -334,7 +335,7 @@ export class TranslationsPage extends HTMLElement {
     await deleteTranslationSet(translationsSet.ids);
     this.#modalConfirmDelete.setAttribute("open", false);
 
-    this.loadData();
+    this.loadTranslations("", this.#languages.value);
   }
 
   async onTranslationFormSubmit(event) {
@@ -349,10 +350,9 @@ export class TranslationsPage extends HTMLElement {
       await putTranslationSet(data, translationsSet.ids, this.#languages.value);
     }
 
-    const appModal = this.querySelectorAll("app-modal")[1];
-    appModal.setAttribute("open", false);
+    this.#modals.translation.setAttribute("open", false);
 
-    this.loadData();
+    this.loadTranslations("", this.#languages.value);
   }
 
   async onLanguageFormSubmit(event) {
