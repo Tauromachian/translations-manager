@@ -95,19 +95,19 @@ export class DataTable extends HTMLElement {
       const row = document.createElement("tr");
 
       for (const header of this.#headers) {
-        const th = document.createElement("td");
+        const td = document.createElement("td");
 
         const itemValue = item[header.key];
 
         const elements = this.#slotsByKeys[header.key].assignedElements();
 
         if (elements.length) {
-          th.appendChild(elements[0].cloneNode(true));
+          td.appendChild(elements[0].cloneNode(true));
         } else {
-          th.textContent = itemValue;
+          td.textContent = itemValue;
         }
 
-        row.appendChild(th);
+        row.appendChild(td);
       }
 
       row.setAttribute("data-value", item.id);
