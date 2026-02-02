@@ -18,16 +18,12 @@ export class TranslationsForm extends HTMLElement {
   onSubmit(event) {
     event.preventDefault();
 
-    const form = event.target;
-
-    if (!form) return;
-
-    if (!form.checkValidity()) {
-      form.reportValidity();
+    if (!this.#form.checkValidity()) {
+      this.#form.reportValidity();
       return;
     }
 
-    const data = new FormData(form);
+    const data = new FormData(this.#form);
     const jsonData = Object.fromEntries(data);
 
     this.dispatchEvent(
@@ -40,13 +36,6 @@ export class TranslationsForm extends HTMLElement {
   }
 
   handleLanguagesChange(newValue) {
-    if (this.#form) {
-      this.#form.remove();
-    }
-
-    this.#form = document.createElement("form");
-    this.appendChild(this.#form);
-
     const languages = JSON.parse(newValue);
 
     this.#fields = languages.map((lang) => {
@@ -58,19 +47,11 @@ export class TranslationsForm extends HTMLElement {
     );
 
     this.#form.innerHTML = `
-            ${this.#fields.join("")}
-            <div class="modal-actions">
-                <app-button type="submit">Add Translations</app-button>
-            </div>
+        ${this.#fields.join("")}
+        <div class="modal-actions">
+            <app-button type="submit">Add Translations</app-button>
+        </div>
         `;
-
-    if (!this.#hasEventListener) {
-      this.#hasEventListener = true;
-      this.#form.addEventListener(
-        "submit",
-        this.onSubmit.bind(this),
-      );
-    }
   }
 
   handleTranslationsChange(newValue) {
@@ -123,6 +104,13 @@ export class TranslationsForm extends HTMLElement {
                 }
             </style>
         `;
+
+    this.#form = document.createElement("form");
+    this.append(this.#form);
+    this.#form.addEventListener(
+      "submit",
+      this.onSubmit.bind(this),
+    );
   }
 }
 
