@@ -1,3 +1,5 @@
+import "iconify-icon";
+
 import "./AppLoader.js";
 
 export class AppButton extends HTMLElement {
@@ -9,7 +11,7 @@ export class AppButton extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ["to", "type", "color", "loading", "disabled"];
+    return ["to", "type", "color", "loading", "disabled", "icon"];
   }
 
   attributeChangedCallback(name, _, newValue) {
@@ -27,27 +29,64 @@ export class AppButton extends HTMLElement {
 
       this.#button.setAttribute("disabled", newValue);
     }
+
+    if (name === "icon") {
+      this.makeButton();
+    }
   }
 
   makeButton() {
-    const type = this.getAttribute("type");
-    const to = this.getAttribute("to");
+    let button;
 
+    const to = this.getAttribute("to");
     if (to) {
-      const button = document.createElement("router-link");
+      button = this.root.querySelector("router-link");
+      button ??= document.createElement("router-link");
       button.setAttribute("to", to);
-      button.setAttribute("class", "button");
-      button.innerHTML = `<slot></slot>`;
-      return button;
+    } else {
+      button = this.root.querySelector("button");
+      button ??= document.createElement("button");
     }
 
-    const button = document.createElement("button");
-    button.setAttribute("class", "button");
-    button.innerHTML = `<slot></slot>
-      <span class="button-loader"><app-loader width="20px" height="20px"></app-loader></span>
-    `;
+    button.classList += "button ";
 
+    const icon = this.getAttribute("icon");
+    if (icon) {
+      this.addIconContent(button, icon);
+    } else {
+      this.addBaseContent(button);
+    }
+
+    const type = this.getAttribute("type");
     if (type) button.setAttribute("type", type);
+
+    this.root.appendChild(button);
+    this.#button = button;
+  }
+
+  addIconContent(button, icon) {
+    const iconifyIcon = document.createElement("iconify-icon");
+    iconifyIcon.setAttribute("icon", `material-symbols:${icon}`);
+    iconifyIcon.setAttribute("width", 24);
+    iconifyIcon.setAttribute("height", 24);
+
+    button.appendChild(iconifyIcon);
+    button.classList += "icon-button";
+
+    return button;
+  }
+
+  addBaseContent(button, to) {
+    button.classList += "base-button";
+
+    if (to) {
+      button.innerHTML = `<slot></slot>`;
+    } else {
+      button.innerHTML = `
+            <slot></slot>
+            <span class="button-loader"><app-loader width="20px" height="20px"></app-loader></span>
+            `;
+    }
 
     return button;
   }
@@ -109,20 +148,14 @@ export class AppButton extends HTMLElement {
                 }
 
                 .button {
-                    padding: 0.5em 20px;
                     font-weight: 500;
                     background-color: var(--primary);
                     color: var(--text-color);
                     border: none;
-                    border-radius: 4px;
                     cursor: pointer;
-                    position: relative;
-                    transition: background-color 0.2s ease;
-                    font-size: 0.9rem;
-                    display: block;
-                    font-weight: 500 !important;
                     font-family: var(--font-sans);
                 }
+
 
                 .button:hover {
                     background-color: var(--primary-10);
@@ -167,13 +200,32 @@ export class AppButton extends HTMLElement {
                     align-items: center;
                     display: none;
                 }
+
+                .base-button {
+                    padding: 0.5em 20px;
+                    border-radius: 4px;
+                    position: relative;
+                    transition: background-color 0.2s ease;
+                    font-size: 0.9rem;
+                    display: block;
+                }
+
+                .icon-button {
+                    padding: 0.5em;
+                    border-radius: 99999px;
+                    height: 48px;
+                    width: 48px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+
             </style>
         `;
 
     this.root.appendChild(template.content.cloneNode(true));
 
-    this.#button = this.makeButton();
-    this.root.appendChild(this.#button);
+    this.makeButton();
 
     this.handleFormSubmit();
     this.handleButtonVariants();
