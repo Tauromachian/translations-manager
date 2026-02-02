@@ -86,8 +86,8 @@ export class DataTable extends HTMLElement {
 
     let tBody = table.querySelector("tbody");
     tBody ??= document.createElement("tbody");
-    tBody.innerHTML = "";
 
+    const rows = [];
     for (const item of this.#items) {
       const row = document.createElement("tr");
 
@@ -108,9 +108,10 @@ export class DataTable extends HTMLElement {
       }
 
       row.setAttribute("data-value", item.id);
-      tBody.appendChild(row);
+      rows.push(row);
     }
 
+    tBody.replaceChildren(...rows);
     table.appendChild(tBody);
   }
 
