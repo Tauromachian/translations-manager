@@ -402,7 +402,7 @@ export class TranslationsPage extends HTMLElement {
                     </data-table>
 
                     <template id="header-select">
-                        <app-menu activator-button-text="Actions" class="ml-4">
+                        <app-menu icon="more-vert" class="ml-4">
                             <app-list></app-list>
                         </app-menu>
                     </template>
