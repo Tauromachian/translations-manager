@@ -85,7 +85,10 @@ export class DataTable extends HTMLElement {
     const table = this.root.querySelector("table");
 
     let tBody = table.querySelector("tbody");
-    tBody ??= document.createElement("tbody");
+    if (!tBody) {
+      tBody = document.createElement("tbody");
+      table.appendChild(tBody);
+    }
 
     const rows = [];
     for (const item of this.#items) {
@@ -112,7 +115,6 @@ export class DataTable extends HTMLElement {
     }
 
     tBody.replaceChildren(...rows);
-    table.appendChild(tBody);
   }
 
   connectedCallback() {
