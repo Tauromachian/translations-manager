@@ -47,9 +47,7 @@ export class AppButton extends HTMLElement {
       <span class="button-loader"><app-loader width="20px" height="20px"></app-loader></span>
     `;
 
-    if (type) {
-      button.setAttribute("type", type);
-    }
+    if (type) button.setAttribute("type", type);
 
     return button;
   }
