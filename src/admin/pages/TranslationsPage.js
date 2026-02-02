@@ -297,7 +297,9 @@ export class TranslationsPage extends HTMLElement {
   }
 
   openTranslationModal(isInserting, id) {
-    const translationsModal = this.querySelectorAll("app-modal")[1];
+    const translationsModal = this.querySelector(
+      "#translations-modal",
+    );
 
     translationsModal.setAttribute("open", true);
     this.#isTranslationFormInserting = isInserting;
@@ -417,7 +419,7 @@ export class TranslationsPage extends HTMLElement {
                 <language-form></language-form>
             </app-modal>
 
-            <app-modal title="Add Translations" width="400px">
+            <app-modal title="Add Translations" width="400px" id="translations-modal">
                 <translations-form></translations-form>
             </app-modal>
 
