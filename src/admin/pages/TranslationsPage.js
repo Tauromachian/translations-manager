@@ -31,6 +31,7 @@ import {
 import { router } from "../services/router.js";
 
 import { computed, ref, watch } from "../../shared/utils/reactivity.js";
+import { makeEl } from "../../shared/utils/rendering.js";
 
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
@@ -192,18 +193,14 @@ export class TranslationsPage extends HTMLElement {
       let th = this.querySelector(`th[slot="header-${header.key}"]`);
       if (th) continue;
 
-      th = document.createElement("th");
-      const div = document.createElement("div");
-      const span = document.createElement("span");
       const headerSelectClone = headerSelect.content.cloneNode(true);
 
-      th.setAttribute("slot", `header-${header.key}`);
-      th.appendChild(div);
-      div.appendChild(span);
-      div.appendChild(headerSelectClone);
-      div.classList += "table-header-container";
+      const div = makeEl("div", { class: "table-header-container" }, [
+        makeEl("span", { textContent: header.title }),
+        headerSelectClone,
+      ]);
 
-      span.textContent = header.title;
+      th = makeEl("th", { slot: `header-${header.key}` }, [div]);
 
       dataTable.appendChild(th);
 
