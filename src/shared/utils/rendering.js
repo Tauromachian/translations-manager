@@ -1,3 +1,7 @@
+/**
+ * @param {string} elName - Tag name of HTML element to create
+ * @param {Object.<string, (string|number)>} props - Object containing attributes you want to put into the HTML element
+ */
 export function makeEl(elName, props) {
   const newEl = document.createElement(elName);
 
