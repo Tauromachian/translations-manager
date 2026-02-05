@@ -7,7 +7,14 @@
 export function makeEl(elName, props, children) {
   const newEl = document.createElement(elName);
 
+  const SPECIAL_PROPS = ["textContent", "innerText", "innerHTML"];
+
   for (const propKey in props) {
+    if (SPECIAL_PROPS.includes(propKey)) {
+      newEl[propKey] = props[propKey];
+      continue;
+    }
+
     newEl.setAttribute(propKey, props[propKey]);
   }
 
