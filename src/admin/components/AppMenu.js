@@ -39,9 +39,17 @@ export class AppMenu extends HTMLElement {
   }
 
   clickOutside(event) {
-    if (event.target.closest("app-menu")) return;
+    const rect = this.#dialog.getBoundingClientRect();
 
-    this.#dialog.close();
+    const clickedInDialog = event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!clickedInDialog) {
+      this.#dialog.close();
+    }
+
     document.removeEventListener("click", this.clickOutside.bind(this));
   }
 
