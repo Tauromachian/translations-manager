@@ -22,7 +22,6 @@ export class AppMenu extends HTMLElement {
   renderButton() {
     const buttonEl = this.root.querySelector("app-button");
     const icon = this.getAttribute("icon");
-    console.log(icon);
     buttonEl.setAttribute("icon", icon);
 
     buttonEl.addEventListener("click", this.onButtonClick.bind(this));
