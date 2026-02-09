@@ -377,6 +377,17 @@ export class TranslationsPage extends HTMLElement {
                 align-items: center;
             }
 
+            th, th * {
+              background-color: var(--table-header-background);
+              border-bottom-color: var(--table-border-color);
+            }
+
+            th * {
+              font-weight: 800;
+              text-transform: uppercase;
+              font-size: 1em;
+              color: var(--table-header-color);
+            }
             </style>
 
             <app-layout class="app-layout" title="Translations">
