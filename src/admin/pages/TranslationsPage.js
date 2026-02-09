@@ -50,6 +50,7 @@ export class TranslationsPage extends HTMLElement {
   #languageForm;
   #selectedId;
   #isLanguagesEmpty;
+  #entityToDelete;
   #modals = {};
 
   constructor() {
@@ -226,14 +227,17 @@ export class TranslationsPage extends HTMLElement {
     const language = this.#languages.value.find((language) =>
       language.code === langCode
     );
-    const langId = language.id;
+
+    this.#selectedId = language.id;
 
     const actions = {
-      delete: deleteLanguage,
+      delete: () => {
+        this.#entityToDelete = "language";
+        this.#modalConfirmDelete.setAttribute("open", true);
+      },
     };
 
-    await actions[action](langId);
-    this.loadData();
+    await actions[action]();
   }
 
   formatTableData(translations, languages) {
@@ -274,15 +278,15 @@ export class TranslationsPage extends HTMLElement {
 
     if (!closestTr) return;
 
-    const translationId = closestTr.dataset.value;
+    this.#selectedId = closestTr.dataset.value;
 
     if (event.target.closest(".delete")) {
       this.#modalConfirmDelete.setAttribute("open", true);
-      this.#selectedId = translationId;
+      this.#entityToDelete = "translation";
     }
 
     if (event.target.closest(".edit")) {
-      this.openTranslationModal(false, translationId);
+      this.openTranslationModal(false, this.#selectedId);
     }
   }
 
@@ -325,14 +329,27 @@ export class TranslationsPage extends HTMLElement {
   }
 
   async onModalDeleteConfirmation() {
-    const translationsSet = this.#translationsByKeys[this.#selectedId];
+    const deleteLogicByEntity = {
+      translation: async () => {
+        const translationsSet = this.#translationsByKeys[this.#selectedId];
 
-    if (!translationsSet) return;
+        if (!translationsSet) return;
 
-    await deleteTranslationSet(translationsSet.ids);
-    this.#modalConfirmDelete.setAttribute("open", false);
+        await deleteTranslationSet(translationsSet.ids);
+        this.#modalConfirmDelete.setAttribute("open", false);
 
-    this.loadTranslations("", this.#languages.value);
+        this.loadTranslations("", this.#languages.value);
+      },
+      language: async () => {
+        await deleteLanguage(this.#selectedId);
+
+        this.#modalConfirmDelete.setAttribute("open", false);
+
+        this.loadData();
+      },
+    };
+
+    await deleteLogicByEntity[this.#entityToDelete]();
   }
 
   async onTranslationFormSubmit(event) {
