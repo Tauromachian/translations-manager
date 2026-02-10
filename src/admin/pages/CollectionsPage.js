@@ -110,6 +110,19 @@ export class CollectionsPage extends HTMLElement {
     this.loadData();
   }
 
+  setModalTitle() {
+    const titlesByMode = {
+      "insert": "Create Modal",
+      "edit": "Edit Modal",
+      "clone": "Clone Modal",
+    };
+
+    const title = titlesByMode[this.#modalMode];
+
+    const modal = this.querySelector("app-modal");
+    modal.setAttribute("title", title);
+  }
+
   onTableAction(event) {
     const button = event.target;
     const closestTd = button.closest("tr");
@@ -166,6 +179,8 @@ export class CollectionsPage extends HTMLElement {
     modal.setAttribute("open", true);
     this.#modalMode = mode;
     this.#selectedId = id;
+
+    this.setModalTitle();
 
     if (mode === "insert" || mode === "clone") {
       this.#form.reset();
