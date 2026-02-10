@@ -45,6 +45,7 @@ export class TranslationsPage extends HTMLElement {
   #isLoading = ref(false);
   #isEmpty = ref(false);
   #modalConfirmDelete = false;
+  #isLanguageFormInserting = true;
   #isTranslationFormInserting = true;
   #translationForm;
   #languageForm;
@@ -211,6 +212,7 @@ export class TranslationsPage extends HTMLElement {
         "items",
         JSON.stringify([
           { value: "delete", text: "Delete" },
+          { value: "edit", text: "Edit" },
         ]),
       );
 
@@ -234,6 +236,9 @@ export class TranslationsPage extends HTMLElement {
       delete: () => {
         this.#entityToDelete = "language";
         this.#modalConfirmDelete.setAttribute("open", true);
+      },
+      edit: () => {
+        this.openLanguageModal(false, this.#selectedId);
       },
     };
 
@@ -290,12 +295,30 @@ export class TranslationsPage extends HTMLElement {
     }
   }
 
-  openLanguageModal() {
-    const languagesModal = this.querySelector("app-modal");
+  openLanguageModal(isInserting, id) {
+    this.#modals["language"] ??= this.querySelector(
+      "#languages-modal",
+    );
 
-    this.#languageForm.reset();
+    this.#modals.language.setAttribute("open", true);
+    this.#isLanguageFormInserting = isInserting;
+    this.#selectedId = id;
 
-    languagesModal.setAttribute("open", true);
+    if (isInserting) {
+      this.#languageForm.reset();
+      return;
+    }
+
+    if (!id) return;
+
+    const language = this.#languages.value.find((language) =>
+      language.id === id
+    );
+
+    this.#languageForm.setAttribute(
+      "language",
+      JSON.stringify(language),
+    );
   }
 
   openTranslationModal(isInserting, id) {
@@ -371,7 +394,6 @@ export class TranslationsPage extends HTMLElement {
 
   async onLanguageFormSubmit(event) {
     const languagesModal = this.querySelector("#languages-modal");
-
     if (!router?.route?.params?.id) return;
 
     const language = {
@@ -379,11 +401,14 @@ export class TranslationsPage extends HTMLElement {
       collectionId: Number(router.route.params.id),
     };
 
-    await postLanguage(language);
+    if (this.#isLanguageFormInserting) {
+      await postLanguage(language);
+    } else {
+      await putLanguage(this.#selectedId, language);
+    }
 
     languagesModal.setAttribute("open", false);
-
-    this.loadData();
+    await this.loadData();
   }
 
   connectedCallback() {

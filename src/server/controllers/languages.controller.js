@@ -48,7 +48,7 @@ export async function store(req, res) {
 export async function edit(req, res) {
   const { id } = req.params;
 
-  const data = LanguageSchema.parse({ ...req.body, id });
+  const data = LanguageSchema.parse({ ...req.body, id: Number(id) });
 
   const language = await db.insert(languagesSchema).values(data)
     .onConflictDoUpdate({
