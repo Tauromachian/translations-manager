@@ -414,21 +414,21 @@ export class TranslationsPage extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
             <style>
-            .table-header-container {
-                display: flex;
-                align-items: center;
-            }
-
-            th, th * {
+            th, th .table-header-container {
               background-color: var(--table-header-background);
               border-bottom-color: var(--table-border-color);
             }
 
-            th * {
+            th .table-header-container {
               font-weight: 800;
               text-transform: uppercase;
               font-size: 1em;
               color: var(--table-header-color);
+            }
+
+            .table-header-container {
+                display: flex;
+                align-items: center;
             }
             </style>
 
