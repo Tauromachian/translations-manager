@@ -93,7 +93,7 @@ export async function clone(req, res) {
                 SELECT old_languages.id AS old_id, new_languages.id AS new_id
                 FROM languages AS old_languages
                 INNER JOIN languages_map AS new_languages ON old_languages.code = new_languages.code
-                WHERE old_languages.collection_id = 2;
+                WHERE old_languages.collection_id = ${id};
 
     `);
 
