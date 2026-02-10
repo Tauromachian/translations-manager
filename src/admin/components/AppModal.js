@@ -15,6 +15,14 @@ export class AppModal extends HTMLElement {
     if (name === "open") {
       this.setDialogState(newValue === "true");
     }
+
+    if (name === "title") {
+      const div = this.root.querySelector("dialog div");
+
+      if (!div) return;
+
+      div.textContent = newValue;
+    }
   }
 
   /**
