@@ -3,10 +3,32 @@ export class LanguageForm extends HTMLElement {
     super();
   }
 
+  static get observedAttributes() {
+    return ["language"];
+  }
+
   reset() {
     const form = this.querySelector("form");
 
     form.reset();
+  }
+
+  attributeChangedCallback(name, _, value) {
+    if (name === "language") {
+      this.setLanguageFields(JSON.parse(value));
+    }
+  }
+
+  setLanguageFields(fields) {
+    const form = this.querySelector("form");
+
+    for (const key of Object.keys(fields)) {
+      for (const child of form.children) {
+        if (child.getAttribute(key)) {
+          child.value = fields[key];
+        }
+      }
+    }
   }
 
   connectedCallback() {
