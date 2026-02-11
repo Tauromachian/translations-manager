@@ -38,13 +38,12 @@ export class TranslationsForm extends HTMLElement {
   handleLanguagesChange(newValue) {
     const languages = JSON.parse(newValue);
 
-    this.#fields = languages.map((lang) => {
-      return `<text-field name="${lang.code}" label="${lang.name}" required></text-field>`;
-    });
-
-    this.#fields.unshift(
+    this.#fields = [
       '<text-field label="Key" name="key" required></text-field>',
-    );
+      ...languages.map((lang) => {
+        return `<text-field name="${lang.code}" label="${lang.name}" required></text-field>`;
+      }),
+    ];
 
     this.#form.innerHTML = `
         ${this.#fields.join("")}
