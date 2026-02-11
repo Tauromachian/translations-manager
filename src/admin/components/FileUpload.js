@@ -1,4 +1,7 @@
+import "iconify-icon";
+
 import { ref, watch } from "../../shared/utils/reactivity.js";
+
 import "./AppButton.js";
 
 export class FileUpload extends HTMLElement {
@@ -17,7 +20,7 @@ export class FileUpload extends HTMLElement {
     const selectingFile = this.querySelector(".selecting-file");
 
     if (Object.keys(value).length) {
-      selectedFile.style.display = "block";
+      selectedFile.style.display = "flex";
       selectingFile.style.display = "none";
 
       const name = selectedFile.querySelector(".selected-file__name");
@@ -27,7 +30,7 @@ export class FileUpload extends HTMLElement {
       size.textContent = `${value.size} bytes`;
     } else {
       selectedFile.style.display = "none";
-      selectingFile.style.display = "block";
+      selectingFile.style.display = "flex";
     }
   }
 
@@ -56,15 +59,6 @@ export class FileUpload extends HTMLElement {
                 font-weight: bold;
              }
 
-            .selected-file {
-                display: none;
-                margin-left: 16px;
-            }
-
-            .selected-file__name {
-                font-weight: bold;
-            }
-
             .selecting-file {
                 width: 100%;
                 display: flex; 
@@ -73,26 +67,43 @@ export class FileUpload extends HTMLElement {
                 align-items: center;
                 gap: 0.5em;
             }
+
+            .selected-file {
+                display: none;
+                margin: 0 16px;
+            }
+
+            .selected-file__name {
+                font-weight: bold;
+
+            }
+
+            .selected-file > app-button {
+                margin-left: auto;
+            }
         </style>
 
         <div class="file-upload-container">
             <div class="selecting-file">
                 <p class="title">Upload File</p>
                 <p class="subtitle">Files Supported: JSON</p>
-                <app-button>Browse File</app-button>
+                <app-button class="browse-file-button">Browse File</app-button>
                 <input type="file" hidden style="display: none;"/>
             </div>
 
             <div class="selected-file">
-                <p class="selected-file__name"></p>
-                <p class="selected-file__size"></p>
-                <p class="selected-file__type"></p>
+                <div>
+                    <p class="selected-file__name"></p>
+                    <p class="selected-file__size"></p>
+                </div>
+                <app-button icon="close" class="close-button"></app-button>
             </div>
         </div>
         `;
 
-    const button = this.querySelector("app-button");
+    const button = this.querySelector(".browse-file-button");
     const fileInput = this.querySelector("input[type='file']");
+    const closeButton = this.querySelector(".close-button");
 
     button.addEventListener("click", () => {
       fileInput.click();
@@ -100,8 +111,6 @@ export class FileUpload extends HTMLElement {
 
     fileInput.addEventListener("change", async (event) => {
       const file = event.target.files[0];
-
-      console.log(file);
 
       const obj = JSON.parse(await file.text());
 
@@ -111,6 +120,10 @@ export class FileUpload extends HTMLElement {
         type: file.type,
         data: obj,
       };
+    });
+
+    closeButton.addEventListener("click", () => {
+      this.#dataValue.value = {};
     });
   }
 }
