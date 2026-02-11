@@ -32,6 +32,7 @@ import { router } from "../services/router.js";
 
 import { computed, ref, watch } from "../../shared/utils/reactivity.js";
 import { makeEl } from "../../shared/utils/rendering.js";
+import { downloadAsJson } from "../utils/client-download-upload.js";
 
 export class TranslationsPage extends HTMLElement {
   #breadcrumbs = [
@@ -213,6 +214,7 @@ export class TranslationsPage extends HTMLElement {
         JSON.stringify([
           { value: "delete", text: "Delete" },
           { value: "edit", text: "Edit" },
+          { value: "download", text: "Download" },
         ]),
       );
 
@@ -239,6 +241,15 @@ export class TranslationsPage extends HTMLElement {
       },
       edit: () => {
         this.openLanguageModal(false, this.#selectedId);
+      },
+      download: () => {
+        const translationObject = {};
+
+        for (const translation of this.#translations.value) {
+          translationObject[translation.key] = translation.translation;
+        }
+
+        downloadAsJson(translationObject, langCode);
       },
     };
 
