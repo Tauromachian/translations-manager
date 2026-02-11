@@ -103,6 +103,11 @@ export class AppModal extends HTMLElement {
     this.#dialog.addEventListener("click", (event) => {
       const rect = this.#dialog.getBoundingClientRect();
 
+      // It's impossible to click something with no coordinates
+      // Hence if the event target has no coordinates then is called
+      // from somewhere inside the dialog with js
+      if (event.clientX === 0 && event.clientY === 0) return;
+
       const clickedInDialog = event.clientX >= rect.left &&
         event.clientX <= rect.right &&
         event.clientY >= rect.top &&
