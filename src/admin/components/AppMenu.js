@@ -1,3 +1,5 @@
+import debounce from "../../shared/utils/debouncer.js";
+
 import "./AppButton.js";
 
 export class AppMenu extends HTMLElement {
@@ -125,7 +127,12 @@ export class AppMenu extends HTMLElement {
 
     this.renderButton();
     this.#dialog = this.root.querySelector("dialog");
-    this.setDialogDimensions();
+    this.setDialogDimensions(this.#dialog, this);
+
+    const observer = new ResizeObserver(() => {
+      debounce.bind(this)(this.setDialogDimensions.call(this));
+    });
+    observer.observe(document.body);
   }
 }
 
