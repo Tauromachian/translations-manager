@@ -105,6 +105,11 @@ export class FileUpload extends HTMLElement {
     const fileInput = this.querySelector("input[type='file']");
     const closeButton = this.querySelector(".close-button");
 
+    const title = this.getAttribute("title");
+    if (title) {
+      this.querySelector(".title").textContent = title;
+    }
+
     button.addEventListener("click", () => {
       fileInput.click();
     });
