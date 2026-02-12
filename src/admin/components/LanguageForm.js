@@ -1,3 +1,6 @@
+import "./FileUpload.js";
+import "./AppCheckbox.js";
+
 export class LanguageForm extends HTMLElement {
   constructor() {
     super();
@@ -37,6 +40,8 @@ export class LanguageForm extends HTMLElement {
                 <text-field label="Name" name="name" required></text-field>
                 <text-field label="Code" name="code" required></text-field>
 
+                <file-upload class="mt-1" title="Upload Translations (optional)"></file-upload>
+
                 <div class="modal-actions">
                     <app-button type="submit">Add Language</app-button>
                 </div>
@@ -44,6 +49,13 @@ export class LanguageForm extends HTMLElement {
         `;
 
     const form = this.querySelector("form");
+    const fileUpload = this.querySelector("file-upload");
+
+    let translationsFile;
+    fileUpload.addEventListener("change", (event) => {
+      translationsFile = event.detail;
+    });
+
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
@@ -57,12 +69,16 @@ export class LanguageForm extends HTMLElement {
       }
 
       const formData = new FormData(event.target);
-      const jsonData = Object.fromEntries(formData);
+      const data = Object.fromEntries(formData);
+
+      if (Object.keys(translationsFile).length) {
+        data["translations"] = translationsFile.data;
+      }
 
       const submitEvent = new CustomEvent("form-submit", {
         bubbles: true,
         cancelable: true,
-        detail: jsonData,
+        detail: data,
       });
 
       this.dispatchEvent(submitEvent);
