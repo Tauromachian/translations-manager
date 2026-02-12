@@ -24,7 +24,9 @@ export async function postLanguage(data) {
     body: JSON.stringify(data),
   });
 
-  return await response.json();
+  const newLang = await response.json();
+
+  return newLang[0];
 }
 
 export async function putLanguage(id, data) {
