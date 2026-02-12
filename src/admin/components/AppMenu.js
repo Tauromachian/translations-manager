@@ -83,6 +83,7 @@ export class AppMenu extends HTMLElement {
               margin: 0;
               font-family: Arial, sans-serif;
               outline: none;
+              z-index: 50;
             }
 
             dialog[open] {
