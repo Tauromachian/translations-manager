@@ -24,6 +24,7 @@ import {
 import {
   deleteTranslationSet,
   getTranslations,
+  postLanguageTranslations,
   postTranslationSet,
   putTranslationSet,
 } from "../services/translations-req.js";
@@ -413,7 +414,11 @@ export class TranslationsPage extends HTMLElement {
     };
 
     if (this.#isLanguageFormInserting) {
-      await postLanguage(language);
+      const newLang = await postLanguage(language);
+
+      if (event?.detail?.translations) {
+        await postLanguageTranslations(event.detail.translations, newLang.id);
+      }
     } else {
       await putLanguage(this.#selectedId, language);
     }
