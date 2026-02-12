@@ -130,7 +130,7 @@ export class AppMenu extends HTMLElement {
     this.setDialogDimensions(this.#dialog, this);
 
     const observer = new ResizeObserver(() => {
-      debounce.bind(this)(this.setDialogDimensions.call(this));
+      debounce(() => this.setDialogDimensions(), 80);
     });
     observer.observe(document.body);
   }
