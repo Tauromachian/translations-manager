@@ -71,7 +71,7 @@ export class LanguageForm extends HTMLElement {
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData);
 
-      if (Object.keys(translationsFile).length) {
+      if (Object.keys(translationsFile ?? {}).length) {
         data["translations"] = translationsFile.data;
       }
 
