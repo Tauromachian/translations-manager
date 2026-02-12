@@ -32,6 +32,11 @@ export class FileUpload extends HTMLElement {
       selectedFile.style.display = "none";
       selectingFile.style.display = "flex";
     }
+
+    const event = new CustomEvent("change", {
+      detail: value,
+    });
+    this.dispatchEvent(event);
   }
 
   static get obvservedAttributes() {
