@@ -55,6 +55,22 @@ export async function deleteTranslationSet(translationsIds) {
   await Promise.all(promises);
 }
 
+export async function postLanguageTranslations(translations, languageId) {
+  const promises = [];
+
+  for (const key of Object.keys(translations)) {
+    const translation = {
+      key,
+      translation: translations[key],
+      languageId,
+    };
+
+    promises.push(postTranslation(translation));
+  }
+
+  await Promise.all(promises);
+}
+
 export async function postTranslationSet(translationSet, languages) {
   const promises = [];
 
