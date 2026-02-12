@@ -44,7 +44,7 @@ app.use(errorHandler);
 
     app.listen(3000, () => console.log("Server on http://localhost:3000"));
 
-    if (Deno.env.get("APP_ENV") === "dev") {
+    if (Deno.env.get("APP_ENV") === "development") {
       livereloadStart();
     }
   }
