@@ -79,6 +79,13 @@ header {
   color: var(--primary);
 }
 
+@media (min-width: 800px) {
+  .hero__img {
+    margin: auto;
+    width: 80%;
+  }
+}
+
 .about-section {
   max-width: 600px;
   margin-left: auto;
