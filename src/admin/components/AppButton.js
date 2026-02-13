@@ -124,6 +124,7 @@ export class AppButton extends HTMLElement {
     }
 
     const loader = this.#button.querySelector(".button-loader");
+    if (!loader) return;
 
     const isLoading = value === "true" || value === "";
 
