@@ -40,23 +40,8 @@ header {
   font-size: 1.5rem;
 }
 
-.header__social {
-  display: flex;
-}
-
-@media (prefers-color-scheme: dark) {
-  .header__social {
-    filter: invert(var(--filter));
-  }
-}
-
 .header__logo {
   height: 42px;
-}
-
-.header__social img {
-  height: 42px;
-  width: auto;
 }
 
 .hero {
@@ -106,4 +91,17 @@ footer {
   display: flex;
   align-items: center;
   height: 100%;
+}
+
+.footer__social {
+  display: flex;
+}
+
+.footer__social svg {
+  width: 42px;
+  height: 42px;
+}
+
+.footer__social svg path {
+  fill: var(--text-color-10);
 }
