@@ -28,6 +28,8 @@
   --form-field-disabled-border: #d0d0d0;
 
   --font-sans: "Nunito Sans Variable", sans-serif;
+
+  --hero-bg-color: #4c86f1;
 }
 
 html[data-theme="dark"] {
@@ -50,4 +52,6 @@ html[data-theme="dark"] {
   --form-field-bg: #122131;
 
   --filter: 100%;
+
+  --hero-bg-color: #162746;
 }
