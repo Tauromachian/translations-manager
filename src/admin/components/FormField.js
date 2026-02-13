@@ -154,6 +154,8 @@ export class FormField extends HTMLElement {
   }
 
   formAssociatedCallback(form) {
+    if (!form) return;
+
     form.addEventListener("reset", () => {
       this.value = "";
     });
