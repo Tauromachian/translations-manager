@@ -129,8 +129,9 @@ export class AppMenu extends HTMLElement {
     this.#dialog = this.root.querySelector("dialog");
     this.setDialogDimensions(this.#dialog, this);
 
+    const debouncifiedCB = debounce(() => this.setDialogDimensions(), 80);
     const observer = new ResizeObserver(() => {
-      debounce(() => this.setDialogDimensions(), 80);
+      debouncifiedCB();
     });
     observer.observe(document.body);
   }
