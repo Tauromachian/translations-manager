@@ -51,10 +51,8 @@ export class CollectionsPage extends HTMLElement {
     watch(this.#isEmpty, this.setEmptyState.bind(this));
   }
 
-  onSearch(event) {
-    debounce(() => {
-      this.loadData(event.detail);
-    });
+  search(event) {
+    this.loadData(event.detail);
   }
 
   populateTable(data) {
@@ -271,7 +269,8 @@ export class CollectionsPage extends HTMLElement {
     const appLayout = this.querySelector("app-layout");
     appLayout.setAttribute("breadcrumbs", JSON.stringify(this.#breadcrumbs));
 
-    tableToolbar.addEventListener("search", this.onSearch.bind(this));
+    const debouncifiedSearch = debounce(this.search.bind(this));
+    tableToolbar.addEventListener("search", debouncifiedSearch);
 
     this.#form = this.querySelector("app-modal form");
     this.#form.addEventListener("submit", this.onSubmit.bind(this));
