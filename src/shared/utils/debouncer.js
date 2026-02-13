@@ -1,12 +1,13 @@
 export default function debounce(func, timeout) {
   let timer;
 
-  const internalDebounce = () => {
+  const internalDebounce = (...args) => {
     clearTimeout(timer);
 
-    timer = setTimeout(func, timeout || 200);
+    timer = setTimeout(() => {
+      func(...args);
+    }, timeout || 200);
   };
-  internalDebounce();
 
   return internalDebounce;
 }
