@@ -60,7 +60,7 @@ header {
 }
 
 .hero {
-  background-color: #4c86f1;
+  background-color: var(--hero-bg-color);
 }
 
 .hero > .container {
