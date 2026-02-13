@@ -1,6 +1,6 @@
 import { defineConfig } from "drizzle-kit";
 
-const postgresUrl = `postgresql://
+const POSTGRES_URL = `postgresql://
 ${Deno.env.get("DB_USER")}:${Deno.env.get("DB_PASSWORD")}@${
   Deno.env.get("DB_HOST")
 }:${Deno.env.get("DB_PORT")}/${Deno.env.get("DB_NAME")}`;
@@ -10,6 +10,6 @@ export default defineConfig({
   schema: "./database/schema/*",
   out: "./database/drizzle",
   dbCredentials: {
-    url: postgresUrl,
+    url: POSTGRES_URL,
   },
 });
