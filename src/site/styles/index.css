@@ -36,21 +36,33 @@ header {
   color: inherit;
 }
 
-.header__title {
-  font-size: 1.5rem;
+.hero > .container {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.hero__title {
+  font-size: 3rem;
+  font-family: var(--font-serif);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+}
+
+.hero__title > * {
+  font-family: var(--font-serif);
+}
+
+.hero__accent {
+  font-style: italic;
+  color: var(--primary-10);
 }
 
 .header__logo {
   height: 42px;
 }
 
-.hero {
-  background-color: var(--hero-bg-color);
-}
-
-.hero > .container {
-  display: grid;
-  grid-template-columns: 1fr;
+.hero__description {
+  font-size: 1.2rem;
 }
 
 @media (min-width: 800px) {
