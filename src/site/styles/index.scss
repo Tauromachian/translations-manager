@@ -132,8 +132,19 @@ main {
     }
   }
 
-  &-why__list {
-    grid-template-columns: 1fr 1fr;
+  &-why {
+    max-width: 800px;
+
+    &__list {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .card {
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1em;
+    }
   }
 }
 
