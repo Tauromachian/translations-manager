@@ -147,6 +147,13 @@ main {
       gap: 1em;
     }
   }
+
+  &-objectives {
+    &__list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+  }
 }
 
 .square-bullet {
