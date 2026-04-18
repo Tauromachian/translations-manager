@@ -93,33 +93,33 @@ main {
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
-}
 
-.section__title {
-  font-family: var(--font-serif);
-  font-size: 2.4rem;
-}
+  &__title {
+    font-family: var(--font-serif);
+    font-size: 2.4rem;
+  }
 
-.section__subitle {
-  text-transform: uppercase;
-  color: var(--primary);
-}
+  &__subtitle {
+    text-transform: uppercase;
+    color: var(--primary-30);
+  }
 
-.section__description {
-  font-family: 1.4rem;
-}
+  &__description {
+    font-family: 1.4rem;
+  }
 
-.section__list {
-  display: grid;
-  list-style-type: none;
-}
+  &__list {
+    display: grid;
+    list-style-type: none;
+  }
 
-.section-problem__list {
-  grid-template-columns: 1fr 1fr 1fr;
-}
+  &-problem__list {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 
-.section-why__list {
-  grid-template-columns: 1fr 1fr;
+  &-why__list {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 footer {
