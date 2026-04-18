@@ -77,12 +77,12 @@ main {
   color: var(--primary-10);
 }
 
-.header__logo {
-  height: 42px;
-}
-
 .hero__description {
   font-size: 1.2rem;
+}
+
+.hero__link {
+  color: var(--primary-30);
 }
 
 @media (min-width: 800px) {
@@ -90,10 +90,6 @@ main {
     grid-template-columns: 1fr 1.5fr;
     align-items: center;
   }
-}
-
-.hero__link {
-  color: var(--primary);
 }
 
 .section {
