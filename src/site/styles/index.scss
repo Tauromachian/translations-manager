@@ -31,21 +31,27 @@ p {
   font-size: 1.2rem;
 }
 
-.header__content {
-  background-color: var;
+.header {
+  &__content {
+    background-color: var;
 
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
+    height: 100%;
+    display: flex;
+    align-items: center;
 
-.header__content > button {
-  color: inherit;
-}
+    button {
+      color: inherit;
+    }
+  }
 
-.hero > .container {
-  display: grid;
-  grid-template-columns: 1fr;
+  &__logo {
+    height: 42px;
+  }
+
+  .container {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
 }
 
 main {
