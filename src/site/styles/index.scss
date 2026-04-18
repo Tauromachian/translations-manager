@@ -1,6 +1,7 @@
 @use "@/shared/styles/reset.css";
 
-@use "@jogarcia/mgrid/margin.scss" with ( $base: 0.25, $range: 20, $unit: rem );
+@use "@jogarcia/mgrid/margin.scss" with ($base: 0.25, $range: 20, $unit: rem);
+@use "@jogarcia/mgrid/padding.scss" with ($base: 0.25, $range: 20, $unit: rem);
 @use "@jogarcia/mgrid/dist/gap.css";
 
 @use "@/shared/styles/fonts.css";
