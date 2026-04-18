@@ -148,6 +148,14 @@ main {
   }
 }
 
+.square-dot {
+  display: block;
+  width: 8px;
+  min-width: 8px;
+  height: 8px;
+  background-color: var(--primary-30);
+}
+
 footer {
   background-color: var(--gray-10);
   color: var(--text-color-10);
