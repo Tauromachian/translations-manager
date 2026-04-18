@@ -46,6 +46,12 @@ p {
   grid-template-columns: 1fr;
 }
 
+main.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4em;
+}
+
 .hero__title {
   font-size: 3.6rem;
   font-family: var(--font-serif);
