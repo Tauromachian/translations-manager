@@ -1,15 +1,15 @@
-@import "@/shared/styles/reset.css";
+@use "@/shared/styles/reset.css";
 
 @use "@jogarcia/mgrid/margin.scss" with ( $base: 0.25, $range: 20, $unit: rem );
+@use "@jogarcia/mgrid/dist/gap.css";
 
-@import "@jogarcia/mgrid/dist/gap.css";
+@use "@/shared/styles/fonts.css";
+@use "@/shared/styles/vars.css";
+@use "@/shared/styles/global.css";
+@use "@/shared/styles/grid.css";
 
-@import "@/shared/styles/fonts.css";
-@import "@/shared/styles/vars.css";
-@import "@/shared/styles/global.css";
-@import "@/shared/styles/grid.css";
-
-@import "button.css";
+@use "@/shared/styles/card.css";
+@use "button.css";
 
 body {
   --footer-height: 80px;
