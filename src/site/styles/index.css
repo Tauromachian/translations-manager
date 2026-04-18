@@ -87,6 +87,33 @@ p {
   margin-right: auto;
 }
 
+.section__title {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+}
+
+.section__subitle {
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+.section__description {
+  font-family: 1.4rem;
+}
+
+.section__list {
+  display: grid;
+  list-style-type: none;
+}
+
+.section-problem__list {
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+.section-why__list {
+  grid-template-columns: 1fr 1fr;
+}
+
 footer {
   background-color: var(--gray-10);
   color: var(--text-color-10);
