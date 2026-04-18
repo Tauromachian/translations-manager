@@ -25,6 +25,10 @@ header {
   height: 64px;
 }
 
+p {
+  font-size: 1.2rem;
+}
+
 .header__content {
   background-color: var;
 
