@@ -106,22 +106,6 @@ main {
     list-style-type: none;
   }
 
-  &-problem__list {
-    grid-template-columns: 1fr 1fr 1fr;
-
-    &__item {
-      &__number {
-        font-size: 2.4rem;
-        font-family: var(--font-serif);
-        color: var(--gray-10);
-      }
-
-      &__title {
-        font-weight: bold;
-      }
-    }
-  }
-
   &-why {
     max-width: 800px;
 
@@ -141,6 +125,30 @@ main {
     &__list {
       display: grid;
       grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+.section-problem {
+  &__list {
+    grid-template-columns: 1fr;
+
+    &__item {
+      &__number {
+        font-size: 2.4rem;
+        font-family: var(--font-serif);
+        color: var(--gray-10);
+      }
+
+      &__title {
+        font-weight: bold;
+      }
+    }
+  }
+
+  @media (min-width: 800px) {
+    &__list {
+      grid-template-columns: 1fr 1fr 1fr;
     }
   }
 }
