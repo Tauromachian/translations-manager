@@ -176,16 +176,21 @@ main {
 footer {
   color: var(--text-color-10);
   width: 100%;
-  text-align: center;
+  text-align: clamp(left, 2vw, center);
   bottom: 0;
   height: var(--footer-height);
   border-top: 1px solid var(--gray-10);
+}
+
+footer p {
+  font-size: clamp(1rem, 2vw, 1.2rem);
 }
 
 .footer__container {
   display: flex;
   align-items: center;
   height: 100%;
+  gap: 1.2em;
 }
 
 .footer__social {
