@@ -50,7 +50,7 @@ main {
 }
 
 .hero__title {
-  font-size: 3.6rem;
+  font-size: clamp(2.4rem, 4vw, 3.6rem);
   font-family: var(--font-serif);
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -88,7 +88,7 @@ main {
 
   &__title {
     font-family: var(--font-serif);
-    font-size: 3rem;
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
   }
 
   &__subtitle {
