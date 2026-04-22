@@ -153,6 +153,10 @@ main {
 }
 
 .section-objectives {
+  iconify-icon {
+    color: var(--gray-20);
+  }
+
   &__list {
     display: grid;
     grid-template-columns: 1fr;
