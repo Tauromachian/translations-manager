@@ -1,0 +1,43 @@
+when:
+  - event: push
+    branch: main
+
+steps:
+  - name: Deploy project over SSH
+    image: appleboy/drone-ssh
+    settings:
+      host:
+        from_secret: SSH_HOST
+      username:
+        from_secret: SSH_USERNAME
+      password:
+        from_secret: SSH_PASSWORD
+    envs:
+      - DB_USER
+      - DB_PASSWORD
+      - DB_PORT
+      - DB_NAME
+    port:
+      from_secret: SSH_PORT
+      script:
+        - |
+          if [ -d translations-manager ]; then
+            git pull --rebase -Xours
+          else
+            git clone https://github.com/Tauromachian/translations-manager.git
+          fi
+
+          cd translations-manager
+
+          echo 'APP_ENV=production' > .env
+          echo 'DB_USER=${{ secrets.DB_USER }}' >> .env
+          echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> .env
+          echo 'DB_PORT=${{ secrets.DB_PORT }}' >> .env
+          echo 'DB_NAME=${{ secrets.DB_NAME }}' >> .env
+          echo 'DB_HOST=db' >> .env
+
+          docker compose down
+          docker compose build --no-cache
+          docker compose up -d
+
+          docker exec translations-manager-web-1 deno run db:push
