@@ -12,7 +12,6 @@ steps:
         from_secret: DB_PASSWORD
       DB_NAME:
         from_secret: DB_NAME
-      DB_PORT: 5432
     settings:
       host:
         from_secret: SSH_HOST
@@ -35,7 +34,7 @@ steps:
           APP_ENV=production
           DB_USER=${DB_USER}
           DB_PASSWORD=${DB_PASSWORD}
-          DB_PORT=${DB_PORT}
+          DB_PORT=5432
           DB_NAME=${DB_NAME}
           DB_HOST=db
           EOF
