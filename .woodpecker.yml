@@ -22,12 +22,14 @@ steps:
 
           cd translations-manager
 
-          echo 'APP_ENV=production' > .env
-          echo 'DB_USER=${{ secrets.DB_USER }}' >> .env
-          echo 'DB_PASSWORD=${{ secrets.DB_PASSWORD }}' >> .env
-          echo 'DB_PORT=${{ secrets.DB_PORT }}' >> .env
-          echo 'DB_NAME=${{ secrets.DB_NAME }}' >> .env
-          echo 'DB_HOST=db' >> .env
+          cat > .env << EOF
+          APP_ENV=production
+          DB_USER=${DB_USER}
+          DB_PASSWORD=${DB_PASSWORD}
+          DB_PORT=${DB_PORT}
+          DB_NAME=${DB_NAME}
+          DB_HOST=db
+          EOF
 
           docker compose down
           docker compose build --no-cache
