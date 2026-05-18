@@ -44,7 +44,6 @@ steps:
         from_secret: DB_NAME
       DB_PASSWORD:
         from_secret: DB_PASSWORD
-      DB_PORT:
-        from_secret: DB_PORT
       DB_USER:
         from_secret: DB_USER
+      DB_PORT: 5432
