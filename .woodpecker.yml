@@ -5,13 +5,6 @@ when:
 steps:
   - name: Deploy project over SSH
     image: appleboy/drone-ssh
-    environment:
-      DB_USER:
-        from_secret: DB_USER
-      DB_PASSWORD:
-        from_secret: DB_PASSWORD
-      DB_NAME:
-        from_secret: DB_NAME
     settings:
       host:
         from_secret: SSH_HOST
@@ -20,6 +13,10 @@ steps:
       password:
         from_secret: SSH_PASSWORD
       port: 22
+      envs:
+        - db_user
+        - db_password
+        - db_name
       script:
         - |
           if [ -d translations-manager ]; then
@@ -32,10 +29,10 @@ steps:
 
           cat > .env << EOF
           APP_ENV=production
-          DB_USER=${DB_USER}
-          DB_PASSWORD=${DB_PASSWORD}
+          DB_USER=$DB_USER
+          DB_PASSWORD=$DB_PASSWORD
           DB_PORT=5432
-          DB_NAME=${DB_NAME}
+          DB_NAME=$DB_NAME
           DB_HOST=db
           EOF
 
@@ -44,3 +41,10 @@ steps:
           docker compose up -d
 
           docker exec translations-manager-web-1 deno run db:push
+    environment:
+      DB_USER:
+        from_secret: DB_USER
+      DB_PASSWORD:
+        from_secret: DB_PASSWORD
+      DB_NAME:
+        from_secret: DB_NAME
