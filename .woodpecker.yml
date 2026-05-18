@@ -5,6 +5,14 @@ when:
 steps:
   - name: Deploy project over SSH
     image: appleboy/drone-ssh
+    environment:
+      DB_USER:
+        from_secret: DB_USER
+      DB_PASSWORD:
+        from_secret: DB_PASSWORD
+      DB_NAME:
+        from_secret: DB_NAME
+      DB_PORT: 5432
     settings:
       host:
         from_secret: SSH_HOST
